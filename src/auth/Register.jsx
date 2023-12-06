@@ -40,7 +40,9 @@ export const Register = ({ setToken }) => {
   return (
     <main>
       <dialog className="dialog dialog--auth p-2" ref={existDialog}>
-        <div className="text-center my-3">Email already exists.</div>
+        <div className="text-center my-3">
+          An account with that email already exists.
+        </div>
         <div className="flex justify-end pr-3">
           <button
             className="button--close"
