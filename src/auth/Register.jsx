@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import { useRef, useState } from "react";
 import { registerUser } from "../managers/AuthManager";
