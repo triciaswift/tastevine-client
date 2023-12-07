@@ -20,6 +20,7 @@ export const Login = ({ setToken }) => {
     loginUser(user).then((authInfo) => {
       if (authInfo && authInfo.token) {
         setToken(authInfo.token);
+        localStorage.setItem("userId", authInfo.userId);
         navigate("/");
       } else {
         setIsUnsuccessful(true);

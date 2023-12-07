@@ -1,5 +1,5 @@
-export const getAllRecipes = (token) => {
-  return fetch(`http://localhost:8000/recipes`, {
+export const getAllRecipes = (url, token) => {
+  return fetch(url, {
     headers: {
       Authorization: `Token ${token}`,
       "Content-Type": "application/json",

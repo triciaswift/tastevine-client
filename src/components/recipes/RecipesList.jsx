@@ -1,10 +1,25 @@
 /* eslint-disable react/prop-types */
+import { useNavigate } from "react-router-dom";
 import { RecipeTabs } from "./RecipeTabs";
+import { useEffect } from "react";
 
-export const RecipesList = ({ allRecipes, token }) => {
+export const RecipesList = ({
+  recipes,
+  categories,
+  fetchRecipes,
+  fetchCategories,
+  showAll,
+}) => {
+  useEffect(() => {
+    fetchRecipes(showAll);
+    fetchCategories();
+  }, [showAll]);
+
+  const navigate = useNavigate();
+
   return (
-    <section className="recipe--book--container my-3">
-      <div className="flex justify-end mr-6">
+    <div>
+      <div className="flex justify-end mr-6 mt-3">
         <form className="d-flex" role="search">
           <input
             className="form-control me-2"
@@ -17,22 +32,35 @@ export const RecipesList = ({ allRecipes, token }) => {
           </button>
         </form>
       </div>
-      {<RecipeTabs token={token} />}
-      <div className="cards--containers grid grid-cols-2 auto-cols-min gap-x-4 gap-y-12 justify-items-center py-16 px-20">
-        {allRecipes.map((recipe) => {
-          return (
-            <div className="card w-3/4" key={recipe.id}>
-              {/* <img src="..." className="card-img-top" alt="..." /> */}
-              <div className="card-body">
-                <h5 className="card-title text-center">{recipe.title}</h5>
-                <p className="card-text">
-                  Written By: {recipe.author.first_name}
-                </p>
+      {showAll !== true ? <h2 className="text-center">My Recipes</h2> : ""}
+      <section className="recipe--book--container my-3">
+        {<RecipeTabs categories={categories} />}
+        <div className="cards--containers grid grid-cols-2 auto-cols-min gap-x-2 gap-y-12 justify-items-center py-16 px-20">
+          {recipes.map((recipe) => {
+            return (
+              <div
+                className="card w-3/4 cursor-pointer hover:bg-slate-500/50"
+                key={recipe.id}
+                onClick={() => {
+                  navigate(`/recipes/details/${recipe.id}`);
+                }}
+              >
+                {/* <img src="..." className="card-img-top" alt="..." /> */}
+                <div className="card-body">
+                  <h5 className="card-title text-center">{recipe.title}</h5>
+                  {showAll ? (
+                    <p className="card-text">
+                      Written By: {recipe.author.first_name}
+                    </p>
+                  ) : (
+                    ""
+                  )}
+                </div>
               </div>
-            </div>
-          );
-        })}
-      </div>
-    </section>
+            );
+          })}
+        </div>
+      </section>
+    </div>
   );
 };

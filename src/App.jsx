@@ -7,6 +7,7 @@ import "./App.css";
 
 function App() {
   const [token, setTokenState] = useState(localStorage.getItem("auth_token"));
+  const userId = JSON.parse(localStorage.getItem("userId"));
 
   const setToken = (newToken) => {
     localStorage.setItem("auth_token", newToken);
@@ -16,7 +17,7 @@ function App() {
   return (
     <BrowserRouter>
       <NavBar token={token} setToken={setToken} />
-      <ApplicationViews token={token} setToken={setToken} />
+      <ApplicationViews token={token} setToken={setToken} userId={userId} />
     </BrowserRouter>
   );
 }
