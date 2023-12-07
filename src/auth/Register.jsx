@@ -28,6 +28,7 @@ export const Register = ({ setToken }) => {
       registerUser(newUser).then((authInfo) => {
         if (authInfo && authInfo.token) {
           setToken(authInfo.token);
+          localStorage.setItem("userId", authInfo.userId);
           navigate("/");
         } else {
           existDialog.current.showModal();
