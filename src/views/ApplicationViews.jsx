@@ -18,7 +18,7 @@ export const ApplicationViews = ({ token, setToken }) => {
         <Route path="/" element="All Recipes" />
         <Route path="recipes">
           <Route path="all" element={<AllRecipes token={token} />} />
-          <Route path="mine" element={<MyRecipes />} />
+          <Route path="mine" element={<MyRecipes token={token} />} />
           <Route path="new" element={<NewRecipe />} />
           <Route path="update" element={<UpdateRecipe />} />
         </Route>
