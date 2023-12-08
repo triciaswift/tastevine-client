@@ -1,8 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/prop-types */
 import { useEffect, useState } from "react";
-import { getRecipeById } from "../../managers/RecipeManager";
-import { useParams } from "react-router-dom";
+import { deleteRecipe, getRecipeById } from "../../managers/RecipeManager";
+import { useNavigate, useParams } from "react-router-dom";
 import { RecipeIngredients } from "./RecipeIngredients";
 import { RecipeDirections } from "./RecipeDirections";
 
@@ -10,6 +10,7 @@ export const RecipeDetails = ({ token, userId }) => {
   const [recipe, setRecipe] = useState({});
   const [activeTab, setActiveTab] = useState(0);
   const { recipeId } = useParams();
+  const navigate = useNavigate();
 
   const handleTabClick = (index) => {
     setActiveTab(index);
@@ -21,7 +22,7 @@ export const RecipeDetails = ({ token, userId }) => {
     });
   }, [recipeId, token]);
 
-  const displayRecipeCard = () => {
+  const displayRecipe = () => {
     if (recipe && recipe.author) {
       return (
         <div className="recipe--content border-1 border-t-transparent px-4">
@@ -35,7 +36,7 @@ export const RecipeDetails = ({ token, userId }) => {
               {<RecipeDirections recipe={recipe} />}
             </div>
           </div>
-          <div className="details--container flex justify-between">
+          <div className="details--container flex justify-between p-2">
             <div>{recipe.author.first_name}</div>
             <div>{recipe.publication_date}</div>
           </div>
@@ -64,12 +65,55 @@ export const RecipeDetails = ({ token, userId }) => {
                   <i className="icon fa-solid fa-gear fa-xl hover:text-yellow-500 cursor-pointer"></i>
                 </div>
                 <div className="ml-1">
-                  <i className="icon fa-solid fa-trash fa-xl hover:text-red-500 cursor-pointer"></i>
+                  <i
+                    className="icon fa-solid fa-trash fa-xl hover:text-red-500 cursor-pointer"
+                    data-bs-toggle="modal"
+                    data-bs-target="#deleteModal"
+                    type="button"
+                  ></i>
                 </div>
               </div>
             ) : (
               ""
             )}
+          </div>
+          <div className="modal fade" id="deleteModal" tabIndex="-1">
+            <div className="modal-dialog">
+              <div className="modal-content">
+                <div className="modal-header">
+                  <button
+                    type="button"
+                    className="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                  ></button>
+                </div>
+                <div className="modal-body text-center">
+                  Are you sure you want to delete this recipe?
+                </div>
+                <div className="modal-footer">
+                  <button
+                    type="button"
+                    className="btn btn-secondary"
+                    data-bs-dismiss="modal"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="button"
+                    className="btn btn-primary"
+                    data-bs-dismiss="modal"
+                    onClick={() => {
+                      deleteRecipe(token, recipeId).then(() => {
+                        navigate(`/recipes/mine`);
+                      });
+                    }}
+                  >
+                    Delete
+                  </button>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       );
@@ -99,7 +143,7 @@ export const RecipeDetails = ({ token, userId }) => {
           </li>
         </ul>
         {activeTab === 0 ? (
-          displayRecipeCard()
+          displayRecipe()
         ) : (
           <div className="border-1 border-t-transparent">Image</div>
         )}

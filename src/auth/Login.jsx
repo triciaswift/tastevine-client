@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { loginUser } from "../managers/AuthManager";
 
-export const Login = ({ setToken }) => {
+export const Login = ({ setToken, setId }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isUnsuccessful, setIsUnsuccessful] = useState(false);
@@ -20,7 +20,7 @@ export const Login = ({ setToken }) => {
     loginUser(user).then((authInfo) => {
       if (authInfo && authInfo.token) {
         setToken(authInfo.token);
-        localStorage.setItem("userId", authInfo.userId);
+        setId(authInfo.userId);
         navigate("/");
       } else {
         setIsUnsuccessful(true);

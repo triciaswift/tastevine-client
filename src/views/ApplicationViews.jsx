@@ -12,7 +12,7 @@ import { useState } from "react";
 import { RecipesList } from "../components/recipes/RecipesList";
 import { getAllCategories } from "../managers/CategoryManager";
 
-export const ApplicationViews = ({ token, setToken, userId }) => {
+export const ApplicationViews = ({ token, setToken, userId, setId }) => {
   const [recipeState, setRecipeState] = useState([]);
   const [categoryState, setCategoryState] = useState([]);
 
@@ -36,10 +36,27 @@ export const ApplicationViews = ({ token, setToken, userId }) => {
 
   return (
     <Routes>
-      <Route path="/register" element={<Register setToken={setToken} />} />
-      <Route path="/login" element={<Login setToken={setToken} />} />
+      <Route
+        path="/register"
+        element={<Register setToken={setToken} setId={setId} />}
+      />
+      <Route
+        path="/login"
+        element={<Login setToken={setToken} setId={setId} />}
+      />
       <Route element={<Authorized token={token} />}>
-        <Route path="/" element="All Recipes" />
+        <Route
+          path="/"
+          element={
+            <RecipesList
+              recipes={recipeState}
+              categories={categoryState}
+              fetchRecipes={fetchRecipesFromAPI}
+              fetchCategories={fetchCategoriesFromAPI}
+              showAll={true}
+            />
+          }
+        />
         <Route path="recipes">
           <Route
             path="all"
