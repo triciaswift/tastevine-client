@@ -1,10 +1,9 @@
 /* eslint-disable no-unused-vars */
-/* eslint-disable react/prop-types */
 import { useRef, useState } from "react";
 import { registerUser } from "../managers/AuthManager";
 import { useNavigate } from "react-router-dom";
 
-export const Register = ({ setToken }) => {
+export const Register = ({ setToken, setId }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [firstName, setFirstName] = useState("");
@@ -28,7 +27,7 @@ export const Register = ({ setToken }) => {
       registerUser(newUser).then((authInfo) => {
         if (authInfo && authInfo.token) {
           setToken(authInfo.token);
-          localStorage.setItem("userId", authInfo.userId);
+          setId(authInfo.userId);
           navigate("/");
         } else {
           existDialog.current.showModal();

@@ -1,14 +1,13 @@
-/* eslint-disable react/prop-types */
 export const RecipeIngredients = ({ recipe }) => {
-  return (
-    <ul>
-      {recipe.recipe_ingredient?.map((ingredient) => {
-        return (
-          <li className="list-none" key={ingredient.id}>
-            {ingredient.measurement}
-          </li>
-        );
-      })}
-    </ul>
-  );
+  const displayIngredients = () => {
+    if (recipe && recipe.recipe_ingredient) {
+      return recipe.recipe_ingredient.map((ingredient) => (
+        <li className="list-none" key={ingredient.id}>
+          {ingredient.measurement}
+        </li>
+      ));
+    }
+  };
+
+  return <ul>{displayIngredients()}</ul>;
 };

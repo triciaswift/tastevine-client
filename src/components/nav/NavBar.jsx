@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import { Link, useNavigate } from "react-router-dom";
 
 export const NavBar = ({ token, setToken }) => {

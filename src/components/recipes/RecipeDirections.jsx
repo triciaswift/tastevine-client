@@ -1,20 +1,20 @@
-/* eslint-disable react/prop-types */
 export const RecipeDirections = ({ recipe }) => {
-  const directions = recipe.instructions;
+  const displayDirections = () => {
+    if (recipe && recipe.instructions) {
+      const directions = recipe.instructions;
+      const directionsArray = directions.split(" | ");
 
-  const directionsArray = directions?.split(` | `);
+      return directionsArray.map((direction, index) => (
+        <li className="list-decimal" key={index}>
+          {direction}
+        </li>
+      ));
+    }
+  };
 
   return (
     <div className="pl-4">
-      <ol>
-        {directionsArray?.map((direction, index) => {
-          return (
-            <li className="list-decimal" key={index}>
-              {direction}
-            </li>
-          );
-        })}
-      </ol>
+      <ol>{displayDirections()}</ol>
     </div>
   );
 };
