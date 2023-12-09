@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 export const RecipeDirections = ({ recipe }) => {
   const displayDirections = () => {
     if (recipe && recipe.instructions) {

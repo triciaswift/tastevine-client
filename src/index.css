@@ -21,6 +21,16 @@ dialog {
   background-color: #0d6efd;
 }
 
+.btn-info {
+  color: black;
+  background-color: #0dcaf0;
+}
+
+.btn-danger {
+  color: white;
+  background-color: #dc3545;
+}
+
 .btn-close {
 }
 

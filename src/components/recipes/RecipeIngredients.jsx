@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 export const RecipeIngredients = ({ recipe }) => {
   const displayIngredients = () => {
     if (recipe && recipe.recipe_ingredient) {

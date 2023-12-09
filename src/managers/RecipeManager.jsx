@@ -53,5 +53,5 @@ export const createRecipe = (recipe, token) => {
       "Content-Type": "application/json",
     },
     body: JSON.stringify(recipe),
-  });
+  }).then((res) => res.json());
 };

@@ -1,9 +1,7 @@
-/* eslint-disable react/prop-types */
 import { Route, Routes } from "react-router-dom";
 import { Register } from "../auth/Register";
 import { Login } from "../auth/Login";
 import { Authorized } from "./Authorized";
-import { NewRecipe } from "../components/recipes/NewRecipe";
 import { UpdateRecipe } from "../components/recipes/UpdateRecipe";
 import { IngredientForm } from "../components/ingredients/IngredientForm";
 import { RecipeDetails } from "../components/recipes/RecipeDetails";
@@ -11,6 +9,7 @@ import { getAllRecipes } from "../managers/RecipeManager";
 import { useState } from "react";
 import { RecipesList } from "../components/recipes/RecipesList";
 import { getAllCategories } from "../managers/CategoryManager";
+import { RecipeForm } from "../components/recipes/RecipeForm";
 
 export const ApplicationViews = ({ token, setToken, userId, setId }) => {
   const [recipeState, setRecipeState] = useState([]);
@@ -93,7 +92,16 @@ export const ApplicationViews = ({ token, setToken, userId, setId }) => {
               />
             }
           />
-          <Route path="new" element={<NewRecipe />} />
+          <Route
+            path="new"
+            element={
+              <RecipeForm
+                categories={categoryState}
+                fetchCategories={fetchCategoriesFromAPI}
+                token={token}
+              />
+            }
+          />
           <Route path="update" element={<UpdateRecipe />} />
         </Route>
         <Route path="ingredients">

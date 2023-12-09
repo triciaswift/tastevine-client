@@ -1,5 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable react/prop-types */
 import { useEffect, useState } from "react";
 import { deleteRecipe, getRecipeById } from "../../managers/RecipeManager";
 import { useNavigate, useParams } from "react-router-dom";
@@ -145,7 +143,17 @@ export const RecipeDetails = ({ token, userId }) => {
         {activeTab === 0 ? (
           displayRecipe()
         ) : (
-          <div className="border-1 border-t-transparent">Image</div>
+          <div className="border-1 border-t-transparent">
+            {recipe.image ? (
+              <img
+                src={recipe.image}
+                className="img-fluid"
+                alt={recipe.title}
+              />
+            ) : (
+              ""
+            )}
+          </div>
         )}
       </div>
       {displayCategories()}
