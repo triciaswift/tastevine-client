@@ -1,53 +1,105 @@
 import { useEffect, useState } from "react";
 import { createRecipe } from "../../managers/RecipeManager";
 import { useNavigate } from "react-router-dom";
-import { IngredientList } from "../ingredients/IngredientsList";
+import { HandleFormattingDirections } from "../../utils/HandleFormattingDirections";
+import { getAllIngredients } from "../../managers/IngredientManager";
+import { IngredientForm } from "../ingredients/IngredientForm";
 
 export const RecipeForm = ({ categories, fetchCategories, token }) => {
   const [recipe, setRecipe] = useState({
-    title: "Better than Olive Garden Fettuccine Alfredo",
-    instructions:
-      "1. Melt butter just under medium heat. Add minced garlic and cook for 3 minutes. Stir often and make sure the garlic doesn't brown.\n2. Add heavy whipping cream. Whisk until the butter and cream come together. It will seem like they repel each other but keep whisking.\n3. Once blended let thicken for about 10 minutes. Whisking often. Add grated parmesan cheese and black pepper. Whisk and let cook until all the cheese has melted, about 5 minutes.\n4. Prepare fettuccini noodles to al dente, strain and serve.",
+    title: "",
+    instructions: "",
     image: null,
-    ingredients: [
-      {
-        ingredient: 23,
-        quantity: "8",
-        unit: "tbsp",
-      },
-      {
-        ingredient: 39,
-        quantity: "3",
-        unit: "cloves minced",
-      },
-      {
-        ingredient: 48,
-        quantity: "1 1/2",
-        unit: "c",
-      },
-      {
-        ingredient: 45,
-        quantity: "2",
-        unit: "c",
-      },
-      {
-        ingredient: 41,
-        quantity: "1/2",
-        unit: "tsp",
-      },
-    ],
-    categories: [5],
   });
-  const [showIngredients, setShowIngredients] = useState(false);
+  const [ingredients, setIngredients] = useState([]);
+  const [chosenCategories, updateChosenCategories] = useState(new Set());
+  const [recipeIngredients, setRecipeIngredients] = useState([]);
 
   const navigate = useNavigate();
 
   useEffect(() => {
     fetchCategories();
+    getAllIngredients(token).then((ingredientArr) => {
+      setIngredients(ingredientArr);
+    });
   }, []);
 
   const changeRecipeState = (e) => {
     setRecipe({ ...recipe, [e.target.name]: e.target.value });
+  };
+
+  const handleCategoryChosen = (category) => {
+    const copy = new Set(chosenCategories);
+    copy.has(category.id) ? copy.delete(category.id) : copy.add(category.id);
+    updateChosenCategories(copy);
+  };
+
+  const displayCategories = () => {
+    if (categories && categories.length) {
+      return categories.map((category) => (
+        <div className="form-check" key={category.id}>
+          <input
+            className="form-check-input"
+            type="checkbox"
+            checked={chosenCategories.has(category.id)}
+            onChange={() => handleCategoryChosen(category)}
+          />
+          <label className="form-check-label" htmlFor="categoryLabel">
+            {category.label}
+          </label>
+        </div>
+      ));
+    }
+  };
+
+  const displayIngredients = () => {
+    if (recipeIngredients && recipeIngredients.length) {
+      return recipeIngredients.map((obj, index) => {
+        const ingredient = ingredients.find(
+          (ingredient) => ingredient.id === obj.ingredient
+        );
+
+        const ingredientName = ingredient ? ingredient.name : "";
+
+        return (
+          <div key={index}>
+            {ingredientName === "" ? (
+              <div className="text-[#aaa] italic mt-2">
+                {`1 tsp ingredient`}
+                <br />
+                {`1 1/2 c ingredient`}
+                <br />
+                {`1 minced ingredient`}
+              </div>
+            ) : (
+              <div>
+                {obj.quantity} {obj.unit} {ingredientName}
+              </div>
+            )}
+          </div>
+        );
+      });
+    }
+    return (
+      // eslint-disable-next-line react/no-unescaped-entities
+      <div>Click the "Select Ingredients" button to add ingredients here.</div>
+    );
+  };
+
+  const handleSave = (e) => {
+    e.preventDefault();
+
+    const formattedDirections = HandleFormattingDirections(recipe.instructions);
+
+    const newRecipe = {
+      ...recipe,
+      instructions: formattedDirections,
+      ingredients: recipeIngredients,
+      categories: Array.from(chosenCategories),
+    };
+    createRecipe(newRecipe, token).then((recipeObj) => {
+      navigate(`/recipes/details/${recipeObj["id"]}`);
+    });
   };
 
   const getBase64 = (file, callback) => {
@@ -60,56 +112,6 @@ export const RecipeForm = ({ categories, fetchCategories, token }) => {
     getBase64(e.target.files[0], (base64ImageString) => {
       setRecipe({ ...recipe, [e.target.name]: base64ImageString });
     });
-  };
-
-  const displayCategories = () => {
-    if (categories && categories.length) {
-      return categories.map((category) => (
-        <div className="form-check" key={category.id}>
-          <input
-            className="form-check-input"
-            type="checkbox"
-            value=""
-            name=""
-          />
-          <label className="form-check-label" htmlFor="categoryLabel">
-            {category.label}
-          </label>
-        </div>
-      ));
-    }
-  };
-
-  const handleSave = (e) => {
-    e.preventDefault();
-    const formattedDirections = handleFormattingDirections(recipe.instructions);
-
-    let newRecipe = {
-      title: recipe.title,
-      image: recipe.image,
-      instructions: formattedDirections,
-      ingredients: recipe.ingredients,
-      categories: recipe.categories,
-    };
-
-    createRecipe(newRecipe, token).then((recipeObj) => {
-      navigate(`/recipes/details/${recipeObj["id"]}`);
-    });
-  };
-
-  const handleFormattingDirections = (directions) => {
-    const formattedDirections = directions
-      .split("\n") // Split the text into an array of lines
-      .map((line) => line.trim()) // Trim leading and trailing whitespaces from each line
-      .filter((line) => line !== "") // Remove empty lines
-      .map((line) => line.split(". ").slice(1).join(". ")) // Remove leading numbers and dots
-      .join(" | "); // Join the lines with the desired separator
-
-    return formattedDirections;
-  };
-
-  const handleShowIngredients = () => {
-    setShowIngredients(!showIngredients);
   };
 
   return (
@@ -126,8 +128,10 @@ export const RecipeForm = ({ categories, fetchCategories, token }) => {
                 type="text"
                 className="form-control"
                 name="title"
+                placeholder="Recipe Title"
                 value={recipe.title}
                 onChange={changeRecipeState}
+                required
                 autoFocus
               />
             </div>
@@ -154,14 +158,17 @@ export const RecipeForm = ({ categories, fetchCategories, token }) => {
                     className="form-control"
                     type="file"
                     name="image"
-                    onChange={createImageString}
+                    onChange={(e) => {
+                      createImageString(e);
+                    }}
+                    required
                   />
                 </div>
               </fieldset>
               <fieldset className="flex w-2/3">
                 <div className="w-1/3 border-l-2 pl-2">
                   <label>Ingredients</label>
-                  {/* {<RecipeIngredients recipe={recipe} />} */}
+                  {displayIngredients()}
                 </div>
                 <div className="w-2/3">
                   <label htmlFor="recipeInstructions" className="form-label">
@@ -170,9 +177,11 @@ export const RecipeForm = ({ categories, fetchCategories, token }) => {
                   <textarea
                     className="form-control"
                     name="instructions"
+                    placeholder={`1. First instruction\n2. Second instruction\netc.`}
                     value={recipe.instructions}
                     onChange={changeRecipeState}
                     rows="10"
+                    required
                     autoFocus
                   ></textarea>
                 </div>
@@ -189,18 +198,12 @@ export const RecipeForm = ({ categories, fetchCategories, token }) => {
           </div>
         </form>
       </div>
-      <div className="text-center">
-        <button
-          className="btn btn-info"
-          onClick={() => {
-            handleShowIngredients();
-          }}
-        >
-          Select Ingredients
-        </button>
-      </div>
-      <div className="flex justify-center"></div>
-      {<IngredientList token={token} showIngredients={handleShowIngredients} />}
+      {
+        <IngredientForm
+          setRecipeIngredients={setRecipeIngredients}
+          ingredients={ingredients}
+        />
+      }
     </section>
   );
 };
