@@ -3,7 +3,7 @@ import { Register } from "../auth/Register";
 import { Login } from "../auth/Login";
 import { Authorized } from "./Authorized";
 import { UpdateRecipe } from "../components/recipes/UpdateRecipe";
-import { IngredientForm } from "../components/ingredients/IngredientForm";
+import { NewIngredient } from "../components/ingredients/NewIngredient";
 import { RecipeDetails } from "../components/recipes/RecipeDetails";
 import { getAllRecipes } from "../managers/RecipeManager";
 import { useState } from "react";
@@ -13,7 +13,10 @@ import { RecipeForm } from "../components/recipes/RecipeForm";
 
 export const ApplicationViews = ({ token, setToken, userId, setId }) => {
   const [recipeState, setRecipeState] = useState([]);
-  const [categoryState, setCategoryState] = useState([]);
+  const [categoryState, setCategoryState] = useState([
+    { id: 1, label: "Appetizers" },
+    { id: 2, label: "Breakfast" },
+  ]);
 
   const fetchRecipesFromAPI = (showAll) => {
     let url = "http://localhost:8000/recipes";
@@ -105,7 +108,7 @@ export const ApplicationViews = ({ token, setToken, userId, setId }) => {
           <Route path="update" element={<UpdateRecipe />} />
         </Route>
         <Route path="ingredients">
-          <Route path="new" element={<IngredientForm />} />
+          <Route path="new" element={<NewIngredient />} />
         </Route>
       </Route>
     </Routes>
