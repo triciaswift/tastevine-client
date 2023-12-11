@@ -10,6 +10,7 @@ import { useState } from "react";
 import { RecipesList } from "../components/recipes/RecipesList";
 import { getAllCategories } from "../managers/CategoryManager";
 import { RecipeForm } from "../components/recipes/RecipeForm";
+import { getAllIngredients } from "../managers/IngredientManager";
 
 export const ApplicationViews = ({ token, setToken, userId, setId }) => {
   const [recipeState, setRecipeState] = useState([]);
@@ -17,6 +18,7 @@ export const ApplicationViews = ({ token, setToken, userId, setId }) => {
     { id: 1, label: "Appetizers" },
     { id: 2, label: "Breakfast" },
   ]);
+  const [ingredientState, setIngredientState] = useState([]);
 
   const fetchRecipesFromAPI = (showAll) => {
     let url = "http://localhost:8000/recipes";
@@ -33,6 +35,12 @@ export const ApplicationViews = ({ token, setToken, userId, setId }) => {
   const fetchCategoriesFromAPI = () => {
     getAllCategories(token).then((categories) => {
       setCategoryState(categories);
+    });
+  };
+
+  const fetchIngredientsFromAPI = () => {
+    getAllIngredients(token).then((ingredients) => {
+      setIngredientState(ingredients);
     });
   };
 
@@ -102,10 +110,23 @@ export const ApplicationViews = ({ token, setToken, userId, setId }) => {
                 categories={categoryState}
                 fetchCategories={fetchCategoriesFromAPI}
                 token={token}
+                ingredients={ingredientState}
+                fetchIngredients={fetchIngredientsFromAPI}
               />
             }
           />
-          <Route path="update" element={<UpdateRecipe />} />
+          <Route
+            path="update/:recipeId"
+            element={
+              <UpdateRecipe
+                token={token}
+                fetchCategories={fetchCategoriesFromAPI}
+                categories={categoryState}
+                ingredients={ingredientState}
+                fetchIngredients={fetchIngredientsFromAPI}
+              />
+            }
+          />
         </Route>
         <Route path="ingredients">
           <Route path="new" element={<NewIngredient />} />

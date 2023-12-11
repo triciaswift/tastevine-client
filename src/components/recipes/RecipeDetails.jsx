@@ -60,7 +60,10 @@ export const RecipeDetails = ({ token, userId }) => {
             {userId === recipe.author.id ? (
               <div className="footer--container flex mb-2">
                 <div className="mr-1">
-                  <i className="icon fa-solid fa-gear fa-xl hover:text-yellow-500 cursor-pointer"></i>
+                  <i
+                    className="icon fa-solid fa-gear fa-xl hover:text-yellow-500 cursor-pointer"
+                    onClick={() => navigate(`/recipes/update/${recipeId}`)}
+                  ></i>
                 </div>
                 <div className="ml-1">
                   <i
