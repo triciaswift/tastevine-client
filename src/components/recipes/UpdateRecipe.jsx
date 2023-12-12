@@ -1,8 +1,14 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { getRecipeById } from "../../managers/RecipeManager";
+import { getRecipeById, updateRecipe } from "../../managers/RecipeManager";
 
-export const UpdateRecipe = ({ token, fetchCategories, categories }) => {
+export const UpdateRecipe = ({
+  token,
+  fetchCategories,
+  categories,
+  ingredients,
+  fetchIngredients,
+}) => {
   const [recipe, setRecipe] = useState({});
   const [chosenCategories, updateCategories] = useState(new Set());
   const [chosenIngredients, updateIngredients] = useState(new Set());
@@ -14,30 +20,56 @@ export const UpdateRecipe = ({ token, fetchCategories, categories }) => {
       setRecipe(r);
     });
     fetchCategories();
+    fetchIngredients();
   }, [recipeId, token]);
 
   useEffect(() => {
-    // Check that recipe exists, & that recipe categories has an array
-    if (recipe && recipe.categories && recipe.categories.length) {
-      // Create a copy of the chosenCategories set
-      const copy = new Set(chosenCategories);
-      // Iterate through the categories array in recipe state
-      for (const categoryObj of recipe.categories) {
-        // Add each category id to the copy of the set
-        copy.add(categoryObj.id);
+    if (recipe) {
+      if (recipe.categories) {
+        // Create a copy of the chosenCategories set
+        const categoriesCopy = new Set(chosenCategories);
+        // Iterate through the categories array in recipe state
+        for (const categoryObj of recipe.categories) {
+          // Add each category id to the copy of the set
+          categoriesCopy.add(categoryObj.id);
+        }
+        updateCategories(categoriesCopy); // Set chosenIngredients state with copy set
       }
-      updateCategories(copy); // Set chosenIngredients state with copy set
+      // Check that ingredient measurements array exists and isn't empty
+      if (recipe.ingredient_measurements) {
+        // Create a copy of chosenIngredients
+        const ingredientsCopy = new Set(chosenIngredients);
+        // Iterate through the ingredient measurements array in recipe state
+        if (ingredientsCopy.size === 0) {
+          for (const ingredientObject of recipe.ingredient_measurements) {
+            // Create a new object with id, quantity, unit
+            const ingredient = {
+              id: ingredientObject.ingredient.id,
+              quantity: ingredientObject.quantity,
+              unit: ingredientObject.unit,
+            };
+            // check if anything is in set (prevent from double adding)
+            if (!ingredientsCopy.has(ingredient.id)) {
+              // Add object to ingredientsCopy
+              ingredientsCopy.add(ingredient);
+            }
+          }
+        }
+        // Set chosenIngredients to ingredientsCopy
+        updateIngredients(ingredientsCopy);
+      }
     }
   }, [recipe]);
 
-  // useEffect(() => {
-  //   if (
-  //     recipe.ingredient_measurements &&
-  //     recipe.ingredient_measurements.length
-  //   ) {
-  //     const copyIngredients = new Set(recipe.ingredient_measurements);
-  //   }
-  // }, [recipe.ingredient_measurements]);
+  const changeRecipeState = (e) => {
+    setRecipe({ ...recipe, [e.target.name]: e.target.value });
+  };
+
+  const handleChosenCategory = (category) => {
+    const copy = new Set(chosenCategories);
+    copy.has(category.id) ? copy.delete(category.id) : copy.add(category.id);
+    updateCategories(copy);
+  };
 
   const displayCategories = () => {
     if (categories && categories.length) {
@@ -47,6 +79,7 @@ export const UpdateRecipe = ({ token, fetchCategories, categories }) => {
             className="form-check-input"
             type="checkbox"
             checked={chosenCategories.has(c.id)}
+            onChange={() => handleChosenCategory(c)}
           />
           <label className="form-check-label">{c.label}</label>
         </div>
@@ -55,19 +88,54 @@ export const UpdateRecipe = ({ token, fetchCategories, categories }) => {
   };
 
   const displayIngredients = () => {
-    if (chosenIngredients && chosenIngredients.length) {
-      return chosenIngredients.map((i) => (
-        <div className="ingredient--container" key={i.id}>
-          {i.measurement} {i.ingredient.name}
-        </div>
-      ));
+    if (chosenIngredients.size !== 0) {
+      return (
+        <>
+          {Array.from(chosenIngredients).map((object) => {
+            // debugger;
+            const matchingIngredient = ingredients.find(
+              (ingredient) => ingredient.id === object.id
+            );
+            return (
+              <div className="ingredient--container" key={object.id}>
+                {object.quantity} {object.unit} {matchingIngredient.name}
+              </div>
+            );
+          })}
+        </>
+      );
     }
+  };
+
+  const handleSave = (e) => {
+    e.preventDefault();
+
+    const updatedRecipe = {
+      ...recipe,
+      ingredients: Array.from(chosenIngredients),
+      categories: Array.from(chosenCategories),
+    };
+    updateRecipe(updatedRecipe, token).then(() => {
+      navigate(`/recipes/details/${recipeId}`);
+    });
+  };
+
+  const getBase64 = (file, callback) => {
+    const reader = new FileReader();
+    reader.addEventListener("load", () => callback(reader.result));
+    reader.readAsDataURL(file);
+  };
+
+  const createImageString = (e) => {
+    getBase64(e.target.files[0], (base64ImageString) => {
+      setRecipe({ ...recipe, [e.target.name]: base64ImageString });
+    });
   };
 
   return (
     <section className="my-16">
       <div className="flex justify-center">
-        <form className="w-3/4">
+        <form className="w-3/4" onSubmit={handleSave}>
           <h2 className="text-center">Update Recipe</h2>
           <div className="border-1 rounded-lg my-4 p-4">
             <div className="mb-3">
@@ -77,6 +145,7 @@ export const UpdateRecipe = ({ token, fetchCategories, categories }) => {
                 className="form-control"
                 name="title"
                 value={recipe.title}
+                onChange={changeRecipeState}
                 required
                 autoFocus
               />
@@ -102,6 +171,9 @@ export const UpdateRecipe = ({ token, fetchCategories, categories }) => {
                     className="form-control"
                     type="file"
                     name="image"
+                    onChange={(e) => {
+                      createImageString(e);
+                    }}
                     required
                   />
                 </div>
@@ -117,7 +189,8 @@ export const UpdateRecipe = ({ token, fetchCategories, categories }) => {
                     className="form-control"
                     name="instructions"
                     value={recipe.instructions}
-                    rows="10"
+                    onChange={changeRecipeState}
+                    rows="20"
                     required
                     autoFocus
                   />
@@ -127,7 +200,7 @@ export const UpdateRecipe = ({ token, fetchCategories, categories }) => {
           </div>
           <div className="buttons--container w-3/4">
             <button type="submit" className="btn btn-primary mr-4">
-              Submit
+              Save
             </button>
             <button
               className="btn btn-danger"

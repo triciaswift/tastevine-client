@@ -34,8 +34,8 @@ export const deleteRecipe = (token, recipeId) => {
   });
 };
 
-export const updateRecipe = (recipe, recipeId, token) => {
-  return fetch(`http://localhost:8000/recipes/${recipeId}`, {
+export const updateRecipe = (recipe, token) => {
+  return fetch(`http://localhost:8000/recipes/${recipe.id}`, {
     method: "PUT",
     headers: {
       Authorization: `Token ${token}`,
