@@ -3,34 +3,41 @@ import { useNavigate, useParams } from "react-router-dom";
 import { getRecipeById } from "../../managers/RecipeManager";
 
 export const UpdateRecipe = ({ token, fetchCategories, categories }) => {
-  const [currentRecipe, setCurrent] = useState({});
+  const [recipe, setRecipe] = useState({});
   const [chosenCategories, updateCategories] = useState(new Set());
-  const [chosenIngredients, updateIngredients] = useState([]);
+  const [chosenIngredients, updateIngredients] = useState(new Set());
   const { recipeId } = useParams();
   const navigate = useNavigate();
 
   useEffect(() => {
     getRecipeById(recipeId, token).then((r) => {
-      setCurrent(r);
+      setRecipe(r);
     });
     fetchCategories();
   }, [recipeId, token]);
 
   useEffect(() => {
-    if (currentRecipe.categories && currentRecipe.categories.length) {
-      const categoryIds = new Set(currentRecipe.categories.map((c) => c.id));
-      updateCategories(categoryIds);
+    // Check that recipe exists, & that recipe categories has an array
+    if (recipe && recipe.categories && recipe.categories.length) {
+      // Create a copy of the chosenCategories set
+      const copy = new Set(chosenCategories);
+      // Iterate through the categories array in recipe state
+      for (const categoryObj of recipe.categories) {
+        // Add each category id to the copy of the set
+        copy.add(categoryObj.id);
+      }
+      updateCategories(copy); // Set chosenIngredients state with copy set
     }
-  }, [currentRecipe.categories]);
+  }, [recipe]);
 
-  useEffect(() => {
-    if (
-      currentRecipe.ingredient_measurements &&
-      currentRecipe.ingredient_measurements.length
-    ) {
-      updateIngredients(currentRecipe.ingredient_measurements);
-    }
-  }, [currentRecipe.ingredient_measurements]);
+  // useEffect(() => {
+  //   if (
+  //     recipe.ingredient_measurements &&
+  //     recipe.ingredient_measurements.length
+  //   ) {
+  //     const copyIngredients = new Set(recipe.ingredient_measurements);
+  //   }
+  // }, [recipe.ingredient_measurements]);
 
   const displayCategories = () => {
     if (categories && categories.length) {
@@ -56,6 +63,7 @@ export const UpdateRecipe = ({ token, fetchCategories, categories }) => {
       ));
     }
   };
+
   return (
     <section className="my-16">
       <div className="flex justify-center">
@@ -68,7 +76,7 @@ export const UpdateRecipe = ({ token, fetchCategories, categories }) => {
                 type="text"
                 className="form-control"
                 name="title"
-                value={currentRecipe.title}
+                value={recipe.title}
                 required
                 autoFocus
               />
@@ -80,9 +88,9 @@ export const UpdateRecipe = ({ token, fetchCategories, categories }) => {
                   {displayCategories()}
                 </div>
                 <div className="image--container">
-                  {currentRecipe.image ? (
+                  {recipe.image ? (
                     <figure className="mb-3">
-                      <img src={currentRecipe.image} alt="recipe-pic" />
+                      <img src={recipe.image} alt="recipe-pic" />
                     </figure>
                   ) : (
                     ""
@@ -108,7 +116,7 @@ export const UpdateRecipe = ({ token, fetchCategories, categories }) => {
                   <textarea
                     className="form-control"
                     name="instructions"
-                    value={currentRecipe.instructions}
+                    value={recipe.instructions}
                     rows="10"
                     required
                     autoFocus
