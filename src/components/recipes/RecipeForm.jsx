@@ -15,8 +15,8 @@ export const RecipeForm = ({
     instructions: "",
     image: null,
   });
-  const [chosenCategories, updateChosenCategories] = useState(new Set());
-  const [chosenIngredients, updateChosenIngredients] = useState(new Set());
+  const [chosenCategories, updateCategories] = useState(new Set());
+  const [chosenIngredients, updateIngredients] = useState(new Set());
 
   const navigate = useNavigate();
 
@@ -33,10 +33,10 @@ export const RecipeForm = ({
     setRecipe({ ...recipe, [e.target.name]: e.target.value });
   };
 
-  const handleCategoryChosen = (category) => {
+  const handleChosenCategory = (category) => {
     const copy = new Set(chosenCategories);
     copy.has(category.id) ? copy.delete(category.id) : copy.add(category.id);
-    updateChosenCategories(copy);
+    updateCategories(copy);
   };
 
   const displayCategories = () => {
@@ -47,7 +47,7 @@ export const RecipeForm = ({
             className="form-check-input"
             type="checkbox"
             checked={chosenCategories.has(category.id)}
-            onChange={() => handleCategoryChosen(category)}
+            onChange={() => handleChosenCategory(category)}
           />
           <label className="form-check-label" htmlFor="categoryLabel">
             {category.label}
@@ -177,7 +177,7 @@ export const RecipeForm = ({
                     placeholder={`1. First instruction\n2. Second instruction\netc.`}
                     value={recipe.instructions}
                     onChange={changeRecipeState}
-                    rows="10"
+                    rows="20"
                     required
                     autoFocus
                   ></textarea>
@@ -202,7 +202,7 @@ export const RecipeForm = ({
         <IngredientForm
           ingredients={ingredients}
           chosenIngredients={chosenIngredients}
-          updateChosenIngredients={updateChosenIngredients}
+          updateIngredients={updateIngredients}
         />
       }
     </section>

@@ -4,7 +4,7 @@ import { IngredientsList } from "./IngredientsList";
 export const IngredientForm = ({
   ingredients,
   chosenIngredients,
-  updateChosenIngredients,
+  updateIngredients,
 }) => {
   const [showIngredients, setShowIngredients] = useState(false);
   const [filteredIngredients, setFiltered] = useState([]);
@@ -51,7 +51,7 @@ export const IngredientForm = ({
             </div>
             <IngredientsList
               chosenIngredients={chosenIngredients}
-              updateChosenIngredients={updateChosenIngredients}
+              updateIngredients={updateIngredients}
               filteredIngredients={filteredIngredients}
             />
           </div>

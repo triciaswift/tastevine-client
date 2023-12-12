@@ -2,7 +2,7 @@ import { IngredientItem } from "./IngredientItem";
 
 export const IngredientsList = ({
   chosenIngredients,
-  updateChosenIngredients,
+  updateIngredients,
   filteredIngredients,
 }) => {
   return (
@@ -24,7 +24,7 @@ export const IngredientsList = ({
                   <IngredientItem
                     ingredient={ingredient}
                     chosenIngredients={chosenIngredients}
-                    updateChosenIngredients={updateChosenIngredients}
+                    updateIngredients={updateIngredients}
                   />
                 }
               </tr>
