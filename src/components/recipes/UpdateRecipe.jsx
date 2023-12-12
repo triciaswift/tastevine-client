@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { getRecipeById, updateRecipe } from "../../managers/RecipeManager";
+import { IngredientForm } from "../ingredients/IngredientForm";
 
 export const UpdateRecipe = ({
   token,
@@ -98,7 +99,7 @@ export const UpdateRecipe = ({
             );
             return (
               <div className="ingredient--container" key={object.id}>
-                {object.quantity} {object.unit} {matchingIngredient.name}
+                {object.quantity} {object.unit} {matchingIngredient?.name}
               </div>
             );
           })}
@@ -211,6 +212,13 @@ export const UpdateRecipe = ({
           </div>
         </form>
       </div>
+      {
+        <IngredientForm
+          ingredients={ingredients}
+          chosenIngredients={chosenIngredients}
+          updateIngredients={updateIngredients}
+        />
+      }
     </section>
   );
 };

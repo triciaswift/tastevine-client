@@ -15,8 +15,8 @@ export const RecipeForm = ({
     instructions: "",
     image: null,
   });
-  const [chosenCategories, updateChosenCategories] = useState(new Set());
-  const [chosenIngredients, updateChosenIngredients] = useState(new Set());
+  const [chosenCategories, updateCategories] = useState(new Set());
+  const [chosenIngredients, updateIngredients] = useState(new Set());
 
   const navigate = useNavigate();
 
@@ -36,7 +36,7 @@ export const RecipeForm = ({
   const handleChosenCategory = (category) => {
     const copy = new Set(chosenCategories);
     copy.has(category.id) ? copy.delete(category.id) : copy.add(category.id);
-    updateChosenCategories(copy);
+    updateCategories(copy);
   };
 
   const displayCategories = () => {
@@ -202,7 +202,7 @@ export const RecipeForm = ({
         <IngredientForm
           ingredients={ingredients}
           chosenIngredients={chosenIngredients}
-          updateChosenIngredients={updateChosenIngredients}
+          updateIngredients={updateIngredients}
         />
       }
     </section>

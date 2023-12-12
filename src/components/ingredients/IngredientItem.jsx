@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 export const IngredientItem = ({
   ingredient,
   chosenIngredients,
-  updateChosenIngredients,
+  updateIngredients,
 }) => {
   const defaultState = {
     id: ingredient.id,
@@ -12,6 +12,18 @@ export const IngredientItem = ({
   };
   const [ingredientInfo, setIngredientInfo] = useState(defaultState);
   const [enabled, setEnabled] = useState(false);
+
+  useEffect(() => {
+    const copy = new Set(chosenIngredients);
+    for (const ingredientObj of copy) {
+      if (ingredient.id === ingredientObj.id) {
+        setEnabled(true);
+        // setTimeout(() => {
+        //   setIngredientInfo(ingredientObj);
+        // }, 10000);
+      }
+    }
+  }, []);
 
   useEffect(() => {
     // copy chosen set
@@ -27,13 +39,21 @@ export const IngredientItem = ({
       copy.add(ingredientInfo);
     }
     // update state set
-    updateChosenIngredients(copy);
+    updateIngredients(copy);
   }, [ingredientInfo]);
 
   useEffect(() => {
     const copy = new Set(chosenIngredients);
-    if (enabled) {
+    debugger;
+    if (enabled && !Array.from(copy).find((obj) => obj.id === ingredient.id)) {
       copy.add(ingredientInfo);
+    } else if (
+      enabled &&
+      Array.from(copy).find((obj) => obj.id === ingredient.id)
+    ) {
+      for (const ingredientObj of copy) {
+        setIngredientInfo(ingredientObj);
+      }
     } else {
       for (const ingredientObject of copy) {
         if (ingredient.id === ingredientObject.id) {
@@ -44,7 +64,7 @@ export const IngredientItem = ({
       setIngredientInfo(defaultState);
     }
     // update state set
-    updateChosenIngredients(copy);
+    updateIngredients(copy);
   }, [enabled]);
 
   return (
