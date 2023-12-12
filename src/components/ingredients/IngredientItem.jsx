@@ -1,4 +1,16 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+
+// found this code by  searching, "how to prevent a useEffect from running on initial render?"
+const useDidMountEffect = (func, deps) => {
+  const didMount = useRef(false);
+  useEffect(() => {
+    if (didMount.current) {
+      func();
+    } else {
+      didMount.current = true;
+    }
+  }, deps);
+};
 
 export const IngredientItem = ({
   ingredient,
@@ -13,7 +25,7 @@ export const IngredientItem = ({
   const [ingredientInfo, setIngredientInfo] = useState(defaultState);
   const [enabled, setEnabled] = useState(false);
 
-  // initial only useEffect
+  // initial render only useEffect
   useEffect(() => {
     const copy = new Set(chosenIngredients);
     for (const ingredientObj of copy) {
@@ -22,20 +34,12 @@ export const IngredientItem = ({
           `${ingredient.name} ingredient is in the original chosenIngredients array, set enabled to true`
         );
         setEnabled(true);
-        console.log(
-          `${
-            ingredient.name
-          } ingredient is in the original chosenIngredients array, set ingredientInfo to ${JSON.stringify(
-            ingredientObj
-          )}.`
-        );
-        setIngredientInfo(ingredientObj);
       }
     }
   }, []);
 
-  // ingredientInfo useEffect
-  useEffect(() => {
+  // ingredientInfo useEffect (will not run on initial render, ONLY when ingredient info value changes from previous render)
+  useDidMountEffect(() => {
     // copy chosen set
     const copy = new Set(chosenIngredients);
     console.log(
@@ -59,8 +63,8 @@ export const IngredientItem = ({
     updateIngredients(copy);
   }, [ingredientInfo]);
 
-  // enabled useEffect
-  useEffect(() => {
+  // enabled useEffect (will not run on initial render, ONLY when enabled value changes from previous render)
+  useDidMountEffect(() => {
     const copy = new Set(chosenIngredients);
     const foundIngredient = Array.from(copy).find(
       (obj) => obj.id === ingredient.id

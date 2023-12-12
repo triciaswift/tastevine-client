@@ -17,14 +17,7 @@ export const IngredientsList = ({
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <IngredientItem
-              ingredient={filteredIngredients[0]}
-              chosenIngredients={chosenIngredients}
-              updateIngredients={updateIngredients}
-            />
-          </tr>
-          {/* {filteredIngredients.map((ingredient) => {
+          {filteredIngredients.map((ingredient) => {
             return (
               <tr key={ingredient.id}>
                 {
@@ -36,7 +29,7 @@ export const IngredientsList = ({
                 }
               </tr>
             );
-          })} */}
+          })}
         </tbody>
       </table>
     </div>

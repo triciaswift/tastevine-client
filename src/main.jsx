@@ -6,3 +6,4 @@ import App from "./App.jsx";
 import "./index.css";
 
 ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+// needed to remove react strict mode for IngredientItem component lifecycle functionality
