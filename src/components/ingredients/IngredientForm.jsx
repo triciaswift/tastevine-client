@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { IngredientsTable } from "./IngredientsTable";
+import { IngredientsList } from "./IngredientsList";
 
 export const IngredientForm = ({
   ingredients,
@@ -49,7 +49,7 @@ export const IngredientForm = ({
                 />
               </div>
             </div>
-            <IngredientsTable
+            <IngredientsList
               chosenIngredients={chosenIngredients}
               updateChosenIngredients={updateChosenIngredients}
               filteredIngredients={filteredIngredients}

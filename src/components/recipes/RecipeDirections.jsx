@@ -2,19 +2,23 @@ export const RecipeDirections = ({ recipe }) => {
   const displayDirections = () => {
     if (recipe && recipe.instructions) {
       const directions = recipe.instructions;
-      const directionsArray = directions.split(" | ");
+      const directionsArray = directions.split("\n");
 
-      return directionsArray.map((direction, index) => (
-        <li className="list-decimal" key={index}>
-          {direction}
-        </li>
-      ));
+      return directionsArray.map((direction, index) => {
+        const instructionWithoutNumber = direction.replace(/^\d+\.\s*/, "");
+        return (
+          <li className="list-decimal" key={index}>
+            {instructionWithoutNumber.trim()}{" "}
+            {/* Trim to remove leading/trailing whitespaces */}
+          </li>
+        );
+      });
     }
   };
 
   return (
     <div className="pl-4">
-      <ol>{displayDirections()}</ol>
+      <ul>{displayDirections()}</ul>
     </div>
   );
 };

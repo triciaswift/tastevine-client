@@ -2,16 +2,24 @@ import { IngredientItem } from "./IngredientItem";
 
 export const IngredientsList = ({
   chosenIngredients,
-  filteredIngredients,
   updateChosenIngredients,
+  filteredIngredients,
 }) => {
-  const showIngredientsList = () => {
-    if (filteredIngredients && filteredIngredients.length) {
-      return (
+  return (
+    <div className="table--container max-h-96 overflow-y-auto border-1 p-4">
+      <table className="table w-full">
+        <thead>
+          <tr>
+            <th scope="col"></th>
+            <th scope="col">Ingredient</th>
+            <th scope="col">Quantity</th>
+            <th scope="col">Unit</th>
+          </tr>
+        </thead>
         <tbody>
           {filteredIngredients.map((ingredient) => {
             return (
-              <div key={ingredient.id}>
+              <tr key={ingredient.id}>
                 {
                   <IngredientItem
                     ingredient={ingredient}
@@ -19,13 +27,11 @@ export const IngredientsList = ({
                     updateChosenIngredients={updateChosenIngredients}
                   />
                 }
-              </div>
+              </tr>
             );
           })}
         </tbody>
-      );
-    }
-  };
-
-  return <>{showIngredientsList()}</>;
+      </table>
+    </div>
+  );
 };

@@ -23,7 +23,9 @@ export const IngredientItem = ({
         copy.delete(ingredientObject);
       }
     }
-    copy.add(ingredientInfo);
+    if (enabled) {
+      copy.add(ingredientInfo);
+    }
     // update state set
     updateChosenIngredients(copy);
   }, [ingredientInfo]);
@@ -34,8 +36,10 @@ export const IngredientItem = ({
       copy.add(ingredientInfo);
     } else {
       for (const ingredientObject of copy) {
-        // delete object from set copy when unchecked
-        copy.delete(ingredientObject);
+        if (ingredient.id === ingredientObject.id) {
+          copy.delete(ingredientObject);
+        }
+        // after delete the object gets added back to the set...think it's happening because every time we setIngredientInfo to default it triggers the other useEffect and adds it back to the set??? Is that true?
       }
       setIngredientInfo(defaultState);
     }
@@ -44,7 +48,7 @@ export const IngredientItem = ({
   }, [enabled]);
 
   return (
-    <tr>
+    <>
       <td className="align-middle">
         <input
           type="checkbox"
@@ -80,6 +84,6 @@ export const IngredientItem = ({
           }
         />
       </td>
-    </tr>
+    </>
   );
 };

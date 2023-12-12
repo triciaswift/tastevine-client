@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { createRecipe } from "../../managers/RecipeManager";
 import { useNavigate } from "react-router-dom";
-import { HandleFormattingDirections } from "../../utils/InstructionHandler";
 import { IngredientForm } from "../ingredients/IngredientForm";
 
 export const RecipeForm = ({
@@ -59,7 +58,6 @@ export const RecipeForm = ({
   };
 
   const displayIngredients = () => {
-    // debugger;
     if (chosenIngredients.size !== 0) {
       return (
         <>
@@ -91,11 +89,8 @@ export const RecipeForm = ({
   const handleSave = (e) => {
     e.preventDefault();
 
-    const formattedDirections = HandleFormattingDirections(recipe.instructions);
-
     const newRecipe = {
       ...recipe,
-      instructions: formattedDirections,
       ingredients: Array.from(chosenIngredients),
       categories: Array.from(chosenCategories),
     };
