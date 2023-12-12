@@ -1,28 +1,33 @@
 import { useEffect, useState } from "react";
 import { createRecipe } from "../../managers/RecipeManager";
 import { useNavigate } from "react-router-dom";
-import { HandleFormattingDirections } from "../../utils/HandleFormattingDirections";
-import { getAllIngredients } from "../../managers/IngredientManager";
 import { IngredientForm } from "../ingredients/IngredientForm";
 
-export const RecipeForm = ({ categories, fetchCategories, token }) => {
+export const RecipeForm = ({
+  categories,
+  fetchCategories,
+  token,
+  ingredients,
+  fetchIngredients,
+}) => {
   const [recipe, setRecipe] = useState({
     title: "",
     instructions: "",
     image: null,
   });
-  const [ingredients, setIngredients] = useState([]);
   const [chosenCategories, updateChosenCategories] = useState(new Set());
-  const [recipeIngredients, setRecipeIngredients] = useState([]);
+  const [chosenIngredients, updateChosenIngredients] = useState(new Set());
 
   const navigate = useNavigate();
 
   useEffect(() => {
     fetchCategories();
-    getAllIngredients(token).then((ingredientArr) => {
-      setIngredients(ingredientArr);
-    });
+    fetchIngredients();
   }, []);
+
+  useEffect(() => {
+    console.log(chosenIngredients);
+  }, [chosenIngredients]);
 
   const changeRecipeState = (e) => {
     setRecipe({ ...recipe, [e.target.name]: e.target.value });
@@ -53,48 +58,40 @@ export const RecipeForm = ({ categories, fetchCategories, token }) => {
   };
 
   const displayIngredients = () => {
-    if (recipeIngredients && recipeIngredients.length) {
-      return recipeIngredients.map((obj, index) => {
-        const ingredient = ingredients.find(
-          (ingredient) => ingredient.id === obj.ingredient
-        );
-
-        const ingredientName = ingredient ? ingredient.name : "";
-
-        return (
-          <div key={index}>
-            {ingredientName === "" ? (
-              <div className="text-[#aaa] italic mt-2">
-                {`1 tsp ingredient`}
-                <br />
-                {`1 1/2 c ingredient`}
-                <br />
-                {`1 minced ingredient`}
+    if (chosenIngredients.size !== 0) {
+      return (
+        <>
+          {Array.from(chosenIngredients).map((object) => {
+            const matchingIngredient = ingredients.find(
+              (ingredient) => ingredient.id === object.id
+            );
+            return (
+              <div className="ingredient--container" key={object.id}>
+                {object.quantity} {object.unit} {matchingIngredient.name}
               </div>
-            ) : (
-              <div>
-                {obj.quantity} {obj.unit} {ingredientName}
-              </div>
-            )}
-          </div>
-        );
-      });
+            );
+          })}
+        </>
+      );
     }
     return (
       // eslint-disable-next-line react/no-unescaped-entities
-      <div>Click the "Select Ingredients" button to add ingredients here.</div>
+      <div className="text-[#aaa] italic mt-2">
+        {`1 tsp ingredient`}
+        <br />
+        {`1 1/2 c ingredient`}
+        <br />
+        {`1 minced ingredient`}
+      </div>
     );
   };
 
   const handleSave = (e) => {
     e.preventDefault();
 
-    const formattedDirections = HandleFormattingDirections(recipe.instructions);
-
     const newRecipe = {
       ...recipe,
-      instructions: formattedDirections,
-      ingredients: recipeIngredients,
+      ingredients: Array.from(chosenIngredients),
       categories: Array.from(chosenCategories),
     };
     createRecipe(newRecipe, token).then((recipeObj) => {
@@ -152,7 +149,7 @@ export const RecipeForm = ({ categories, fetchCategories, token }) => {
                 </div>
                 <div>
                   <label htmlFor="formFile" className="form-label">
-                    Upload Recipe Image
+                    Recipe Image
                   </label>
                   <input
                     className="form-control"
@@ -166,11 +163,11 @@ export const RecipeForm = ({ categories, fetchCategories, token }) => {
                 </div>
               </fieldset>
               <fieldset className="flex w-2/3">
-                <div className="w-1/3 border-l-2 pl-2">
+                <div className="ingredients--container w-1/3 border-l-2 pl-2">
                   <label>Ingredients</label>
                   {displayIngredients()}
                 </div>
-                <div className="w-2/3">
+                <div className="instructions--container w-2/3">
                   <label htmlFor="recipeInstructions" className="form-label">
                     Instructions
                   </label>
@@ -190,9 +187,12 @@ export const RecipeForm = ({ categories, fetchCategories, token }) => {
           </div>
           <div className="w-3/4">
             <button type="submit" className="btn btn-primary mr-4">
-              Submit
+              Save
             </button>
-            <button type="submit" className="btn btn-danger">
+            <button
+              className="btn btn-danger"
+              onClick={() => navigate(`/recipes/mine`)}
+            >
               Cancel
             </button>
           </div>
@@ -200,8 +200,9 @@ export const RecipeForm = ({ categories, fetchCategories, token }) => {
       </div>
       {
         <IngredientForm
-          setRecipeIngredients={setRecipeIngredients}
           ingredients={ingredients}
+          chosenIngredients={chosenIngredients}
+          updateChosenIngredients={updateChosenIngredients}
         />
       }
     </section>
