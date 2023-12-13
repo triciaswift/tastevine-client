@@ -7,7 +7,7 @@ export const getAllIngredients = (token) => {
   }).then((response) => response.json());
 };
 
-export const createRecipe = (ingredient, token) => {
+export const createIngredient = (ingredient, token) => {
   return fetch(`http://localhost:8000/ingredients`, {
     method: "POST",
     headers: {

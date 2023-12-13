@@ -30,9 +30,9 @@ export const IngredientItem = ({
     const copy = new Set(chosenIngredients);
     for (const ingredientObj of copy) {
       if (ingredient.id === ingredientObj.id) {
-        console.log(
-          `${ingredient.name} ingredient is in the original chosenIngredients array, set enabled to true`
-        );
+        // console.log(
+        //   `${ingredient.name} ingredient is in the original chosenIngredients array, set enabled to true`
+        // );
         setEnabled(true);
       }
     }
@@ -42,21 +42,21 @@ export const IngredientItem = ({
   useDidMountEffect(() => {
     // copy chosen set
     const copy = new Set(chosenIngredients);
-    console.log(
-      `ingredientInfo useEffect triggered. changed to ${JSON.stringify(
-        ingredientInfo
-      )}.`
-    );
+    // console.log(
+    //   `ingredientInfo useEffect triggered. changed to ${JSON.stringify(
+    //     ingredientInfo
+    //   )}.`
+    // );
     // iterate copy
     for (const ingredientObject of copy) {
       // if object exists in set, nuke it
       if (ingredient.id === ingredientObject.id) {
-        console.log(`Remove the matching object from chosenIngredients`);
+        // console.log(`Remove the matching object from chosenIngredients`);
         copy.delete(ingredientObject);
       }
     }
     if (enabled) {
-      console.log(`Add the ingredientInfo object to chosenIngredients`);
+      // console.log(`Add the ingredientInfo object to chosenIngredients`);
       copy.add(ingredientInfo);
     }
     // update state set
@@ -70,29 +70,29 @@ export const IngredientItem = ({
       (obj) => obj.id === ingredient.id
     );
 
-    console.log(`enabled useEffect triggered. changed to ${enabled}`);
+    // console.log(`enabled useEffect triggered. changed to ${enabled}`);
     if (enabled && !foundIngredient) {
-      console.log(
-        `enabled is true, and the ${
-          ingredient.name
-        } ingredient is not in the chosenIngredients array. Add the ingredientInfo ${JSON.stringify(
-          ingredientInfo
-        )} to the chosenIngredientsArray`
-      );
+      // console.log(
+      //   `enabled is true, and the ${
+      //     ingredient.name
+      //   } ingredient is not in the chosenIngredients array. Add the ingredientInfo ${JSON.stringify(
+      //     ingredientInfo
+      //   )} to the chosenIngredientsArray`
+      // );
       copy.add(ingredientInfo);
     } else if (enabled && foundIngredient) {
-      console.log(
-        `enabled is true and ${
-          ingredient.name
-        } is in the chosenIngredients array. Set ingredientInfo to ${JSON.stringify(
-          foundIngredient
-        )}`
-      );
+      // console.log(
+      //   `enabled is true and ${
+      //     ingredient.name
+      //   } is in the chosenIngredients array. Set ingredientInfo to ${JSON.stringify(
+      //     foundIngredient
+      //   )}`
+      // );
       setIngredientInfo(foundIngredient);
     } else {
-      console.log(
-        `enabled is false, remove the ${ingredient.name} ingredient from chosenIngredients and set the ingredientInfo to blank obj (with ingredient.id blank quantity/unit)`
-      );
+      // console.log(
+      //   `enabled is false, remove the ${ingredient.name} ingredient from chosenIngredients and set the ingredientInfo to blank obj (with ingredient.id blank quantity/unit)`
+      // );
       for (const ingredientObject of copy) {
         if (ingredient.id === ingredientObject.id) {
           copy.delete(ingredientObject);

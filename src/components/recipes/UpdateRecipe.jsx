@@ -145,7 +145,7 @@ export const UpdateRecipe = ({
                 type="text"
                 className="form-control"
                 name="title"
-                value={recipe.title}
+                value={recipe.title ? recipe.title : ""}
                 onChange={changeRecipeState}
                 required
                 autoFocus
