@@ -129,7 +129,7 @@ export const ApplicationViews = ({ token, setToken, userId, setId }) => {
           />
         </Route>
         <Route path="ingredients">
-          <Route path="new" element={<NewIngredient />} />
+          <Route path="new" element={<NewIngredient token={token} />} />
         </Route>
       </Route>
     </Routes>

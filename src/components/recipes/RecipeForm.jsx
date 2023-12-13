@@ -26,7 +26,7 @@ export const RecipeForm = ({
   }, []);
 
   useEffect(() => {
-    console.log(chosenIngredients);
+    // console.log(chosenIngredients);
   }, [chosenIngredients]);
 
   const changeRecipeState = (e) => {
