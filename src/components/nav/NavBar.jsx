@@ -62,16 +62,28 @@ export const NavBar = ({ token, setToken }) => {
         )}
         <div>
           {token ? (
-            <div className="hover:bg-cyan-600/90 py-2.5 px-3">
-              <button
-                className=""
+            <div className="flex items-center">
+              <div className="hover:bg-cyan-600/90 py-2.5 px-3 mx-2">
+                <button
+                  className=""
+                  onClick={() => {
+                    setToken("");
+                    navigate("/login");
+                  }}
+                >
+                  Logout
+                </button>
+              </div>
+              <div
+                className="mx-2 p-2.5"
                 onClick={() => {
-                  setToken("");
-                  navigate("/login");
+                  navigate(`/account`);
                 }}
               >
-                Logout
-              </button>
+                <button>
+                  <i className="fa-solid fa-circle-user fa-2xl"></i>
+                </button>
+              </div>
             </div>
           ) : (
             <div className="flex">

@@ -23,6 +23,7 @@ export const NewIngredient = ({ token }) => {
               type="text"
               className="form-control"
               value={ingredient.name}
+              placeholder="Ingredient Name"
               onChange={(e) =>
                 setIngredient({ ...ingredient, name: e.target.value })
               }

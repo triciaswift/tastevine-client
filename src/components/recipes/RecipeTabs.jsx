@@ -1,12 +1,4 @@
-import { useState } from "react";
-
-export const RecipeTabs = ({ categories }) => {
-  const [activeTab, setActiveTab] = useState(0);
-
-  const handleTabClick = (categoryId) => {
-    setActiveTab(categoryId);
-  };
-
+export const RecipeTabs = ({ categories, activeTab, handleTabClick }) => {
   return (
     <ul className="nav nav-tabs justify-center">
       {categories.map((category) => {

@@ -77,6 +77,7 @@ export const ApplicationViews = ({ token, setToken, userId, setId }) => {
                 fetchRecipes={fetchRecipesFromAPI}
                 fetchCategories={fetchCategoriesFromAPI}
                 showAll={true}
+                token={token}
               />
             }
           />
@@ -131,6 +132,7 @@ export const ApplicationViews = ({ token, setToken, userId, setId }) => {
         <Route path="ingredients">
           <Route path="new" element={<NewIngredient token={token} />} />
         </Route>
+        <Route path="account" element={"Hello"} />
       </Route>
     </Routes>
   );
