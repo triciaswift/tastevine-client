@@ -11,6 +11,7 @@ import { RecipesList } from "../components/recipes/RecipesList";
 import { getAllCategories } from "../managers/CategoryManager";
 import { RecipeForm } from "../components/recipes/RecipeForm";
 import { getAllIngredients } from "../managers/IngredientManager";
+import { Account } from "../auth/Account";
 
 export const ApplicationViews = ({ token, setToken, userId, setId }) => {
   const [recipeState, setRecipeState] = useState([]);
@@ -132,7 +133,10 @@ export const ApplicationViews = ({ token, setToken, userId, setId }) => {
         <Route path="ingredients">
           <Route path="new" element={<NewIngredient token={token} />} />
         </Route>
-        <Route path="account" element={"Hello"} />
+        <Route
+          path="account"
+          element={<Account token={token} userId={userId} />}
+        />
       </Route>
     </Routes>
   );
