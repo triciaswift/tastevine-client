@@ -134,10 +134,10 @@ export const UpdateRecipe = ({
   };
 
   return (
-    <section className="my-16">
+    <section className="my-14">
       <div className="flex justify-center">
         <form className="w-3/4" onSubmit={handleSave}>
-          <h2 className="text-center">Update Recipe</h2>
+          <h2 className="text-center text-3xl">Update Recipe</h2>
           <div className="border-1 rounded-lg my-4 p-4">
             <div className="mb-3">
               <label className="form-label">Title</label>
@@ -175,7 +175,6 @@ export const UpdateRecipe = ({
                     onChange={(e) => {
                       createImageString(e);
                     }}
-                    required
                   />
                 </div>
               </fieldset>
@@ -205,7 +204,7 @@ export const UpdateRecipe = ({
             </button>
             <button
               className="btn btn-danger"
-              onClick={() => navigate(`/recipes/mine`)}
+              onClick={() => navigate(`/recipes/details/${recipeId}`)}
             >
               Cancel
             </button>

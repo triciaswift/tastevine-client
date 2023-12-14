@@ -13,10 +13,10 @@ export const NewIngredient = ({ token }) => {
   };
 
   return (
-    <section className="m-16">
+    <section className="my-24">
       <div className="flex justify-center">
         <form className="w-1/3" onSubmit={handleSave}>
-          <h2>New Ingredient</h2>
+          <h2 className="text-3xl mb-10">New Ingredient</h2>
           <div className="mb-3">
             <label className="form-label">Ingredient</label>
             <input
