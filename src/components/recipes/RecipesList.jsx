@@ -56,7 +56,7 @@ export const RecipesList = ({
           {filteredRecipes.map((recipe) => {
             return (
               <div
-                className="card cursor-pointer hover:bg-slate-500/50"
+                className="card cursor-pointer hover:bg-slate-500/50 w-3/4"
                 key={recipe.id}
                 onClick={() => {
                   navigate(`/recipes/details/${recipe.id}`);
@@ -64,11 +64,13 @@ export const RecipesList = ({
               >
                 <img
                   src={recipe.image}
-                  className="card-img-top"
+                  className="card-img-top img-fluid h-72"
                   alt={recipe.title}
                 />
                 <div className="card-body">
-                  <h5 className="card-title text-center">{recipe.title}</h5>
+                  <h5 className="card-title text-center mb-6 text-2xl">
+                    {recipe.title}
+                  </h5>
                   {showAll ? (
                     <p className="card-text">
                       Written By: {recipe.author.first_name}

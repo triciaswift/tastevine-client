@@ -21,7 +21,7 @@ export const loginUser = (user) => {
 };
 
 export const getUser = (userId, token) => {
-  return fetch(`http://localhost:8000/recipes/${userId}`, {
+  return fetch(`http://localhost:8000/users/${userId}`, {
     headers: {
       Authorization: `Token ${token}`,
       "Content-Type": "application/json",

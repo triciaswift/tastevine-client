@@ -123,7 +123,7 @@ export const RecipeDetails = ({ token, userId }) => {
 
   return (
     <section className="my-10 mx-72">
-      <h2 className="mb-2 text-center">{recipe.title}</h2>
+      <h2 className="mb-2 text-center text-4xl">{recipe.title}</h2>
       <div className="recipe--container">
         <ul className="nav nav-tabs cursor-pointer">
           <li className="nav-item">
@@ -150,7 +150,7 @@ export const RecipeDetails = ({ token, userId }) => {
             {recipe.image ? (
               <img
                 src={recipe.image}
-                className="img-fluid"
+                className="img-fluid h-[30rem] mx-auto"
                 alt={recipe.title}
               />
             ) : (
