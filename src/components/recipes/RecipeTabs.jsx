@@ -5,7 +5,9 @@ export const RecipeTabs = ({ categories, activeTab, handleTabClick }) => {
         return (
           <li className="nav-item cursor-pointer" key={category.id}>
             <a
-              className={`nav-link ${activeTab == category.id ? "active" : ""}`}
+              className={`nav-link ${
+                activeTab == category.id ? "active" : "text-black"
+              }`}
               onClick={() => {
                 handleTabClick(category.id);
               }}

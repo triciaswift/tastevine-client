@@ -12,17 +12,6 @@ export default {
       roboto: ["Roboto", "sans-serif"],
       quicksand: ["Quicksand", "sans-serif"],
     },
-    colors: {
-      primary: "#0d6efd",
-      secondary: "#6c757d",
-      info: "#0dcaf0",
-      warning: "#ffc107",
-      danger: "#dc3545",
-      white: "#ffffff",
-      // light: ,
-      // dark: ,
-      // outline:
-    },
     extend: {},
   },
   plugins: [],

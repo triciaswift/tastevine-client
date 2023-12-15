@@ -123,7 +123,7 @@ export const RecipeForm = ({
       <div className="flex justify-center">
         <form className="w-3/4" onSubmit={handleSave}>
           <h2 className="text-center text-3xl">New Recipe</h2>
-          <div className="border-1 rounded-lg my-4 p-4">
+          <div className="recipe--card border-1 rounded-lg my-4 p-4 bg-white">
             <div className="mb-3">
               <div>
                 <label htmlFor="recipeTitle" className="form-label">

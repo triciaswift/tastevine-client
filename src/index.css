@@ -1,64 +1,38 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-/* @import url("https://fonts.cdnfonts.com/css/spoof-trial"); */
-/* @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400&display=swap"); */
+
+dialog {
+  min-width: 15rem;
+  min-height: 5rem;
+}
 
 @layer components {
   .btn-close {
     background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23000'%3e%3cpath d='M.293.293a1 1 0 0 1 1.414 0L8 6.586 14.293.293a1 1 0 1 1 1.414 1.414L9.414 8l6.293 6.293a1 1 0 0 1-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 0 1-1.414-1.414L6.586 8 .293 1.707a1 1 0 0 1 0-1.414z'/%3e%3c/svg%3e");
   }
-
-  .btn {
-    @apply font-poppins;
+  .btn-secondary {
+    @apply bg-gray-500 text-white;
   }
 
   .btn-primary {
-    @apply bg-primary text-white;
-  }
-
-  .btn-secondary {
-    @apply bg-secondary text-white;
+    @apply bg-blue-600 text-white;
   }
 
   .btn-info {
-    @apply bg-info;
-  }
-
-  .btn-warning {
-    @apply bg-warning;
+    @apply bg-cyan-500;
   }
 
   .btn-danger {
-    @apply bg-danger text-white;
+    @apply bg-red-600 text-white;
   }
 }
 
-@layer base {
-  dialog {
-    min-width: 15rem;
-    min-height: 5rem;
-  }
-  body,
-  button,
-  input,
-  select,
-  textarea {
-    @apply font-montserrat;
-  }
-
-  h1,
-  h2,
-  h3,
-  h4 {
-    @apply font-spoof;
-  }
-  body {
-    background: url(images/top-view-cut-vegetables-wooden-spoons-with-peppers-beans-tomatoes-cinnamons.jpg)
-      no-repeat center center fixed;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
-  }
+body {
+  background: url(images/top-view-cut-vegetables-wooden-spoons-with-peppers-beans-tomatoes-cinnamons.jpg)
+    no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
 }
