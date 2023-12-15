@@ -1,57 +1,64 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-dialog {
-  min-width: 15rem;
-  min-height: 5rem;
-}
-
-.btn-close {
-  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23000'%3e%3cpath d='M.293.293a1 1 0 0 1 1.414 0L8 6.586 14.293.293a1 1 0 1 1 1.414 1.414L9.414 8l6.293 6.293a1 1 0 0 1-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 0 1-1.414-1.414L6.586 8 .293 1.707a1 1 0 0 1 0-1.414z'/%3e%3c/svg%3e");
-}
-
-.btn-secondary {
-  color: white;
-  background-color: #6c757d;
-}
-
-.btn-primary {
-  color: white;
-  background-color: #0d6efd;
-}
-
-.btn-info {
-  color: black;
-  background-color: #0dcaf0;
-}
-
-.btn-danger {
-  color: white;
-  background-color: #dc3545;
-}
-
-.btn-close {
-}
+/* @import url("https://fonts.cdnfonts.com/css/spoof-trial"); */
+/* @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400&display=swap"); */
 
 @layer components {
-  .btn-delete {
-    @apply bg-red-800/60 hover:bg-red-600/90 text-white font-medium py-1 px-2 border-slate-950/50 border-2 hover:border-white rounded-lg;
+  .btn-close {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23000'%3e%3cpath d='M.293.293a1 1 0 0 1 1.414 0L8 6.586 14.293.293a1 1 0 1 1 1.414 1.414L9.414 8l6.293 6.293a1 1 0 0 1-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 0 1-1.414-1.414L6.586 8 .293 1.707a1 1 0 0 1 0-1.414z'/%3e%3c/svg%3e");
   }
-  .btn-edit {
-    @apply bg-cyan-800/60 hover:bg-blue-600/90 text-white font-bold py-1 px-2 border-slate-950/50 border-2 hover:border-white  rounded-lg;
+
+  .btn {
+    @apply font-poppins;
   }
-  /* .btn-navbar {
-    @apply bg-cyan-800/60 hover:bg-cyan-600/90 text-white font-bold py-1 px-2 border-slate-950/50 border-2 hover:border-white hover:border-2 rounded-lg;
+
+  .btn-primary {
+    @apply bg-primary text-white;
   }
-  .bg-fade-b {
-    @apply bg-gradient-to-r from-slate-900/0 via-slate-900/80 to-slate-900/0;
+
+  .btn-secondary {
+    @apply bg-secondary text-white;
   }
-  .input-text {
-    @apply shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none;
-  } */
+
+  .btn-info {
+    @apply bg-info;
+  }
+
+  .btn-warning {
+    @apply bg-warning;
+  }
+
+  .btn-danger {
+    @apply bg-danger text-white;
+  }
 }
 
-/* html {
-      background-image: url();
-} */
+@layer base {
+  dialog {
+    min-width: 15rem;
+    min-height: 5rem;
+  }
+  body,
+  button,
+  input,
+  select,
+  textarea {
+    @apply font-montserrat;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-spoof;
+  }
+  body {
+    background: url(images/top-view-cut-vegetables-wooden-spoons-with-peppers-beans-tomatoes-cinnamons.jpg)
+      no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+  }
+}

@@ -13,6 +13,8 @@ export const UpdateRecipe = ({
   const [recipe, setRecipe] = useState({});
   const [chosenCategories, updateCategories] = useState(new Set());
   const [chosenIngredients, updateIngredients] = useState(new Set());
+  const [showIngredients, setShowIngredients] = useState(false);
+
   const { recipeId } = useParams();
   const navigate = useNavigate();
 
@@ -133,6 +135,10 @@ export const UpdateRecipe = ({
     });
   };
 
+  const handleShowIngredients = () => {
+    setShowIngredients(!showIngredients);
+  };
+
   return (
     <section className="my-14">
       <div className="flex justify-center">
@@ -197,6 +203,17 @@ export const UpdateRecipe = ({
                 </div>
               </fieldset>
             </fieldset>
+            <div className="text-center">
+              <button
+                type="button"
+                className="btn btn-info"
+                onClick={() => {
+                  handleShowIngredients();
+                }}
+              >
+                Select Ingredients
+              </button>
+            </div>
           </div>
           <div className="buttons--container w-3/4">
             <button type="submit" className="btn btn-primary mr-4">
@@ -216,6 +233,9 @@ export const UpdateRecipe = ({
           ingredients={ingredients}
           chosenIngredients={chosenIngredients}
           updateIngredients={updateIngredients}
+          showIngredients={showIngredients}
+          token={token}
+          fetchIngredients={fetchIngredients}
         />
       }
     </section>

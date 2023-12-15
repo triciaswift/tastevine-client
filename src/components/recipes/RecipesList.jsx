@@ -52,11 +52,11 @@ export const RecipesList = ({
             handleTabClick={handleTabClick}
           />
         }
-        <div className="cards--containers grid grid-cols-2 auto-cols-min gap-x-2 gap-y-12 justify-items-center py-12 px-20">
+        <div className="cards--containers grid grid-cols-4 auto-cols-min gap-x-10 gap-y-12 justify-items-center py-12 px-72">
           {filteredRecipes.map((recipe) => {
             return (
               <div
-                className="card cursor-pointer hover:bg-slate-500/50 w-3/4"
+                className="card cursor-pointer shadow-sm border-2 border-cyan-600"
                 key={recipe.id}
                 onClick={() => {
                   navigate(`/recipes/details/${recipe.id}`);
@@ -64,11 +64,11 @@ export const RecipesList = ({
               >
                 <img
                   src={recipe.image}
-                  className="card-img-top img-fluid h-72"
+                  className="card-img-top img-fluid h-auto"
                   alt={recipe.title}
                 />
                 <div className="card-body">
-                  <h5 className="card-title text-center mb-6 text-2xl">
+                  <h5 className="card-title text-center mb-6 text-xl">
                     {recipe.title}
                   </h5>
                   {showAll ? (

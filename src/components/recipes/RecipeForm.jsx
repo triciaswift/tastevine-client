@@ -17,6 +17,7 @@ export const RecipeForm = ({
   });
   const [chosenCategories, updateCategories] = useState(new Set());
   const [chosenIngredients, updateIngredients] = useState(new Set());
+  const [showIngredients, setShowIngredients] = useState(false);
 
   const navigate = useNavigate();
 
@@ -76,12 +77,14 @@ export const RecipeForm = ({
     }
     return (
       // eslint-disable-next-line react/no-unescaped-entities
-      <div className="text-[#aaa] italic mt-2">
-        {`1 tsp ingredient`}
-        <br />
-        {`1 1/2 c ingredient`}
-        <br />
-        {`1 minced ingredient`}
+      <div>
+        <div className="text-[#aaa] italic mt-2">
+          {`1 tsp ingredient`}
+          <br />
+          {`1 1/2 c ingredient`}
+          <br />
+          {`1 minced ingredient`}
+        </div>
       </div>
     );
   };
@@ -111,6 +114,10 @@ export const RecipeForm = ({
     });
   };
 
+  const handleShowIngredients = () => {
+    setShowIngredients(!showIngredients);
+  };
+
   return (
     <section className="my-16">
       <div className="flex justify-center">
@@ -118,9 +125,11 @@ export const RecipeForm = ({
           <h2 className="text-center text-3xl">New Recipe</h2>
           <div className="border-1 rounded-lg my-4 p-4">
             <div className="mb-3">
-              <label htmlFor="recipeTitle" className="form-label">
-                Title
-              </label>
+              <div>
+                <label htmlFor="recipeTitle" className="form-label">
+                  Title
+                </label>
+              </div>
               <input
                 type="text"
                 className="form-control"
@@ -177,19 +186,31 @@ export const RecipeForm = ({
                     placeholder={`1. First instruction\n2. Second instruction\netc.`}
                     value={recipe.instructions}
                     onChange={changeRecipeState}
-                    rows="20"
+                    rows="15"
                     required
                     autoFocus
                   ></textarea>
                 </div>
               </fieldset>
             </fieldset>
+            <div className="text-center">
+              <button
+                type="button"
+                className="btn btn-info"
+                onClick={() => {
+                  handleShowIngredients();
+                }}
+              >
+                Select Ingredients
+              </button>
+            </div>
           </div>
           <div className="w-3/4">
             <button type="submit" className="btn btn-primary mr-4">
               Save
             </button>
             <button
+              type="button"
               className="btn btn-danger"
               onClick={() => navigate(`/recipes/mine`)}
             >
@@ -203,6 +224,9 @@ export const RecipeForm = ({
           ingredients={ingredients}
           chosenIngredients={chosenIngredients}
           updateIngredients={updateIngredients}
+          showIngredients={showIngredients}
+          token={token}
+          fetchIngredients={fetchIngredients}
         />
       }
     </section>
