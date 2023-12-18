@@ -143,7 +143,7 @@ export const UpdateRecipe = ({
     <section className="my-14">
       <div className="flex justify-center">
         <form className="w-3/4" onSubmit={handleSave}>
-          <h2 className="text-center text-3xl">Update Recipe</h2>
+          <h1>Update Recipe</h1>
           <div className="recipe--card bg-white border-1 rounded-lg my-4 p-4">
             <div className="mb-3">
               <label className="form-label">Title</label>

@@ -26,13 +26,30 @@ dialog {
   .btn-danger {
     @apply bg-red-600 text-white;
   }
+
+  .tabs {
+    @apply font-poppins text-lg font-light rounded-t-lg border-x border-t p-2;
+    text-decoration: none;
+    display: block;
+    background: 0;
+  }
 }
 
-body {
-  background: url(images/top-view-cut-vegetables-wooden-spoons-with-peppers-beans-tomatoes-cinnamons.jpg)
-    no-repeat center center fixed;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
+@layer base {
+  body {
+    background: url(images/top-view-cut-vegetables-wooden-spoons-with-peppers-beans-tomatoes-cinnamons.jpg)
+      no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+  }
+
+  h1 {
+    @apply font-spoof font-light text-center text-5xl mb-8;
+  }
+
+  h2 {
+    @apply font-muli text-center text-3xl;
+  }
 }

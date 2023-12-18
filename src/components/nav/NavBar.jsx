@@ -26,34 +26,10 @@ export const NavBar = ({ token, setToken }) => {
                   My Recipes
                 </Link>
               </li>
-              <li className="nav-item dropdown mx-4 px-4 py-2.5 hover:bg-cyan-600/90">
-                <button
-                  className="dropdown-toggle"
-                  type="button"
-                  id="dropdownMenuButton"
-                  data-bs-toggle="dropdown"
-                  aria-expanded="false"
-                >
-                  Add
-                </button>
-                <ul className="dropdown-menu">
-                  <li>
-                    <Link
-                      to="/recipes/new"
-                      className="dropdown-item hover:bg-slate-400/30 active:bg-slate-500/50"
-                    >
-                      Recipe
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      to="/ingredients/new"
-                      className="dropdown-item hover:bg-slate-400/30 active:bg-slate-500/50"
-                    >
-                      Ingredient
-                    </Link>
-                  </li>
-                </ul>
+              <li className="nav-item px-4 py-0.5 hover:bg-cyan-600/90">
+                <Link to="/recipes/new" className="nav-link text-white">
+                  Add Recipe
+                </Link>
               </li>
             </ul>
           </div>

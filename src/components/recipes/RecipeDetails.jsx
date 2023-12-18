@@ -133,7 +133,7 @@ export const RecipeDetails = ({ token, userId }) => {
 
   return (
     <section className="my-20">
-      <h2 className="mb-6 text-center text-4xl">{recipe.title}</h2>
+      <h1 className="">{recipe.title}</h1>
       {displayCategories()}
       <div className="recipe--container w-[70rem] mx-auto shadow-lg">
         <ul className="nav nav-tabs cursor-pointer">
