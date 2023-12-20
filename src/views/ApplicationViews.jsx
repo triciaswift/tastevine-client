@@ -12,6 +12,7 @@ import { getAllCategories } from "../managers/CategoryManager";
 import { RecipeForm } from "../components/recipes/RecipeForm";
 import { getAllIngredients } from "../managers/IngredientManager";
 import { Account } from "../auth/Account";
+import { FavoriteList } from "../components/favorites/FavoriteList";
 
 export const ApplicationViews = ({ token, setToken, userId, setId }) => {
   const [recipeState, setRecipeState] = useState([]);
@@ -137,6 +138,7 @@ export const ApplicationViews = ({ token, setToken, userId, setId }) => {
           path="account"
           element={<Account token={token} userId={userId} />}
         />
+        <Route path="favorites" element={<FavoriteList token={token} />} />
       </Route>
     </Routes>
   );
