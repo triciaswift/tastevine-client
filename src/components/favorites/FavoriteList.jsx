@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import { getAllFavorites } from "../../managers/FavoriteManager";
+import { useNavigate } from "react-router-dom";
 
 export const FavoriteList = ({ token }) => {
   const [favorites, setFavorites] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     getAllFavorites(token).then(setFavorites);
@@ -13,7 +15,13 @@ export const FavoriteList = ({ token }) => {
       return (
         <>
           {favorites.map((favorite) => (
-            <div className="card basis-1/5 mx-4" key={favorite.id}>
+            <div
+              className="card basis-1/5 mx-4 cursor-pointer"
+              key={favorite.id}
+              onClick={() => {
+                navigate(`/recipes/details/${favorite.recipe.id}`);
+              }}
+            >
               <img
                 className="card-img-top img-fluid h-auto"
                 src={favorite.recipe.image}
