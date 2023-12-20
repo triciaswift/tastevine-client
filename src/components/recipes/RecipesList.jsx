@@ -41,47 +41,58 @@ export const RecipesList = ({
     setCategoryId(categoryId);
   };
 
+  const findCategory = (catId) => {
+    if (categoryId) {
+      const category = categories.find((category) => category.id === catId);
+      return category.label;
+    } else {
+      return "All Recipes";
+    }
+  };
+
   const displayRecipes = () => {
     // if (filteredRecipes && filteredRecipes.length) {
     return (
-      <section className="recipe--book--container my-3">
-        {
-          <RecipeTabs
-            categories={categories}
-            activeTab={categoryId}
-            handleTabClick={handleTabClick}
-          />
-        }
-        <div className="cards--containers grid grid-cols-2 auto-cols-min gap-x-2 gap-y-12 justify-items-center py-12 px-20">
-          {filteredRecipes.map((recipe) => {
-            return (
-              <div
-                className="card cursor-pointer hover:bg-slate-500/50 w-3/4"
-                key={recipe.id}
-                onClick={() => {
-                  navigate(`/recipes/details/${recipe.id}`);
-                }}
-              >
-                <img
-                  src={recipe.image}
-                  className="card-img-top img-fluid h-72"
-                  alt={recipe.title}
-                />
-                <div className="card-body">
-                  <h5 className="card-title text-center mb-6 text-2xl">
-                    {recipe.title}
-                  </h5>
-                  {showAll ? (
-                    <p className="card-text">
-                      Written By: {recipe.author.first_name}
-                    </p>
-                  ) : (
-                    ""
-                  )}
+      <section className="recipe--book--container flex flex-col my-3 items-center">
+        <div className="w-3/4">
+          {
+            <RecipeTabs
+              categories={categories}
+              activeTab={categoryId}
+              handleTabClick={handleTabClick}
+            />
+          }
+          <div className="cards--containers grid grid-cols-4 auto-cols-min gap-y-4 gap-x-4 justify-items-center bg-cyan-600 py-4 px-4 rounded-md">
+            {filteredRecipes.map((recipe) => {
+              return (
+                <div
+                  className="card cursor-pointer shadow-sm border-2 border-cyan-600"
+                  key={recipe.id}
+                  onClick={() => {
+                    navigate(`/recipes/details/${recipe.id}`);
+                  }}
+                >
+                  <img
+                    src={recipe.image}
+                    className="card-img-top img-fluid h-auto"
+                    alt={recipe.title}
+                  />
+                  <div className="card-body">
+                    <h5 className="card-title text-center mb-6 text-xl">
+                      {recipe.title}
+                    </h5>
+                    {showAll ? (
+                      <p className="card-text">
+                        Written By: {recipe.author.first_name}
+                      </p>
+                    ) : (
+                      ""
+                    )}
+                  </div>
                 </div>
-              </div>
-            );
-          })}
+              );
+            })}
+          </div>
         </div>
       </section>
     );
@@ -95,14 +106,14 @@ export const RecipesList = ({
           <input
             className="form-control me-2"
             type="search"
-            placeholder="Search"
+            placeholder={`Search ${findCategory(categoryId)}`}
             onChange={(event) => {
               setSearch(event.target.value);
             }}
           />
         </form>
       </div>
-      {showAll !== true ? <h2 className="text-center">My Recipes</h2> : ""}
+      <h2>Select a category</h2>
       {displayRecipes()}
     </div>
   );

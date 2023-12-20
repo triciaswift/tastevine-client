@@ -23,18 +23,18 @@ export const RecipeDetails = ({ token, userId }) => {
   const displayRecipe = () => {
     if (recipe && recipe.author) {
       return (
-        <div className="recipe--content border-1 border-t-transparent px-4">
-          <div className="grid grid-cols-3 gap-4">
+        <div className="recipe--content rounded-b-md border-t-transparent px-10 py-2 bg-white">
+          <div className="grid grid-cols-4 gap-4 mb-10">
             <div className="ingredient--container my-4">
-              <h3 className="pb-3">Ingredients</h3>
+              <h3 className="pb-3 text-lg">Ingredients</h3>
               {<RecipeIngredients recipe={recipe} />}
             </div>
-            <div className="directions--container col-span-2 my-4">
-              <h3 className="pb-3">Directions</h3>
+            <div className="directions--container col-span-3 my-4">
+              <h3 className="pb-3 text-lg">Directions</h3>
               {<RecipeDirections recipe={recipe} />}
             </div>
           </div>
-          <div className="details--container flex justify-between p-2">
+          <div className="details--container flex justify-between py-2">
             <div>{recipe.author.first_name}</div>
             <div>{recipe.publication_date}</div>
           </div>
@@ -42,21 +42,11 @@ export const RecipeDetails = ({ token, userId }) => {
       );
     }
   };
-
-  const displayCategories = () => {
-    if (recipe.categories && recipe.categories.length) {
+  const displayButtons = () => {
+    if (recipe && recipe.author)
       return (
-        <div className="flex flex-col items-center my-3">
-          <div className="flex">
-            {recipe.categories.map((category) => {
-              return (
-                <div className="mx-2 mb-8" key={category.id}>
-                  {category.label}
-                </div>
-              );
-            })}
-          </div>
-          <div>
+        <>
+          <div className="flex justify-center mt-4">
             {userId === recipe.author.id ? (
               <div className="footer--container flex mb-2">
                 <div className="mr-1">
@@ -116,19 +106,42 @@ export const RecipeDetails = ({ token, userId }) => {
               </div>
             </div>
           </div>
+        </>
+      );
+  };
+
+  const displayCategories = () => {
+    if (recipe.categories && recipe.categories.length) {
+      return (
+        <div className="flex justify-center">
+          <div className="flex">
+            {recipe.categories.map((category) => {
+              return (
+                <div
+                  className="mx-2 mb-4 bg-cyan-600 text-white rounded-full border-2 border-cyan-600 px-3"
+                  key={category.id}
+                >
+                  {category.label}
+                </div>
+              );
+            })}
+          </div>
         </div>
       );
     }
   };
 
   return (
-    <section className="my-10 mx-72">
-      <h2 className="mb-2 text-center text-4xl">{recipe.title}</h2>
-      <div className="recipe--container">
+    <section className="my-20">
+      <h1 className="">{recipe.title}</h1>
+      {displayCategories()}
+      <div className="recipe--container w-[70rem] mx-auto shadow-lg">
         <ul className="nav nav-tabs cursor-pointer">
           <li className="nav-item">
             <a
-              className={`nav-link ${activeTab === 0 ? "active" : ""}`}
+              className={`nav-link ${
+                activeTab === 0 ? "active text-black" : "text-white"
+              } text-black bg-cyan-600`}
               onClick={() => handleTabClick(0)}
             >
               Recipe
@@ -136,7 +149,9 @@ export const RecipeDetails = ({ token, userId }) => {
           </li>
           <li className="nav-item">
             <a
-              className={`nav-link ${activeTab === 1 ? "active" : ""}`}
+              className={`nav-link ${
+                activeTab === 1 ? "active text-black" : "text-white"
+              } bg-cyan-600`}
               onClick={() => handleTabClick(1)}
             >
               Image
@@ -146,11 +161,11 @@ export const RecipeDetails = ({ token, userId }) => {
         {activeTab === 0 ? (
           displayRecipe()
         ) : (
-          <div className="border-1 border-t-transparent">
+          <div className=" border-t-transparent bg-white w-full py-6 rounded-b-md">
             {recipe.image ? (
               <img
                 src={recipe.image}
-                className="img-fluid h-[30rem] mx-auto"
+                className="border-4 border-cyan-600 rounded-lg w-3/5 h-auto mx-auto shadow"
                 alt={recipe.title}
               />
             ) : (
@@ -159,7 +174,7 @@ export const RecipeDetails = ({ token, userId }) => {
           </div>
         )}
       </div>
-      {displayCategories()}
+      {displayButtons()}
     </section>
   );
 };

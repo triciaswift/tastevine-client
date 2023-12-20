@@ -1,11 +1,15 @@
 export const RecipeTabs = ({ categories, activeTab, handleTabClick }) => {
   return (
-    <ul className="nav nav-tabs justify-center">
+    <ul className="nav justify-center">
       {categories.map((category) => {
         return (
           <li className="nav-item cursor-pointer" key={category.id}>
             <a
-              className={`nav-link ${activeTab == category.id ? "active" : ""}`}
+              className={`tabs ${
+                activeTab == category.id
+                  ? "active bg-cyan-600 text-white border-x-cyan-600 border-t-cyan-600"
+                  : "bg-cyan-100 border-x-cyan-600 border-t-cyan-600 hover:border-0 hover:bg-cyan-600 hover:border-b hover:border-b-cyan-600 hover:text-white"
+              }`}
               onClick={() => {
                 handleTabClick(category.id);
               }}
