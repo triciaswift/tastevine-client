@@ -141,9 +141,9 @@ export const UpdateRecipe = ({
 
   return (
     <section className="my-14">
-      <div className="flex justify-center">
-        <form className="w-3/4" onSubmit={handleSave}>
-          <h1>Update Recipe</h1>
+      <div className="flex flex-col items-center">
+        <h1>Update Recipe</h1>
+        <form className="w-3/4 bg-white rounded-lg p-8" onSubmit={handleSave}>
           <div className="recipe--card bg-white border-1 rounded-lg my-4 p-4">
             <div className="mb-3">
               <label className="form-label">Title</label>
@@ -157,7 +157,7 @@ export const UpdateRecipe = ({
                 autoFocus
               />
             </div>
-            <fieldset className="flex mb-4">
+            <fieldset className="flex">
               <fieldset className="w-1/3 mb-3 pr-3">
                 <div className="categories--container mb-3">
                   <label className="form-label">Categories</label>

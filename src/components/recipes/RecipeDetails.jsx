@@ -3,6 +3,7 @@ import { deleteRecipe, getRecipeById } from "../../managers/RecipeManager";
 import { useNavigate, useParams } from "react-router-dom";
 import { RecipeIngredients } from "./RecipeIngredients";
 import { RecipeDirections } from "./RecipeDirections";
+import { FavoriteButton } from "../favorites/FavoriteButton";
 
 export const RecipeDetails = ({ token, userId }) => {
   const [recipe, setRecipe] = useState({});
@@ -24,19 +25,26 @@ export const RecipeDetails = ({ token, userId }) => {
     if (recipe && recipe.author) {
       return (
         <div className="recipe--content rounded-b-md border-t-transparent px-10 py-2 bg-white">
+          <div className="flex justify-end">
+            <div>{recipe.publication_date}</div>
+          </div>
           <div className="grid grid-cols-4 gap-4 mb-10">
-            <div className="ingredient--container my-4">
+            <div className="ingredient--container">
               <h3 className="pb-3 text-lg">Ingredients</h3>
               {<RecipeIngredients recipe={recipe} />}
             </div>
-            <div className="directions--container col-span-3 my-4">
+            <div className="directions--container col-span-3">
               <h3 className="pb-3 text-lg">Directions</h3>
               {<RecipeDirections recipe={recipe} />}
             </div>
           </div>
-          <div className="details--container flex justify-between py-2">
+          <div className="details--container flex justify-between py-2 items-center">
             <div>{recipe.author.first_name}</div>
-            <div>{recipe.publication_date}</div>
+            {userId === recipe.author.id ? (
+              displayButtons()
+            ) : (
+              <FavoriteButton recipeId={recipeId} token={token} />
+            )}
           </div>
         </div>
       );
@@ -46,27 +54,21 @@ export const RecipeDetails = ({ token, userId }) => {
     if (recipe && recipe.author)
       return (
         <>
-          <div className="flex justify-center mt-4">
-            {userId === recipe.author.id ? (
-              <div className="footer--container flex mb-2">
-                <div className="mr-1">
-                  <i
-                    className="icon fa-solid fa-gear fa-xl hover:text-yellow-500 cursor-pointer"
-                    onClick={() => navigate(`/recipes/update/${recipeId}`)}
-                  ></i>
-                </div>
-                <div className="ml-1">
-                  <i
-                    className="icon fa-solid fa-trash fa-xl hover:text-red-500 cursor-pointer"
-                    data-bs-toggle="modal"
-                    data-bs-target="#deleteModal"
-                    type="button"
-                  ></i>
-                </div>
-              </div>
-            ) : (
-              ""
-            )}
+          <div className="footer--container flex mb-2">
+            <div className="mr-1">
+              <i
+                className="icon fa-solid fa-pen-to-square fa-lg cursor-pointer"
+                onClick={() => navigate(`/recipes/update/${recipeId}`)}
+              ></i>
+            </div>
+            <div className="ml-1">
+              <i
+                className="icon fa-solid fa-trash fa-lg hcursor-pointer"
+                data-bs-toggle="modal"
+                data-bs-target="#deleteModal"
+                type="button"
+              ></i>
+            </div>
           </div>
           <div className="modal fade" id="deleteModal" tabIndex="-1">
             <div className="modal-dialog">
@@ -174,7 +176,7 @@ export const RecipeDetails = ({ token, userId }) => {
           </div>
         )}
       </div>
-      {displayButtons()}
+      {/* {displayButtons()} */}
     </section>
   );
 };
