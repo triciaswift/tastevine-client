@@ -16,7 +16,7 @@ export const Account = ({ token, userId }) => {
   }, [token, userId]);
 
   return (
-    <section className="flex justify-center my-20">
+    <section className="flex justify-center my-14">
       <div className="account--container w-1/3">
         <h1>Account Info</h1>
         <div className="border-1 border-cyan-600 rounded-lg bg-cyan-600/90 shadow-lg p-3 mb-5">

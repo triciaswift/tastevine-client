@@ -3,8 +3,6 @@ import { Register } from "../auth/Register";
 import { Login } from "../auth/Login";
 import { Authorized } from "./Authorized";
 import { UpdateRecipe } from "../components/recipes/UpdateRecipe";
-import { NewIngredient } from "../components/ingredients/NewIngredient";
-import { RecipeDetails } from "../components/recipes/RecipeDetails";
 import { getAllRecipes } from "../managers/RecipeManager";
 import { useState } from "react";
 import { RecipesList } from "../components/recipes/RecipesList";
@@ -13,6 +11,7 @@ import { RecipeForm } from "../components/recipes/RecipeForm";
 import { getAllIngredients } from "../managers/IngredientManager";
 import { Account } from "../auth/Account";
 import { FavoriteList } from "../components/favorites/FavoriteList";
+import { RecipeDetails } from "../components/recipes/card/RecipeDetails";
 
 export const ApplicationViews = ({ token, setToken, userId, setId }) => {
   const [recipeState, setRecipeState] = useState([]);
@@ -130,9 +129,6 @@ export const ApplicationViews = ({ token, setToken, userId, setId }) => {
               />
             }
           />
-        </Route>
-        <Route path="ingredients">
-          <Route path="new" element={<NewIngredient token={token} />} />
         </Route>
         <Route
           path="account"

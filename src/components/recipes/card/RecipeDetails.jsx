@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
-import { deleteRecipe, getRecipeById } from "../../managers/RecipeManager";
+import { deleteRecipe, getRecipeById } from "../../../managers/RecipeManager";
 import { useNavigate, useParams } from "react-router-dom";
 import { RecipeIngredients } from "./RecipeIngredients";
 import { RecipeDirections } from "./RecipeDirections";
-import { FavoriteButton } from "../favorites/FavoriteButton";
+import { FavoriteButton } from "../../favorites/FavoriteButton";
+import { TabContent } from "./TabContent";
 
 export const RecipeDetails = ({ token, userId }) => {
   const [recipe, setRecipe] = useState({});
@@ -24,27 +25,29 @@ export const RecipeDetails = ({ token, userId }) => {
   const displayRecipe = () => {
     if (recipe && recipe.author) {
       return (
-        <div className="recipe--content rounded-b-md border-t-transparent px-10 py-2 bg-white">
-          <div className="flex justify-end">
-            <div>{recipe.publication_date}</div>
-          </div>
-          <div className="grid grid-cols-4 gap-4 mb-10">
-            <div className="ingredient--container">
-              <h3 className="pb-3 text-lg">Ingredients</h3>
-              {<RecipeIngredients recipe={recipe} />}
+        <div className="recipe--content rounded-b-md border-t-transparent px-10 py-2 bg-cyan-600">
+          <div className="bg-white py-2 px-4 rounded-md my-4 shadow-lg">
+            <div className="flex justify-end">
+              <div>{recipe.publication_date}</div>
             </div>
-            <div className="directions--container col-span-3">
-              <h3 className="pb-3 text-lg">Directions</h3>
-              {<RecipeDirections recipe={recipe} />}
+            <div className="grid grid-cols-4 gap-4 mb-10">
+              <div className="ingredient--container">
+                <h3 className="pb-3 text-lg">Ingredients</h3>
+                {<RecipeIngredients recipe={recipe} />}
+              </div>
+              <div className="directions--container col-span-3">
+                <h3 className="pb-3 text-lg">Directions</h3>
+                {<RecipeDirections recipe={recipe} />}
+              </div>
             </div>
-          </div>
-          <div className="details--container flex justify-between py-2 items-center">
-            <div>{recipe.author.first_name}</div>
-            {userId === recipe.author.id ? (
-              displayButtons()
-            ) : (
-              <FavoriteButton recipeId={recipeId} token={token} />
-            )}
+            <div className="details--container flex justify-between py-2 items-center">
+              <div>{recipe.author.full_name}</div>
+              {userId === recipe.author.id ? (
+                displayButtons()
+              ) : (
+                <FavoriteButton recipeId={recipeId} token={token} />
+              )}
+            </div>
           </div>
         </div>
       );
@@ -63,7 +66,7 @@ export const RecipeDetails = ({ token, userId }) => {
             </div>
             <div className="ml-1">
               <i
-                className="icon fa-solid fa-trash fa-lg hcursor-pointer"
+                className="icon fa-solid fa-trash fa-lg cursor-pointer"
                 data-bs-toggle="modal"
                 data-bs-target="#deleteModal"
                 type="button"
@@ -134,49 +137,17 @@ export const RecipeDetails = ({ token, userId }) => {
   };
 
   return (
-    <section className="my-20">
-      <h1 className="">{recipe.title}</h1>
+    <section className="my-14">
+      <h1>{recipe.title}</h1>
       {displayCategories()}
-      <div className="recipe--container w-[70rem] mx-auto shadow-lg">
-        <ul className="nav nav-tabs cursor-pointer">
-          <li className="nav-item">
-            <a
-              className={`nav-link ${
-                activeTab === 0 ? "active text-black" : "text-white"
-              } text-black bg-cyan-600`}
-              onClick={() => handleTabClick(0)}
-            >
-              Recipe
-            </a>
-          </li>
-          <li className="nav-item">
-            <a
-              className={`nav-link ${
-                activeTab === 1 ? "active text-black" : "text-white"
-              } bg-cyan-600`}
-              onClick={() => handleTabClick(1)}
-            >
-              Image
-            </a>
-          </li>
-        </ul>
-        {activeTab === 0 ? (
-          displayRecipe()
-        ) : (
-          <div className=" border-t-transparent bg-white w-full py-6 rounded-b-md">
-            {recipe.image ? (
-              <img
-                src={recipe.image}
-                className="border-4 border-cyan-600 rounded-lg w-3/5 h-auto mx-auto shadow"
-                alt={recipe.title}
-              />
-            ) : (
-              ""
-            )}
-          </div>
-        )}
-      </div>
-      {/* {displayButtons()} */}
+      <TabContent
+        displayRecipe={displayRecipe}
+        activeTab={activeTab}
+        handleTabClick={handleTabClick}
+        recipe={recipe}
+        token={token}
+        userId={userId}
+      />
     </section>
   );
 };

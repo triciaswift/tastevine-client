@@ -16,22 +16,21 @@ export const FavoriteList = ({ token }) => {
         <>
           {favorites.map((favorite) => (
             <div
-              className="card basis-1/5 mx-4 cursor-pointer"
+              className="card basis-1/5 mx-4 cursor-pointer border-double border-8 border-cyan-600 shadow-md"
               key={favorite.id}
               onClick={() => {
                 navigate(`/recipes/details/${favorite.recipe.id}`);
               }}
             >
               <img
-                className="card-img-top img-fluid h-auto"
+                className="card-img-top img-fluid h-auto rounded-none"
                 src={favorite.recipe.image}
                 alt={favorite.recipe.title}
               />
-              <div className="card-body">
-                <h5 className="card-title text-center">
+              <div className="card-body flex flex-1 items-center justify-center">
+                <h5 className="card-title text-center text-xl m-0">
                   {favorite.recipe.title}
                 </h5>
-                <p>{favorite.recipe.author.first_name}</p>
               </div>
             </div>
           ))}
@@ -41,9 +40,9 @@ export const FavoriteList = ({ token }) => {
   };
 
   return (
-    <section className="my-24 mx-16">
+    <section className="my-14 mx-16">
       <h1 className="mb-10">Favorites</h1>
-      <div className="cards--container flex justify-center">
+      <div className="cards--container flex flex-wrap justify-center gap-y-4">
         {displayFavorite()}
       </div>
     </section>

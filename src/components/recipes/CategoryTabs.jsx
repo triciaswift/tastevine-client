@@ -1,4 +1,4 @@
-export const RecipeTabs = ({ categories, activeTab, handleTabClick }) => {
+export const CategoryTabs = ({ categories, activeTab, handleTabClick }) => {
   return (
     <ul className="nav justify-center">
       {categories.map((category) => {
