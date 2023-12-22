@@ -5,16 +5,26 @@ import { RecipeIngredients } from "./RecipeIngredients";
 import { RecipeDirections } from "./RecipeDirections";
 import { FavoriteButton } from "../../favorites/FavoriteButton";
 import { TabContent } from "./TabContent";
+import { getNotesByRecipeId } from "../../../managers/NoteManager";
 
 export const RecipeDetails = ({ token, userId }) => {
   const [recipe, setRecipe] = useState({});
   const [activeTab, setActiveTab] = useState(0);
+  const [notes, setNotes] = useState([]);
   const { recipeId } = useParams();
   const navigate = useNavigate();
 
   const handleTabClick = (index) => {
     setActiveTab(index);
   };
+
+  const fetchNotes = () => {
+    getNotesByRecipeId(token, recipeId).then(setNotes);
+  };
+
+  useEffect(() => {
+    fetchNotes();
+  }, []);
 
   useEffect(() => {
     getRecipeById(recipeId, token).then((recipeObj) => {
@@ -25,7 +35,7 @@ export const RecipeDetails = ({ token, userId }) => {
   const displayRecipe = () => {
     if (recipe && recipe.author) {
       return (
-        <div className="recipe--content rounded-b-md border-t-transparent px-10 py-2 bg-cyan-600">
+        <div className="recipe--content flex items-center rounded-b-md border-t-transparent px-10 py-2 bg-cyan-600 h-full w-full overflow-auto">
           <div className="bg-white py-2 px-4 rounded-md my-4 shadow-lg">
             <div className="flex justify-end">
               <div>{recipe.publication_date}</div>
@@ -90,13 +100,6 @@ export const RecipeDetails = ({ token, userId }) => {
                 <div className="modal-footer">
                   <button
                     type="button"
-                    className="btn btn-secondary"
-                    data-bs-dismiss="modal"
-                  >
-                    Cancel
-                  </button>
-                  <button
-                    type="button"
                     className="btn btn-primary"
                     data-bs-dismiss="modal"
                     onClick={() => {
@@ -106,6 +109,13 @@ export const RecipeDetails = ({ token, userId }) => {
                     }}
                   >
                     Delete
+                  </button>
+                  <button
+                    type="button"
+                    className="btn btn-secondary"
+                    data-bs-dismiss="modal"
+                  >
+                    Cancel
                   </button>
                 </div>
               </div>
@@ -147,6 +157,8 @@ export const RecipeDetails = ({ token, userId }) => {
         recipe={recipe}
         token={token}
         userId={userId}
+        notes={notes}
+        fetchNotes={fetchNotes}
       />
     </section>
   );

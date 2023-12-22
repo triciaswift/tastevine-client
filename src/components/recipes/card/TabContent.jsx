@@ -8,6 +8,8 @@ export const TabContent = ({
   recipe,
   token,
   userId,
+  notes,
+  fetchNotes,
 }) => {
   let tabContent;
 
@@ -17,7 +19,7 @@ export const TabContent = ({
       break;
     case 1:
       tabContent = (
-        <div className="w-full py-6 rounded-b-md bg-cyan-600">
+        <div className="flex items-center w-full h-full py-6 rounded-b-md bg-cyan-600 overflow-auto">
           {recipe.image ? (
             <img
               src={recipe.image}
@@ -32,7 +34,13 @@ export const TabContent = ({
       break;
     case 2:
       tabContent = (
-        <NotesList token={token} recipeId={recipe.id} userId={userId} />
+        <NotesList
+          token={token}
+          recipeId={recipe.id}
+          userId={userId}
+          notes={notes}
+          fetchNotes={fetchNotes}
+        />
       );
       break;
     default:
@@ -40,7 +48,7 @@ export const TabContent = ({
   }
 
   return (
-    <div className="recipe--container w-[70rem] mx-auto">
+    <div className="recipe--container w-[70rem] h-[35rem] mx-auto">
       <RecipeTabs activeTab={activeTab} handleTabClick={handleTabClick} />
       {tabContent}
     </div>

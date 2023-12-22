@@ -1,20 +1,28 @@
-import { useEffect, useState } from "react";
-import { getNotesByRecipeId } from "../../managers/NoteManager";
+import { useState } from "react";
+import { deleteNote } from "../../managers/NoteManager";
+import { NoteForm } from "./NoteForm";
 
-export const NotesList = ({ token, recipeId, userId }) => {
-  const [notes, setNotes] = useState([]);
+export const NotesList = ({ token, recipeId, userId, notes, fetchNotes }) => {
+  const [isEditing, setIsEditing] = useState(false);
+  const [editingNoteId, setEditingNoteId] = useState(null);
+  const [showAddButton, setShowAddButton] = useState(true);
+  const newNote = { content: "" };
 
-  useEffect(() => {
-    getNotesByRecipeId(token, recipeId).then(setNotes);
-  }, [token, recipeId]);
+  const handleEdit = (noteId) => {
+    setIsEditing(true);
+    setEditingNoteId(noteId);
+  };
 
-  const displayButtons = () => {
+  const displayButtons = (note) => {
     if (notes && notes.length)
       return (
         <>
           <div className="footer--container flex justify-end mt-2">
             <div className="mr-1">
-              <i className="icon fa-solid fa-pen-to-square fa-lg cursor-pointer"></i>
+              <i
+                className="icon fa-solid fa-pen-to-square fa-lg cursor-pointer"
+                onClick={() => handleEdit(note.id)}
+              ></i>
             </div>
             <div className="ml-1">
               <i
@@ -42,17 +50,24 @@ export const NotesList = ({ token, recipeId, userId }) => {
                 <div className="modal-footer">
                   <button
                     type="button"
+                    className="btn btn-primary"
+                    data-bs-dismiss="modal"
+                    onClick={() => {
+                      deleteNote(token, note.id)
+                        .then(() => {
+                          fetchNotes();
+                        })
+                        .then(setEditingNoteId(null));
+                    }}
+                  >
+                    Delete
+                  </button>
+                  <button
+                    type="button"
                     className="btn btn-secondary"
                     data-bs-dismiss="modal"
                   >
                     Cancel
-                  </button>
-                  <button
-                    type="button"
-                    className="btn btn-primary"
-                    data-bs-dismiss="modal"
-                  >
-                    Delete
                   </button>
                 </div>
               </div>
@@ -63,26 +78,66 @@ export const NotesList = ({ token, recipeId, userId }) => {
   };
 
   return (
-    <div className="notes--container flex flex-col rounded-b-md border-t-transparent px-10 py-2 bg-cyan-600">
-      <div className="text-center">
-        <button className="bg-white">Add Note</button>
-      </div>
-      <div className="flex justify-around flex-wrap">
-        {notes.map((note) => (
-          <div
-            className="note--container card basis-1/3 bg-white px-2 pt-2 rounded-md my-4 shadow-lg"
-            key={note.id}
-          >
-            <div className="card-body">
-              <div className="flex justify-between card-subtitle mb-2">
-                <div>{note.author.full_name}</div>
-                <div>{note.posted_on}</div>
+    <div className="notes--container flex flex-col rounded-b-md border-t-transparent px-8 py-2 bg-cyan-600 w-full h-full overflow-auto">
+      <div className="my-2">
+        {showAddButton ? (
+          <div className="text-center">
+            <button
+              className="bg-white px-4 py-1 rounded-full"
+              onClick={() => setShowAddButton(false)}
+            >
+              Add Note
+            </button>
+          </div>
+        ) : (
+          <div className="flex justify-center">
+            <div className="card basis-80">
+              <div className="card-body">
+                <NoteForm
+                  note={newNote}
+                  isEditing={isEditing}
+                  token={token}
+                  recipeId={recipeId}
+                  fetchNotes={fetchNotes}
+                  setShowAddButton={setShowAddButton}
+                />
               </div>
-              <p className="card-text">{note.content}</p>
-              {userId === note.author.id ? displayButtons() : ""}
             </div>
           </div>
-        ))}
+        )}
+      </div>
+      <div className="bg-cyan-100 rounded-lg border-double border-8 border-cyan-600 h-full mb-4">
+        <div className="flex justify-around flex-wrap ">
+          {notes.map((note) => (
+            <div
+              className="note--container card basis-80 bg-white px-2 pt-2 rounded-md my-3 shadow-lg border-2 border-cyan-600"
+              key={note.id}
+            >
+              <div className="card-body">
+                {editingNoteId === note.id ? (
+                  <NoteForm
+                    note={note}
+                    isEditing={isEditing}
+                    setIsEditing={setIsEditing}
+                    setEditingNoteId={setEditingNoteId}
+                    token={token}
+                    recipeId={recipeId}
+                    fetchNotes={fetchNotes}
+                  />
+                ) : (
+                  <>
+                    <div className="flex justify-between card-subtitle mb-2">
+                      <div>{note.author.full_name}</div>
+                      <div>{note.posted_on}</div>
+                    </div>
+                    <p className="card-text">{note.content}</p>
+                    {userId === note.author.id && displayButtons(note)}
+                  </>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
