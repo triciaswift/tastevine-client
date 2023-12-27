@@ -119,7 +119,7 @@ export const RecipeForm = ({
   };
 
   return (
-    <section className="my-16">
+    <section className="my-14">
       <div className="flex justify-center">
         <form className="w-3/4" onSubmit={handleSave}>
           <h1>New Recipe</h1>

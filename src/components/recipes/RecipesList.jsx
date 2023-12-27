@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
-import { RecipeTabs } from "./RecipeTabs";
 import { useEffect, useState } from "react";
+import { CategoryTabs } from "./CategoryTabs";
 
 export const RecipesList = ({
   recipes,
@@ -56,17 +56,17 @@ export const RecipesList = ({
       <section className="recipe--book--container flex flex-col my-3 items-center">
         <div className="w-3/4">
           {
-            <RecipeTabs
+            <CategoryTabs
               categories={categories}
               activeTab={categoryId}
               handleTabClick={handleTabClick}
             />
           }
-          <div className="cards--containers grid grid-cols-4 auto-cols-min gap-y-4 gap-x-4 justify-items-center bg-cyan-600 py-4 px-4 rounded-md">
+          <div className="cards--containers flex flex-wrap gap-y-4 justify-center bg-cyan-600 py-4 px-8 rounded-md">
             {filteredRecipes.map((recipe) => {
               return (
                 <div
-                  className="card cursor-pointer shadow-sm border-2 border-cyan-600"
+                  className="card basis-1/4 cursor-pointer shadow-sm border-2 border-cyan-600 p-2"
                   key={recipe.id}
                   onClick={() => {
                     navigate(`/recipes/details/${recipe.id}`);
@@ -74,20 +74,13 @@ export const RecipesList = ({
                 >
                   <img
                     src={recipe.image}
-                    className="card-img-top img-fluid h-auto"
+                    className="card-img-top img-fluid h-auto rounded-xl border-double border-8 border-cyan-600"
                     alt={recipe.title}
                   />
-                  <div className="card-body">
-                    <h5 className="card-title text-center mb-6 text-xl">
+                  <div className="card-body flex items-center justify-center">
+                    <h5 className="card-title text-center text-xl m-0">
                       {recipe.title}
                     </h5>
-                    {showAll ? (
-                      <p className="card-text">
-                        Written By: {recipe.author.first_name}
-                      </p>
-                    ) : (
-                      ""
-                    )}
                   </div>
                 </div>
               );
@@ -104,7 +97,7 @@ export const RecipesList = ({
       <div className="flex justify-end mr-6 mt-3">
         <form className="d-flex" role="search">
           <input
-            className="form-control me-2"
+            className="form-control me-2 border-4 rounded-lg border-cyan-600"
             type="search"
             placeholder={`Search ${findCategory(categoryId)}`}
             onChange={(event) => {
