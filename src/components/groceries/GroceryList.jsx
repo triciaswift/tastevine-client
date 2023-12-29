@@ -164,15 +164,15 @@ export const GroceryList = ({ token }) => {
           <div className="items--container">
             {displayUncheckedItems()}
             {displayCheckedItems()}
+            <div className="text-center">
+              <button className="btn btn-primary" onClick={handleDeleteList}>
+                Delete All
+              </button>
+            </div>
           </div>
         ) : (
           <div>No saved items!</div>
         )}
-      </div>
-      <div className="text-center">
-        <button className="btn btn-primary" onClick={handleDeleteList}>
-          Delete All
-        </button>
       </div>
     </section>
   );
