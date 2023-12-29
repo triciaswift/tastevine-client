@@ -36,6 +36,11 @@ export const NavBar = ({ token, setToken }) => {
                   Add Recipe
                 </Link>
               </li>
+              <li className="nav-item px-4 py-0.5 hover:bg-cyan-600/90">
+                <Link to="/groceries" className="nav-link text-white">
+                  Grocery List
+                </Link>
+              </li>
             </ul>
           </div>
         ) : (

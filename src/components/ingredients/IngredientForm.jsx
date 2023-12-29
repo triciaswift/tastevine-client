@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { IngredientsList } from "./IngredientsList";
 import { createIngredient } from "../../managers/IngredientManager";
+import { FormInput } from "../../utils/FormInput";
+import { getGroceryCategories } from "../../managers/GroceryListManager";
 
 export const IngredientForm = ({
   ingredients,
@@ -12,11 +14,19 @@ export const IngredientForm = ({
 }) => {
   const [filteredIngredients, setFiltered] = useState([]);
   const [searchIngredient, setSearch] = useState("");
-  const [ingredientState, setIngredient] = useState({ name: "" });
+  const [ingredientState, setIngredient] = useState({
+    name: "",
+    grocery_category: 0,
+  });
+  const [groceryCategories, setCategories] = useState([]);
 
   useEffect(() => {
     fetchIngredients();
   }, [ingredientState]);
+
+  useEffect(() => {
+    getGroceryCategories(token).then(setCategories);
+  }, []);
 
   useEffect(() => {
     const foundIngredients = ingredients.filter((ingredient) =>
@@ -25,10 +35,14 @@ export const IngredientForm = ({
     setFiltered(foundIngredients);
   }, [ingredients, searchIngredient]);
 
+  const handleInputChange = (e) => {
+    setIngredient({ ...ingredientState, [e.target.name]: e.target.value });
+  };
+
   const handleSave = (e) => {
     e.preventDefault();
     createIngredient(ingredientState, token).then(() => {
-      setIngredient({ name: "" });
+      setIngredient({ name: "", grocery_category: "" });
     });
   };
 
@@ -59,20 +73,28 @@ export const IngredientForm = ({
                 <form>
                   <div className="mb-3">
                     <label className="col-form-label">Ingredient:</label>
-                    <input
-                      type="text"
-                      className="form-control"
+                    <FormInput
+                      name="name"
                       value={ingredientState.name}
+                      onChange={handleInputChange}
                       placeholder="Ingredient Name"
-                      onChange={(e) =>
-                        setIngredient({
-                          ...ingredientState,
-                          name: e.target.value,
-                        })
-                      }
                       required
                       autoFocus
                     />
+                  </div>
+                  <div className="mb-3">
+                    <select
+                      name="grocery_category"
+                      onChange={handleInputChange}
+                      required
+                    >
+                      <option value={0}>- Select a grocery category -</option>
+                      {groceryCategories.map((c) => (
+                        <option key={`category-${c.id}`} value={c.id}>
+                          {c.category}
+                        </option>
+                      ))}
+                    </select>
                   </div>
                 </form>
               </div>

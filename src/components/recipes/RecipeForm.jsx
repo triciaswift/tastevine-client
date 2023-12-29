@@ -26,9 +26,9 @@ export const RecipeForm = ({
     fetchIngredients();
   }, []);
 
-  useEffect(() => {
-    // console.log(chosenIngredients);
-  }, [chosenIngredients]);
+  // useEffect(() => {
+  //   console.log(chosenIngredients);
+  // }, [chosenIngredients]);
 
   const changeRecipeState = (e) => {
     setRecipe({ ...recipe, [e.target.name]: e.target.value });

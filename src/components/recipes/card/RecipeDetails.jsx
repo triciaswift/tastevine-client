@@ -6,11 +6,14 @@ import { RecipeDirections } from "./RecipeDirections";
 import { FavoriteButton } from "../../favorites/FavoriteButton";
 import { TabContent } from "./TabContent";
 import { getNotesByRecipeId } from "../../../managers/NoteManager";
+import { createGroceryList } from "../../../managers/GroceryListManager";
 
 export const RecipeDetails = ({ token, userId }) => {
   const [recipe, setRecipe] = useState({});
   const [activeTab, setActiveTab] = useState(0);
   const [notes, setNotes] = useState([]);
+  const [chosenIngredients, updateIngredients] = useState(new Set());
+
   const { recipeId } = useParams();
   const navigate = useNavigate();
 
@@ -35,15 +38,27 @@ export const RecipeDetails = ({ token, userId }) => {
   const displayRecipe = () => {
     if (recipe && recipe.author) {
       return (
-        <div className="recipe--content flex items-center rounded-b-md border-t-transparent px-10 py-2 bg-cyan-600 h-full w-full overflow-auto">
-          <div className="bg-white py-2 px-4 rounded-md my-4 shadow-lg">
+        <div className="recipe--content flex items-center rounded-b-md border-t-transparent px-10 py-8 bg-cyan-600 w-full overflow-auto">
+          <div className="bg-white py-2 px-4 rounded-md shadow-lg">
             <div className="flex justify-end">
               <div>{recipe.publication_date}</div>
             </div>
             <div className="grid grid-cols-4 gap-4 mb-10">
               <div className="ingredient--container">
-                <h3 className="pb-3 text-lg">Ingredients</h3>
-                {<RecipeIngredients recipe={recipe} />}
+                <div className="flex items-center pb-3 ">
+                  <h3 className="text-lg pr-2">Ingredients</h3>
+                  <i
+                    className="fa-solid fa-square-check fa-lg cursor-pointer"
+                    onClick={handleCheckAllIngredients}
+                  ></i>
+                </div>
+                {
+                  <RecipeIngredients
+                    recipe={recipe}
+                    chosenIngredients={chosenIngredients}
+                    updateIngredients={updateIngredients}
+                  />
+                }
               </div>
               <div className="directions--container col-span-3">
                 <h3 className="pb-3 text-lg">Directions</h3>
@@ -51,7 +66,11 @@ export const RecipeDetails = ({ token, userId }) => {
               </div>
             </div>
             <div className="details--container flex justify-between py-2 items-center">
-              <div>{recipe.author.full_name}</div>
+              <i
+                className="fa-solid fa-cart-plus fa-xl cursor-pointer"
+                onClick={handleAddToGroceryList}
+              ></i>
+              <div>By: {recipe.author.full_name}</div>
               {userId === recipe.author.id ? (
                 displayButtons()
               ) : (
@@ -63,6 +82,7 @@ export const RecipeDetails = ({ token, userId }) => {
       );
     }
   };
+
   const displayButtons = () => {
     if (recipe && recipe.author)
       return (
@@ -143,6 +163,30 @@ export const RecipeDetails = ({ token, userId }) => {
           </div>
         </div>
       );
+    }
+  };
+
+  const handleAddToGroceryList = () => {
+    const groceryList = {
+      ingredients: Array.from(chosenIngredients),
+    };
+    createGroceryList(groceryList, token).then(() => navigate(`/groceries`));
+  };
+
+  const handleCheckAllIngredients = () => {
+    if (recipe && recipe.ingredient_measurements) {
+      const allIngredientIds = recipe.ingredient_measurements.map(
+        (ingredient) => ingredient.ingredient.id
+      );
+      if (
+        allIngredientIds.every((ingredientId) =>
+          chosenIngredients.has(ingredientId)
+        )
+      ) {
+        updateIngredients(new Set());
+      } else {
+        updateIngredients(new Set(allIngredientIds));
+      }
     }
   };
 
