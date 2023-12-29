@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import {
   deleteGroceryItem,
   deleteGroceryList,
+  getGroceryCategories,
   getGroceryList,
   updateGroceryItem,
 } from "../../managers/GroceryListManager";
@@ -9,6 +10,7 @@ import { FormInput } from "../../utils/FormInput";
 
 export const GroceryList = ({ token }) => {
   const [groceries, setGroceries] = useState({});
+  const [groceryCategories, setCategories] = useState([]);
 
   const fetchGroceryList = async () => {
     try {
@@ -29,6 +31,7 @@ export const GroceryList = ({ token }) => {
 
   useEffect(() => {
     fetchGroceryList();
+    getGroceryCategories(token).then(setCategories);
   }, []);
 
   const handleCheckboxChange = async (groceryItemId, checked) => {
@@ -70,34 +73,62 @@ export const GroceryList = ({ token }) => {
     deleteGroceryList(groceries.id, token).then(() => setGroceries(null));
   };
 
-  const displayUncheckedItems = () => {
-    if (groceries.groceries && groceries.groceries.length) {
-      return (
-        <div className="uncheckedItems--container">
-          {groceries.groceries
-            .filter((groceryItem) => !groceryItem.checked)
-            .map((groceryItem) => (
-              <div key={groceryItem.id}>
-                <FormInput
-                  type="checkbox"
-                  className="form-check-input"
-                  checked={false}
-                  onChange={() => handleCheckboxChange(groceryItem.id, true)}
-                />
-                <label>{groceryItem.ingredient.name}</label>
-                <i
-                  className="icon fa-solid fa-trash fa-sm cursor-pointer"
-                  onClick={() => handleDeleteItem(groceryItem.id)}
-                ></i>
-              </div>
-            ))}
-        </div>
-      );
+  const filterGroceriesByCategory = (categoryId) => {
+    if (groceries && groceries.groceries && groceries.groceries.length) {
+      return groceries.groceries
+        .filter((groceryItem) => !groceryItem.checked)
+        .filter(
+          (grocery) => grocery.ingredient.grocery_category === categoryId
+        );
     }
   };
 
+  const categorizedGroceries = groceryCategories.map((category) => {
+    const categoryGroceries = filterGroceriesByCategory(category.id);
+    return {
+      categoryTitle: category.category,
+      groceries: categoryGroceries,
+    };
+  });
+
+  const displayUncheckedItems = () => {
+    if (groceries && groceries.groceries && groceries.groceries.length) {
+      return (
+        <div className="uncheckedItems--container">
+          {categorizedGroceries.map(
+            (category, index) =>
+              // Check if the category has any groceries before rendering
+              category.groceries.length > 0 && (
+                <div key={`category-${index}`}>
+                  <h3>{category.categoryTitle}</h3>
+                  {category.groceries.map((groceryItem) => (
+                    <div key={groceryItem.id}>
+                      <FormInput
+                        type="checkbox"
+                        className="form-check-input"
+                        checked={false}
+                        onChange={() =>
+                          handleCheckboxChange(groceryItem.id, true)
+                        }
+                      />
+                      <label>{groceryItem.ingredient.name}</label>
+                      <i
+                        className="icon fa-solid fa-trash fa-sm cursor-pointer"
+                        onClick={() => handleDeleteItem(groceryItem.id)}
+                      ></i>
+                    </div>
+                  ))}
+                </div>
+              )
+          )}
+        </div>
+      );
+    }
+    // return null; // Return null if there are no groceries
+  };
+
   const displayCheckedItems = () => {
-    if (groceries.groceries && groceries.groceries.length) {
+    if (groceries && groceries.groceries && groceries.groceries.length) {
       return (
         <div className="checkedItems--container">
           <div className="flex items-center justify-center">

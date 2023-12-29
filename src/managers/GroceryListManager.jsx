@@ -46,3 +46,12 @@ export const deleteGroceryList = (listId, token) => {
     },
   });
 };
+
+export const getGroceryCategories = (token) => {
+  return fetch(`http://localhost:8000/grocery-categories`, {
+    headers: {
+      Authorization: `Token ${token}`,
+      "Content-Type": "application/json",
+    },
+  }).then((response) => response.json());
+};

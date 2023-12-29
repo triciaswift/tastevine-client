@@ -176,7 +176,7 @@ export const RecipeDetails = ({ token, userId }) => {
   const handleCheckAllIngredients = () => {
     if (recipe && recipe.ingredient_measurements) {
       const allIngredientIds = recipe.ingredient_measurements.map(
-        (ingredient) => ingredient.id
+        (ingredient) => ingredient.ingredient.id
       );
       if (
         allIngredientIds.every((ingredientId) =>

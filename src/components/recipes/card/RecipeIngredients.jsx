@@ -20,8 +20,8 @@ export const RecipeIngredients = ({
           <FormInput
             type="checkbox"
             className="form-check-input"
-            checked={chosenIngredients.has(ingredient.id)}
-            onChange={() => handleChosenIngredient(ingredient)}
+            checked={chosenIngredients.has(ingredient.ingredient.id)}
+            onChange={() => handleChosenIngredient(ingredient.ingredient)}
           />
           <label className="form-check-label">{ingredient.measurement}</label>
         </div>
