@@ -78,9 +78,7 @@ export const RecipesList = ({
                     alt={recipe.title}
                   />
                   <div className="card-body flex items-center justify-center">
-                    <h5 className="card-title text-center text-xl m-0">
-                      {recipe.title}
-                    </h5>
+                    <h3 className="card-title m-0">{recipe.title}</h3>
                   </div>
                 </div>
               );

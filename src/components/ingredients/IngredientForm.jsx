@@ -8,7 +8,6 @@ export const IngredientForm = ({
   ingredients,
   chosenIngredients,
   updateIngredients,
-  showIngredients,
   token,
   fetchIngredients,
 }) => {
@@ -20,9 +19,13 @@ export const IngredientForm = ({
   });
   const [groceryCategories, setCategories] = useState([]);
 
-  useEffect(() => {
+  const getIngredients = () => {
     fetchIngredients();
-  }, [ingredientState]);
+  };
+
+  useEffect(() => {
+    getIngredients();
+  }, []);
 
   useEffect(() => {
     getGroceryCategories(token).then(setCategories);
@@ -41,21 +44,26 @@ export const IngredientForm = ({
 
   const handleSave = (e) => {
     e.preventDefault();
-    createIngredient(ingredientState, token).then(() => {
-      setIngredient({ name: "", grocery_category: "" });
-    });
+    createIngredient(ingredientState, token)
+      .then(() => {
+        setIngredient({ name: "", grocery_category: "" });
+      })
+      .then(() => {
+        getIngredients();
+      });
   };
 
   const displayIngredientForm = () => {
     return (
       <>
         <button
+          className="text-white"
           type="button"
-          className="btn btn-info"
           data-bs-toggle="modal"
           data-bs-target="#formModal"
         >
-          Add new ingredient
+          <i className="fa-solid fa-plus fa-lg mr-2"></i>
+          Ingredient
         </button>
         <div className="modal fade" id="formModal" tabIndex="-1">
           <div className="modal-dialog modal-dialog-centered">
@@ -73,17 +81,20 @@ export const IngredientForm = ({
                 <form>
                   <div className="mb-3">
                     <label className="col-form-label">Ingredient:</label>
-                    <FormInput
+                    <input
+                      type="text"
+                      className="form-control"
                       name="name"
                       value={ingredientState.name}
                       onChange={handleInputChange}
-                      placeholder="Ingredient Name"
+                      placeholder="Ingredient name"
                       required
                       autoFocus
                     />
                   </div>
                   <div className="mb-3">
                     <select
+                      className="form-select"
                       name="grocery_category"
                       onChange={handleInputChange}
                       required
@@ -123,34 +134,27 @@ export const IngredientForm = ({
   };
 
   return (
-    <>
-      <div className="flex justify-center">
-        {showIngredients ? (
-          <div className="flex flex-col justify-center mt-10 w-3/4">
-            <h4 className="text-center text-xl">Ingredient Options</h4>
-            <div className="flex justify-between items-center mb-2">
-              <div>
-                <input
-                  className="form-control me-2"
-                  type="search"
-                  placeholder="Search"
-                  onChange={(event) => {
-                    setSearch(event.target.value);
-                  }}
-                />
-              </div>
-              <div>{displayIngredientForm()}</div>
-            </div>
-            <IngredientsList
-              chosenIngredients={chosenIngredients}
-              updateIngredients={updateIngredients}
-              filteredIngredients={filteredIngredients}
+    <div className="w-[40%] my-4 bg-cyan-600 rounded-lg p-4 flex">
+      <div className="flex flex-col justify-center bg-cyan-600">
+        <h3 className="mb-4 text-white">Ingredient Options</h3>
+        <div className="flex justify-between items-center mb-4">
+          <div>
+            <FormInput
+              type="search"
+              onChange={(e) => {
+                setSearch(e.target.value);
+              }}
+              placeholder="Search ingredients"
             />
           </div>
-        ) : (
-          ""
-        )}
+          <div>{displayIngredientForm()}</div>
+        </div>
+        <IngredientsList
+          chosenIngredients={chosenIngredients}
+          updateIngredients={updateIngredients}
+          filteredIngredients={filteredIngredients}
+        />
       </div>
-    </>
+    </div>
   );
 };

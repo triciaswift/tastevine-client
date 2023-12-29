@@ -33,6 +33,10 @@ dialog {
     display: block;
     background: 0;
   }
+
+  .category--tags {
+    @apply font-poppins border-double mx-2 mb-4 bg-cyan-600 text-white rounded-full border-4 border-cyan-300 px-4;
+  }
 }
 
 @layer base {
@@ -43,6 +47,15 @@ dialog {
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
+    font-family: "Montserrat", "sans-serif";
+  }
+
+  label {
+    @apply font-poppins tracking-wide;
+  }
+
+  button {
+    @apply font-poppins;
   }
 
   h1 {
@@ -50,6 +63,14 @@ dialog {
   }
 
   h2 {
-    @apply font-muli text-center text-3xl;
+    @apply font-muli text-center text-4xl;
+  }
+
+  h3 {
+    @apply font-spoof text-center text-2xl;
+  }
+
+  h4 {
+    @apply font-poppins text-xl;
   }
 }

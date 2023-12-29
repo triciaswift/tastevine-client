@@ -1,34 +1,21 @@
-import { useEffect, useState } from "react";
-import { createRecipe } from "../../managers/RecipeManager";
 import { useNavigate } from "react-router-dom";
 import { IngredientForm } from "../ingredients/IngredientForm";
+import { FormInput } from "../../utils/FormInput";
 
 export const RecipeForm = ({
   categories,
-  fetchCategories,
   token,
   ingredients,
   fetchIngredients,
+  recipe,
+  setRecipe,
+  chosenCategories,
+  updateCategories,
+  chosenIngredients,
+  updateIngredients,
+  handleSave,
 }) => {
-  const [recipe, setRecipe] = useState({
-    title: "",
-    instructions: "",
-    image: null,
-  });
-  const [chosenCategories, updateCategories] = useState(new Set());
-  const [chosenIngredients, updateIngredients] = useState(new Set());
-  const [showIngredients, setShowIngredients] = useState(false);
-
   const navigate = useNavigate();
-
-  useEffect(() => {
-    fetchCategories();
-    fetchIngredients();
-  }, []);
-
-  // useEffect(() => {
-  //   console.log(chosenIngredients);
-  // }, [chosenIngredients]);
 
   const changeRecipeState = (e) => {
     setRecipe({ ...recipe, [e.target.name]: e.target.value });
@@ -44,8 +31,7 @@ export const RecipeForm = ({
     if (categories && categories.length) {
       return categories.map((category) => (
         <div className="form-check" key={category.id}>
-          <input
-            className="form-check-input"
+          <FormInput
             type="checkbox"
             checked={chosenCategories.has(category.id)}
             onChange={() => handleChosenCategory(category)}
@@ -61,18 +47,18 @@ export const RecipeForm = ({
   const displayIngredients = () => {
     if (chosenIngredients.size !== 0) {
       return (
-        <>
+        <div>
           {Array.from(chosenIngredients).map((object) => {
             const matchingIngredient = ingredients.find(
               (ingredient) => ingredient.id === object.id
             );
             return (
               <div className="ingredient--container" key={object.id}>
-                {object.quantity} {object.unit} {matchingIngredient.name}
+                {object.quantity} {object.unit} {matchingIngredient?.name}
               </div>
             );
           })}
-        </>
+        </div>
       );
     }
     return (
@@ -89,19 +75,6 @@ export const RecipeForm = ({
     );
   };
 
-  const handleSave = (e) => {
-    e.preventDefault();
-
-    const newRecipe = {
-      ...recipe,
-      ingredients: Array.from(chosenIngredients),
-      categories: Array.from(chosenCategories),
-    };
-    createRecipe(newRecipe, token).then((recipeObj) => {
-      navigate(`/recipes/details/${recipeObj["id"]}`);
-    });
-  };
-
   const getBase64 = (file, callback) => {
     const reader = new FileReader();
     reader.addEventListener("load", () => callback(reader.result));
@@ -114,16 +87,11 @@ export const RecipeForm = ({
     });
   };
 
-  const handleShowIngredients = () => {
-    setShowIngredients(!showIngredients);
-  };
-
   return (
-    <section className="my-14">
-      <div className="flex justify-center">
-        <form className="w-3/4" onSubmit={handleSave}>
-          <h1>New Recipe</h1>
-          <div className="recipe--card border-1 rounded-lg my-4 p-4 bg-white">
+    <form onSubmit={handleSave}>
+      <div className="recipe-ingredient--container flex">
+        <div className="recipe--card rounded-lg my-4 p-4 bg-cyan-600 w-[60%] mr-24 flex flex-col justify-between">
+          <div className="bg-white rounded-lg px-4 py-8">
             <div className="mb-3">
               <div>
                 <label htmlFor="recipeTitle" className="form-label">
@@ -141,8 +109,8 @@ export const RecipeForm = ({
                 autoFocus
               />
             </div>
-            <fieldset className="flex mb-4">
-              <fieldset className="w-1/3 mb-3 pr-3">
+            <fieldset className="flex">
+              <fieldset className="w-1/3 pr-3">
                 <div className="mb-3">
                   <label className="form-label">Categories</label>
                   {displayCategories()}
@@ -160,25 +128,22 @@ export const RecipeForm = ({
                   <label htmlFor="formFile" className="form-label">
                     Recipe Image
                   </label>
-                  <input
-                    className="form-control"
+                  <FormInput
                     type="file"
-                    name="image"
                     onChange={(e) => {
                       createImageString(e);
                     }}
-                    required
                   />
                 </div>
               </fieldset>
               <fieldset className="flex w-2/3">
                 <div className="ingredients--container w-1/3 border-l-2 pl-2">
-                  <label>Ingredients</label>
+                  <label className="mb-2">Ingredients</label>
                   {displayIngredients()}
                 </div>
                 <div className="instructions--container w-2/3">
                   <label htmlFor="recipeInstructions" className="form-label">
-                    Instructions
+                    Directions
                   </label>
                   <textarea
                     className="form-control"
@@ -188,24 +153,12 @@ export const RecipeForm = ({
                     onChange={changeRecipeState}
                     rows="15"
                     required
-                    autoFocus
                   ></textarea>
                 </div>
               </fieldset>
             </fieldset>
-            <div className="text-center">
-              <button
-                type="button"
-                className="btn btn-info"
-                onClick={() => {
-                  handleShowIngredients();
-                }}
-              >
-                Select Ingredients
-              </button>
-            </div>
           </div>
-          <div className="w-3/4">
+          <div className="mt-2">
             <button type="submit" className="btn btn-primary mr-4">
               Save
             </button>
@@ -217,18 +170,17 @@ export const RecipeForm = ({
               Cancel
             </button>
           </div>
-        </form>
+        </div>
+        {
+          <IngredientForm
+            ingredients={ingredients}
+            chosenIngredients={chosenIngredients}
+            updateIngredients={updateIngredients}
+            token={token}
+            fetchIngredients={fetchIngredients}
+          />
+        }
       </div>
-      {
-        <IngredientForm
-          ingredients={ingredients}
-          chosenIngredients={chosenIngredients}
-          updateIngredients={updateIngredients}
-          showIngredients={showIngredients}
-          token={token}
-          fetchIngredients={fetchIngredients}
-        />
-      }
-    </section>
+    </form>
   );
 };

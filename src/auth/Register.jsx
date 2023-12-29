@@ -40,17 +40,22 @@ export const Register = ({ setToken, setId }) => {
 
   return (
     <main>
-      <dialog className="dialog dialog--auth p-2" ref={existDialog}>
-        <div className="text-center my-3">
-          An account with that email already exists.
-        </div>
-        <div className="flex justify-end pr-3">
-          <button
-            className="button--close"
-            onClick={(e) => existDialog.current.close()}
-          >
-            Close
-          </button>
+      <dialog
+        className="dialog dialog--auth p-4 border-4 border-red-400 border-double rounded-lg bg-red-700"
+        ref={existDialog}
+      >
+        <div className="bg-white rounded-md px-4 pt-4 py-2">
+          <div className="text-center">
+            An account with that email already exists.
+          </div>
+          <div className="flex justify-end mt-2">
+            <button
+              className="button--close"
+              onClick={(e) => existDialog.current.close()}
+            >
+              Close
+            </button>
+          </div>
         </div>
       </dialog>
 
@@ -83,7 +88,6 @@ export const Register = ({ setToken, setId }) => {
                   value={lastName}
                   onChange={(e) => setLastName(e.target.value)}
                   required
-                  autoFocus
                 />
               </div>
             </div>
@@ -98,7 +102,6 @@ export const Register = ({ setToken, setId }) => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                autoFocus
               />
             </div>
           </div>
@@ -113,7 +116,6 @@ export const Register = ({ setToken, setId }) => {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
-                  autoFocus
                 />
               </div>
             </div>
@@ -127,7 +129,6 @@ export const Register = ({ setToken, setId }) => {
                   value={verifyPassword}
                   onChange={(e) => setVerifyPassword(e.target.value)}
                   required
-                  autoFocus
                 />
               </div>
               {matchUnsuccessful ? (

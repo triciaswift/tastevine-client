@@ -105,7 +105,6 @@ export const GroceryList = ({ token }) => {
                     <div key={groceryItem.id}>
                       <FormInput
                         type="checkbox"
-                        className="form-check-input"
                         checked={false}
                         onChange={() =>
                           handleCheckboxChange(groceryItem.id, true)
@@ -144,7 +143,6 @@ export const GroceryList = ({ token }) => {
               <div key={groceryItem.id}>
                 <FormInput
                   type="checkbox"
-                  className="form-check-input"
                   checked={true}
                   onChange={() => handleCheckboxChange(groceryItem.id, false)}
                 />

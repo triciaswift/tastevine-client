@@ -7,12 +7,12 @@ import { getAllRecipes } from "../managers/RecipeManager";
 import { useState } from "react";
 import { RecipesList } from "../components/recipes/RecipesList";
 import { getAllCategories } from "../managers/CategoryManager";
-import { RecipeForm } from "../components/recipes/RecipeForm";
 import { getAllIngredients } from "../managers/IngredientManager";
 import { Account } from "../auth/Account";
 import { FavoriteList } from "../components/favorites/FavoriteList";
 import { RecipeDetails } from "../components/recipes/card/RecipeDetails";
 import { GroceryList } from "../components/groceries/GroceryList";
+import { NewRecipe } from "../components/recipes/NewRecipe";
 
 export const ApplicationViews = ({ token, setToken, userId, setId }) => {
   const [recipeState, setRecipeState] = useState([]);
@@ -109,7 +109,7 @@ export const ApplicationViews = ({ token, setToken, userId, setId }) => {
           <Route
             path="new"
             element={
-              <RecipeForm
+              <NewRecipe
                 categories={categoryState}
                 fetchCategories={fetchCategoriesFromAPI}
                 token={token}

@@ -39,14 +39,14 @@ export const RecipeDetails = ({ token, userId }) => {
     if (recipe && recipe.author) {
       return (
         <div className="recipe--content flex items-center rounded-b-md border-t-transparent px-10 py-8 bg-cyan-600 w-full overflow-auto">
-          <div className="bg-white py-2 px-4 rounded-md shadow-lg">
+          <div className="bg-white py-2 px-4 rounded-md shadow-lg w-full">
             <div className="flex justify-end">
               <div>{recipe.publication_date}</div>
             </div>
             <div className="grid grid-cols-4 gap-4 mb-10">
               <div className="ingredient--container">
                 <div className="flex items-center pb-3 ">
-                  <h3 className="text-lg pr-2">Ingredients</h3>
+                  <h4 className="pr-2">Ingredients</h4>
                   <i
                     className="fa-solid fa-square-check fa-lg cursor-pointer"
                     onClick={handleCheckAllIngredients}
@@ -61,7 +61,7 @@ export const RecipeDetails = ({ token, userId }) => {
                 }
               </div>
               <div className="directions--container col-span-3">
-                <h3 className="pb-3 text-lg">Directions</h3>
+                <h4 className="pb-3">Directions</h4>
                 {<RecipeDirections recipe={recipe} />}
               </div>
             </div>
@@ -152,10 +152,7 @@ export const RecipeDetails = ({ token, userId }) => {
           <div className="flex">
             {recipe.categories.map((category) => {
               return (
-                <div
-                  className="mx-2 mb-4 bg-cyan-600 text-white rounded-full border-2 border-cyan-600 px-3"
-                  key={category.id}
-                >
+                <div className="category--tags" key={category.id}>
                   {category.label}
                 </div>
               );
