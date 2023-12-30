@@ -62,7 +62,7 @@ export const RecipesList = ({
               handleTabClick={handleTabClick}
             />
           }
-          <div className="cards--containers flex flex-wrap gap-y-4 justify-center bg-cyan-600 py-4 px-8 rounded-md">
+          <div className="cards--containers flex flex-wrap gap-y-4 justify-center bg-cyan-600 py-4 px-8 rounded-md max-h-[64rem] overflow-y-auto">
             {filteredRecipes.map((recipe) => {
               return (
                 <div

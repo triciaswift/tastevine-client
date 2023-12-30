@@ -26,7 +26,7 @@ export const FormInput = ({
           type="checkbox"
           checked={checked}
           onChange={onChange}
-          className="form-check-input"
+          className="form-check-input border-cyan-600"
         />
       );
     case "search":
@@ -48,6 +48,27 @@ export const FormInput = ({
           required
         />
       );
+    case "email":
+      return (
+        <input
+          className="form-control"
+          type="email"
+          value={value}
+          onChange={onChange}
+          required
+        />
+      );
+    case "password":
+      return (
+        <input
+          className="form-control"
+          type="password"
+          value={value}
+          onChange={onChange}
+          required
+        />
+      );
+
     default:
       return (
         <input

@@ -64,7 +64,7 @@ export const Login = ({ setToken, setId }) => {
               </div>
             </div>
             {isUnsuccessful ? (
-              <p className="text-red-500 text-center">
+              <p className="text-white mx-auto bg-red-600 rounded-full w-max px-3 py-1">
                 Username or password not valid
               </p>
             ) : (
