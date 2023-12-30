@@ -29,58 +29,60 @@ export const Login = ({ setToken, setId }) => {
 
   return (
     <main>
-      <section className="flex justify-center mt-20">
-        <form className="w-5/12" onSubmit={handleLogin}>
-          <h1 className="mb-16">Welcome to Tastevine</h1>
-          <p className="mb-4 text-2xl">Login To Your Account</p>
-          <div className="mb-2">
-            <label className="form-label">Email</label>
-            <div>
-              <input
-                className="form-control"
-                type="email"
-                name="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-                autoFocus
-              />
+      <section className="mt-20 flex flex-col justify-center items-center">
+        <h1 className="mb-16">Welcome to Tastevine</h1>
+        <div className="w-5/12 bg-cyan-600 px-8 py-4 rounded-lg mb-4">
+          <form onSubmit={handleLogin}>
+            <p className="mb-4 text-2xl text-white">Login To Your Account</p>
+            <div className="mb-2">
+              <label className="form-label text-white">Email</label>
+              <div>
+                <input
+                  className="form-control"
+                  type="email"
+                  name="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                  autoFocus
+                />
+              </div>
             </div>
-          </div>
 
-          <div className="basis-1/2 mb-2 mr-2">
-            <label className="form-label">Password</label>
-            <div>
-              <input
-                className="form-control"
-                type="password"
-                name="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-                autoFocus
-              />
+            <div className="basis-1/2 mb-2">
+              <label className="form-label text-white">Password</label>
+              <div>
+                <input
+                  className="form-control"
+                  type="password"
+                  name="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                  autoFocus
+                />
+              </div>
             </div>
-          </div>
-          {isUnsuccessful ? (
-            <p className="text-red-500 text-center">
-              Username or password not valid
-            </p>
-          ) : (
-            ""
-          )}
+            {isUnsuccessful ? (
+              <p className="text-white mx-auto bg-red-600 rounded-full w-max px-3 py-1">
+                Username or password not valid
+              </p>
+            ) : (
+              ""
+            )}
 
-          <div className="mb-4 mt-6">
-            <button className="btn btn-primary rounded-full w-100">
-              Login
-            </button>
-          </div>
-        </form>
+            <div className="mt-6">
+              <button className="btn btn-primary rounded-full w-100">
+                Login
+              </button>
+            </div>
+          </form>
+        </div>
       </section>
       <div className="loginLinks mb-6">
         <section className="link--register text-center">
           <Link
-            className="underline text-blue-600 hover:text-blue-800 visited:text-purple-600"
+            className="underline text-blue-600 hover:text-blue-600 visited:text-black"
             to="/register"
           >
             Create Account

@@ -7,12 +7,13 @@ import { getAllRecipes } from "../managers/RecipeManager";
 import { useState } from "react";
 import { RecipesList } from "../components/recipes/RecipesList";
 import { getAllCategories } from "../managers/CategoryManager";
-import { RecipeForm } from "../components/recipes/RecipeForm";
 import { getAllIngredients } from "../managers/IngredientManager";
 import { Account } from "../auth/Account";
 import { FavoriteList } from "../components/favorites/FavoriteList";
 import { RecipeDetails } from "../components/recipes/card/RecipeDetails";
 import { GroceryList } from "../components/groceries/GroceryList";
+import { NewRecipe } from "../components/recipes/NewRecipe";
+import { Home } from "./Home";
 
 export const ApplicationViews = ({ token, setToken, userId, setId }) => {
   const [recipeState, setRecipeState] = useState([]);
@@ -60,13 +61,7 @@ export const ApplicationViews = ({ token, setToken, userId, setId }) => {
         <Route
           path="/"
           element={
-            <RecipesList
-              recipes={recipeState}
-              categories={categoryState}
-              fetchRecipes={fetchRecipesFromAPI}
-              fetchCategories={fetchCategoriesFromAPI}
-              showAll={true}
-            />
+            <Home recipes={recipeState} fetchRecipes={fetchRecipesFromAPI} />
           }
         />
         <Route path="recipes">
@@ -79,7 +74,6 @@ export const ApplicationViews = ({ token, setToken, userId, setId }) => {
                 fetchRecipes={fetchRecipesFromAPI}
                 fetchCategories={fetchCategoriesFromAPI}
                 showAll={true}
-                token={token}
               />
             }
           />
@@ -109,7 +103,7 @@ export const ApplicationViews = ({ token, setToken, userId, setId }) => {
           <Route
             path="new"
             element={
-              <RecipeForm
+              <NewRecipe
                 categories={categoryState}
                 fetchCategories={fetchCategoriesFromAPI}
                 token={token}

@@ -94,30 +94,38 @@ export const GroceryList = ({ token }) => {
   const displayUncheckedItems = () => {
     if (groceries && groceries.groceries && groceries.groceries.length) {
       return (
-        <div className="uncheckedItems--container">
+        <div className="uncheckedItems--container flex flex-wrap justify-center gap-4 bg-white rounded-lg p-3">
           {categorizedGroceries.map(
             (category, index) =>
               // Check if the category has any groceries before rendering
               category.groceries.length > 0 && (
-                <div key={`category-${index}`}>
-                  <h3>{category.categoryTitle}</h3>
-                  {category.groceries.map((groceryItem) => (
-                    <div key={groceryItem.id}>
-                      <FormInput
-                        type="checkbox"
-                        className="form-check-input"
-                        checked={false}
-                        onChange={() =>
-                          handleCheckboxChange(groceryItem.id, true)
-                        }
-                      />
-                      <label>{groceryItem.ingredient.name}</label>
-                      <i
-                        className="icon fa-solid fa-trash fa-sm cursor-pointer"
-                        onClick={() => handleDeleteItem(groceryItem.id)}
-                      ></i>
-                    </div>
-                  ))}
+                <div
+                  key={`category-${index}`}
+                  className="pb-4 basis-[25rem] bg-slate-400/20 rounded-lg"
+                >
+                  <h3 className="bg-cyan-600 rounded-full mb-3 mx-8 px-4 mt-3">
+                    {category.categoryTitle}
+                  </h3>
+                  <div className="px-4">
+                    {category.groceries.map((groceryItem) => (
+                      <div key={groceryItem.id}>
+                        <FormInput
+                          type="checkbox"
+                          checked={false}
+                          onChange={() =>
+                            handleCheckboxChange(groceryItem.id, true)
+                          }
+                        />
+                        <label className="mx-2">
+                          {groceryItem.ingredient.name}
+                        </label>
+                        <i
+                          className="icon fa-solid fa-trash fa-sm cursor-pointer"
+                          onClick={() => handleDeleteItem(groceryItem.id)}
+                        ></i>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               )
           )}
@@ -130,9 +138,9 @@ export const GroceryList = ({ token }) => {
   const displayCheckedItems = () => {
     if (groceries && groceries.groceries && groceries.groceries.length) {
       return (
-        <div className="checkedItems--container">
+        <div className="checkedItems--container bg-white rounded-lg p-2">
           <div className="flex items-center justify-center">
-            <h4>Completed Items</h4>
+            <h4 className="mr-2">Completed Items</h4>
             <i
               className="icon fa-solid fa-trash fa-sm cursor-pointer"
               onClick={handleDeleteCheckedItems}
@@ -144,7 +152,6 @@ export const GroceryList = ({ token }) => {
               <div key={groceryItem.id}>
                 <FormInput
                   type="checkbox"
-                  className="form-check-input"
                   checked={true}
                   onChange={() => handleCheckboxChange(groceryItem.id, false)}
                 />
@@ -157,14 +164,18 @@ export const GroceryList = ({ token }) => {
   };
 
   return (
-    <section>
-      <h2>Grocery List</h2>
+    <section className="my-14 mx-[22rem]">
+      <h1>Grocery List</h1>
       <div className="flex flex-col items-center">
         {groceries ? (
           <div className="items--container">
-            {displayUncheckedItems()}
-            {displayCheckedItems()}
-            <div className="text-center">
+            <div className="bg-cyan-600 p-2 rounded-lg mb-20">
+              {displayUncheckedItems()}
+            </div>
+            <div className="bg-cyan-600 p-2 rounded-lg">
+              {displayCheckedItems()}
+            </div>
+            <div className="text-center mt-8">
               <button className="btn btn-primary" onClick={handleDeleteList}>
                 Delete All
               </button>

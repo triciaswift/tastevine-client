@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { FormInput } from "../../utils/FormInput";
 
 // found this code by  searching, "how to prevent a useEffect from running on initial render?"
 const useDidMountEffect = (func, deps) => {
@@ -30,13 +31,14 @@ export const IngredientItem = ({
     const copy = new Set(chosenIngredients);
     for (const ingredientObj of copy) {
       if (ingredient.id === ingredientObj.id) {
+        // debugger;
         // console.log(
         //   `${ingredient.name} ingredient is in the original chosenIngredients array, set enabled to true`
         // );
         setEnabled(true);
       }
     }
-  }, []);
+  }, [chosenIngredients]);
 
   // ingredientInfo useEffect (will not run on initial render, ONLY when ingredient info value changes from previous render)
   useDidMountEffect(() => {
@@ -97,7 +99,6 @@ export const IngredientItem = ({
         if (ingredient.id === ingredientObject.id) {
           copy.delete(ingredientObject);
         }
-        // after delete the object gets added back to the set...think it's happening because every time we setIngredientInfo to default it triggers the other useEffect and adds it back to the set??? Is that true?
       }
       setIngredientInfo(defaultState);
     }
@@ -108,7 +109,7 @@ export const IngredientItem = ({
   return (
     <>
       <td className="align-middle">
-        <input
+        <FormInput
           type="checkbox"
           checked={enabled}
           onChange={() => setEnabled(!enabled)}

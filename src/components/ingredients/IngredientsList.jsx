@@ -6,7 +6,7 @@ export const IngredientsList = ({
   filteredIngredients,
 }) => {
   return (
-    <div className="table--container max-h-96 overflow-y-auto border-1 p-4">
+    <div className="table--container max-h-[32rem] overflow-y-auto border-1 px-4 py-1 rounded-md bg-white">
       <table className="table w-full">
         <thead>
           <tr>

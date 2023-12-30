@@ -6,7 +6,6 @@ export const FormInput = ({
   placeholder,
   rows,
   checked,
-  className,
 }) => {
   switch (type) {
     case "textarea":
@@ -18,6 +17,7 @@ export const FormInput = ({
           placeholder={placeholder}
           rows={rows}
           className="form-control"
+          required
         />
       );
     case "checkbox":
@@ -26,7 +26,7 @@ export const FormInput = ({
           type="checkbox"
           checked={checked}
           onChange={onChange}
-          className={className}
+          className="form-check-input border-cyan-600"
         />
       );
     case "search":
@@ -38,6 +38,37 @@ export const FormInput = ({
           className="form-control"
         />
       );
+    case "file":
+      return (
+        <input
+          type="file"
+          name="image"
+          onChange={onChange}
+          className="form-control"
+          required
+        />
+      );
+    case "email":
+      return (
+        <input
+          className="form-control"
+          type="email"
+          value={value}
+          onChange={onChange}
+          required
+        />
+      );
+    case "password":
+      return (
+        <input
+          className="form-control"
+          type="password"
+          value={value}
+          onChange={onChange}
+          required
+        />
+      );
+
     default:
       return (
         <input
@@ -48,6 +79,7 @@ export const FormInput = ({
           placeholder={placeholder}
           autoComplete="off"
           className="form-control"
+          required
         />
       );
   }

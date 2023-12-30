@@ -19,7 +19,6 @@ export const RecipeIngredients = ({
         <div className="form-check" key={ingredient.id}>
           <FormInput
             type="checkbox"
-            className="form-check-input"
             checked={chosenIngredients.has(ingredient.ingredient.id)}
             onChange={() => handleChosenIngredient(ingredient.ingredient)}
           />
