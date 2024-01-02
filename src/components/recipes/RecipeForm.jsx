@@ -88,99 +88,106 @@ export const RecipeForm = ({
   };
 
   return (
-    <form onSubmit={handleSave}>
-      <div className="recipe-ingredient--container flex">
-        <div className="recipe--card rounded-lg my-4 p-4 bg-cyan-600 w-[60%] mr-24 flex flex-col justify-between">
-          <div className="bg-white rounded-lg px-4 py-8">
-            <div className="mb-3">
-              <div>
-                <label htmlFor="recipeTitle" className="form-label">
-                  Title
-                </label>
-              </div>
-              <input
-                type="text"
-                className="form-control"
-                name="title"
-                placeholder="Recipe Title"
-                value={recipe.title}
-                onChange={changeRecipeState}
-                required
-                autoFocus
-              />
-            </div>
-            <fieldset className="flex">
-              <fieldset className="w-1/3 pr-3">
+    <div className="flex">
+      <div className="flex flex-col w-[60%]">
+        <form onSubmit={handleSave}>
+          <div className="recipe-ingredient--container">
+            <div className="recipe--card rounded-lg mr-24 flex flex-col justify-between">
+              <div className="bg-white rounded-lg px-4 py-8 border-2 border-dashed border-green-700">
                 <div className="mb-3">
-                  <label className="form-label">Categories</label>
-                  {displayCategories()}
-                </div>
-                <div>
-                  {recipe.image ? (
-                    <figure className="mb-3">
-                      <img src={recipe.image} alt="recipe-pic" />
-                    </figure>
-                  ) : (
-                    ""
-                  )}
-                </div>
-                <div>
-                  <label htmlFor="formFile" className="form-label">
-                    Recipe Image
-                  </label>
-                  <FormInput
-                    type="file"
-                    onChange={(e) => {
-                      createImageString(e);
-                    }}
+                  <div>
+                    <label htmlFor="recipeTitle" className="form-label">
+                      Title
+                    </label>
+                  </div>
+                  <input
+                    type="text"
+                    className="form-control focus:ring-4 focus:ring-green-700/40 focus:border focus:border-green-700"
+                    name="title"
+                    placeholder="Recipe Title"
+                    value={recipe.title}
+                    onChange={changeRecipeState}
+                    required
+                    autoFocus
                   />
                 </div>
-              </fieldset>
-              <fieldset className="flex w-2/3">
-                <div className="ingredients--container w-1/3 border-l-2 pl-2">
-                  <label className="mb-2">Ingredients</label>
-                  {displayIngredients()}
-                </div>
-                <div className="instructions--container w-2/3">
-                  <label htmlFor="recipeInstructions" className="form-label">
-                    Directions
-                  </label>
-                  <textarea
-                    className="form-control"
-                    name="instructions"
-                    placeholder={`1. First instruction\n2. Second instruction\netc.`}
-                    value={recipe.instructions}
-                    onChange={changeRecipeState}
-                    rows="15"
-                    required
-                  ></textarea>
-                </div>
-              </fieldset>
-            </fieldset>
+                <fieldset className="flex">
+                  <fieldset className="w-1/3 pr-3">
+                    <div className="mb-3">
+                      <label className="form-label">Categories</label>
+                      {displayCategories()}
+                    </div>
+                    <div>
+                      {recipe.image ? (
+                        <figure className="mb-3">
+                          <img src={recipe.image} alt="recipe-pic" />
+                        </figure>
+                      ) : (
+                        ""
+                      )}
+                    </div>
+                    <div>
+                      <label htmlFor="formFile" className="form-label">
+                        Recipe Image
+                      </label>
+                      <FormInput
+                        type="file"
+                        onChange={(e) => {
+                          createImageString(e);
+                        }}
+                      />
+                    </div>
+                  </fieldset>
+                  <fieldset className="flex w-2/3">
+                    <div className="ingredients--container w-1/3 border-l-2 pl-2">
+                      <label className="mb-2">Ingredients</label>
+                      {displayIngredients()}
+                    </div>
+                    <div className="instructions--container w-2/3">
+                      <label
+                        htmlFor="recipeInstructions"
+                        className="form-label"
+                      >
+                        Directions
+                      </label>
+                      <textarea
+                        className="form-control focus:ring-4 focus:ring-green-700/40 focus:border focus:border-green-700"
+                        name="instructions"
+                        placeholder={`1. First instruction\n2. Second instruction\netc.`}
+                        value={recipe.instructions}
+                        onChange={changeRecipeState}
+                        rows="20"
+                        required
+                      ></textarea>
+                    </div>
+                  </fieldset>
+                </fieldset>
+              </div>
+            </div>
           </div>
           <div className="mt-2">
-            <button type="submit" className="btn btn-primary mr-4">
+            <button type="submit" className="btn btn-success mr-4">
               Save
             </button>
             <button
               type="button"
-              className="btn btn-danger"
+              className="btn btn-outline-danger"
               onClick={() => navigate(`/recipes/mine`)}
             >
               Cancel
             </button>
           </div>
-        </div>
-        {
-          <IngredientForm
-            ingredients={ingredients}
-            chosenIngredients={chosenIngredients}
-            updateIngredients={updateIngredients}
-            token={token}
-            fetchIngredients={fetchIngredients}
-          />
-        }
+        </form>
       </div>
-    </form>
+      {
+        <IngredientForm
+          ingredients={ingredients}
+          chosenIngredients={chosenIngredients}
+          updateIngredients={updateIngredients}
+          token={token}
+          fetchIngredients={fetchIngredients}
+        />
+      }
+    </div>
   );
 };

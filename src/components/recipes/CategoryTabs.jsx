@@ -7,8 +7,8 @@ export const CategoryTabs = ({ categories, activeTab, handleTabClick }) => {
             <a
               className={`tabs ${
                 activeTab == category.id
-                  ? "active bg-cyan-600 text-white border-x-cyan-600 border-t-cyan-600"
-                  : "bg-cyan-100 border-x-cyan-600 border-t-cyan-600 hover:border-0 hover:bg-cyan-600 hover:border-b hover:border-b-cyan-600 hover:text-white"
+                  ? "active bg-beige border-beige"
+                  : "bg-yellow-50 border-x-yellow-300 border-t-yellow-300 hover:border-0 hover:bg-beige hover:border-b hover:border-b-beige hover:text-black"
               }`}
               onClick={() => {
                 handleTabClick(category.id);

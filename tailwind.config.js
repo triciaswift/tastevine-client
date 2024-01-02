@@ -12,7 +12,15 @@ export default {
       roboto: ["Roboto", "sans-serif"],
       quicksand: ["Quicksand", "sans-serif"],
     },
-    extend: {},
+    extend: {
+      colors: {
+        beige: "#f5ecca",
+        "avocado-green": "#748147",
+        "beet-purple": "#844a4e",
+        "tomato-red": "#ba0518",
+        "lemon-yellow": "#f4ca64",
+      },
+    },
   },
   plugins: [],
 };

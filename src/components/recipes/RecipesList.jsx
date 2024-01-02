@@ -62,11 +62,11 @@ export const RecipesList = ({
               handleTabClick={handleTabClick}
             />
           }
-          <div className="cards--containers flex flex-wrap gap-y-4 justify-center bg-cyan-600 py-4 px-8 rounded-md max-h-[64rem] overflow-y-auto">
+          <div className="cards--containers flex flex-wrap gap-y-4 gap-x-20 justify-center bg-beige rounded-md max-h-[64rem] min-h-[20rem] overflow-y-auto py-4">
             {filteredRecipes.map((recipe) => {
               return (
                 <div
-                  className="card basis-1/4 cursor-pointer shadow-sm border-2 border-cyan-600 p-2"
+                  className="card basis-1/5 cursor-pointer border-2 border-beet-purple hover:shadow-xl"
                   key={recipe.id}
                   onClick={() => {
                     navigate(`/recipes/details/${recipe.id}`);
@@ -74,7 +74,7 @@ export const RecipesList = ({
                 >
                   <img
                     src={recipe.image}
-                    className="card-img-top img-fluid h-auto rounded-xl border-double border-8 border-cyan-600"
+                    className="card-img-top img-fluid h-auto rounded-sm"
                     alt={recipe.title}
                   />
                   <div className="card-body flex items-center justify-center">
@@ -95,7 +95,7 @@ export const RecipesList = ({
       <div className="flex justify-end mr-6 mt-3">
         <form className="d-flex" role="search">
           <input
-            className="form-control me-2 border-4 rounded-lg border-cyan-600"
+            className="form-control me-2 border-2 rounded-lg focus:border focus:border-beet-purple border-beet-purple"
             type="search"
             placeholder={`Search ${findCategory(categoryId)}`}
             onChange={(event) => {

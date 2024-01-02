@@ -16,7 +16,7 @@ export const FormInput = ({
           onChange={onChange}
           placeholder={placeholder}
           rows={rows}
-          className="form-control"
+          className="form-control focus:ring-4 focus:ring-green-700/40 focus:border focus:border-green-700"
           required
         />
       );
@@ -26,7 +26,7 @@ export const FormInput = ({
           type="checkbox"
           checked={checked}
           onChange={onChange}
-          className="form-check-input border-cyan-600"
+          className="form-check-input checked:bg-green-700 checked:border-green-700 focus:ring-4 focus:ring-green-700/40 focus:border focus:border-green-700"
         />
       );
     case "search":
@@ -44,14 +44,14 @@ export const FormInput = ({
           type="file"
           name="image"
           onChange={onChange}
-          className="form-control"
+          className="form-control focus:ring-4 focus:ring-green-700/40 focus:border focus:border-green-700"
           required
         />
       );
     case "email":
       return (
         <input
-          className="form-control"
+          className="form-control focus:ring-4 focus:ring-green-700/40 focus:border focus:border-green-700"
           type="email"
           value={value}
           onChange={onChange}
@@ -61,7 +61,7 @@ export const FormInput = ({
     case "password":
       return (
         <input
-          className="form-control"
+          className="form-control focus:ring-4 focus:ring-green-700/40 focus:border focus:border-green-700"
           type="password"
           value={value}
           onChange={onChange}
@@ -78,7 +78,7 @@ export const FormInput = ({
           onChange={onChange}
           placeholder={placeholder}
           autoComplete="off"
-          className="form-control"
+          className="form-control focus:ring-4 focus:ring-green-700/40 focus:border focus:border-green-700"
           required
         />
       );

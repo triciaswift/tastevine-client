@@ -12,8 +12,8 @@ export const RecipeTabs = ({ activeTab, handleTabClick }) => {
           <a
             className={`tabs ${
               activeTab === tab.id
-                ? "active bg-cyan-600 text-white border-x-cyan-600 border-t-cyan-600"
-                : "bg-cyan-100 border-x-cyan-600 border-t-cyan-600 hover:border-0 hover:bg-cyan-600 hover:border-b hover:border-b-cyan-600 hover:text-white"
+                ? "active bg-green-800 text-white border-x-green-600 border-t-green-600"
+                : "bg-green-100 border-x-green-600 border-t-green-600 hover:border-0 hover:bg-green-800 hover:border-b hover:border-b-green-600 hover:text-white"
             }`}
             onClick={() => handleTabClick(tab.id)}
           >

@@ -19,7 +19,7 @@ export const TabContent = ({
       break;
     case 1:
       tabContent = (
-        <div className="flex items-center w-full h-full py-6 rounded-b-md bg-cyan-600 overflow-auto">
+        <div className="flex items-center w-full h-full py-6 rounded-b-md bg-green-800 overflow-auto">
           {recipe.image ? (
             <img
               src={recipe.image}

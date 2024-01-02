@@ -38,7 +38,7 @@ export const RecipeDetails = ({ token, userId }) => {
   const displayRecipe = () => {
     if (recipe && recipe.author) {
       return (
-        <div className="recipe--content flex items-center rounded-b-md border-t-transparent px-10 py-8 bg-cyan-600 w-full overflow-auto">
+        <div className="recipe--content flex items-center rounded-b-md border-t-transparent px-10 py-8 bg-green-800 w-full overflow-auto">
           <div className="bg-white py-2 px-4 rounded-md shadow-lg w-full">
             <div className="flex justify-end">
               <div>{recipe.publication_date}</div>
@@ -105,8 +105,8 @@ export const RecipeDetails = ({ token, userId }) => {
           </div>
           <div className="modal fade" id="deleteModal" tabIndex="-1">
             <div className="modal-dialog">
-              <div className="modal-content">
-                <div className="modal-header">
+              <div className="modal-content border-2 border-beet-purple">
+                <div className="modal-header border-b-0">
                   <button
                     type="button"
                     className="btn-close"
@@ -114,13 +114,13 @@ export const RecipeDetails = ({ token, userId }) => {
                     aria-label="Close"
                   ></button>
                 </div>
-                <div className="modal-body text-center">
+                <div className="modal-body text-center text-lg">
                   Are you sure you want to delete this recipe?
                 </div>
-                <div className="modal-footer">
+                <div className="modal-footer border-t-0">
                   <button
                     type="button"
-                    className="btn btn-primary"
+                    className="btn btn-danger"
                     data-bs-dismiss="modal"
                     onClick={() => {
                       deleteRecipe(token, recipeId).then(() => {

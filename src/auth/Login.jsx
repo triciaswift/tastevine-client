@@ -31,14 +31,14 @@ export const Login = ({ setToken, setId }) => {
     <main>
       <section className="mt-20 flex flex-col justify-center items-center">
         <h1 className="mb-16">Welcome to Tastevine</h1>
-        <div className="w-5/12 bg-cyan-600 px-8 py-4 rounded-lg mb-4">
+        <div className="w-5/12 bg-green-800 px-8 py-4 rounded-lg mb-4">
           <form onSubmit={handleLogin}>
             <p className="mb-4 text-2xl text-white">Login To Your Account</p>
             <div className="mb-2">
               <label className="form-label text-white">Email</label>
               <div>
                 <input
-                  className="form-control"
+                  className="form-control focus:ring-4 focus:ring-green-700/40 focus:border focus:border-green-700"
                   type="email"
                   name="email"
                   value={email}
@@ -53,13 +53,12 @@ export const Login = ({ setToken, setId }) => {
               <label className="form-label text-white">Password</label>
               <div>
                 <input
-                  className="form-control"
+                  className="form-control focus:ring-4 focus:ring-green-700/40 focus:border focus:border-green-700"
                   type="password"
                   name="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
-                  autoFocus
                 />
               </div>
             </div>

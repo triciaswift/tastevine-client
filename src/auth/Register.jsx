@@ -50,8 +50,8 @@ export const Register = ({ setToken, setId }) => {
   return (
     <section className="flex flex-col items-center mt-20">
       <h1 className="mb-16">Welcome to Tastevine</h1>
-      <div className="w-5/12 bg-cyan-600 p-4 rounded-lg">
-        <form className="" onSubmit={handleRegister}>
+      <div className="w-5/12 bg-green-800 p-4 rounded-lg">
+        <form onSubmit={handleRegister}>
           <p className="mb-4 text-2xl text-white">Create an Account</p>
           <div className="flex">
             <div className="mb-2 mr-2 basis-1/2">

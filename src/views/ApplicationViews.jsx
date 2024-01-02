@@ -58,12 +58,7 @@ export const ApplicationViews = ({ token, setToken, userId, setId }) => {
         element={<Login setToken={setToken} setId={setId} />}
       />
       <Route element={<Authorized token={token} />}>
-        <Route
-          path="/"
-          element={
-            <Home recipes={recipeState} fetchRecipes={fetchRecipesFromAPI} />
-          }
-        />
+        <Route path="/" element={<Home userId={userId} />} />
         <Route path="recipes">
           <Route
             path="all"

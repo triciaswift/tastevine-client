@@ -16,7 +16,7 @@ export const FavoriteList = ({ token }) => {
         <>
           {favorites.map((favorite) => (
             <div
-              className="card basis-1/5 mx-4 cursor-pointer border-double border-8 border-cyan-600 shadow-md"
+              className="card basis-1/5 mx-4 cursor-pointer border-double border-8 border-beet-purple shadow-md"
               key={favorite.id}
               onClick={() => {
                 navigate(`/recipes/details/${favorite.recipe.id}`);

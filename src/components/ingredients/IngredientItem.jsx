@@ -120,7 +120,7 @@ export const IngredientItem = ({
       </td>
       <td className="align-middle">
         <input
-          className="form-control"
+          className="form-control focus:ring-4 focus:ring-green-700/40 focus:border focus:border-green-700"
           type="text"
           name="quantity"
           disabled={!enabled}
@@ -133,7 +133,7 @@ export const IngredientItem = ({
       </td>
       <td className="align-middle">
         <input
-          className="form-control"
+          className="form-control focus:ring-4 focus:ring-green-700/40 focus:border focus:border-green-700"
           type="text"
           name="unit"
           disabled={!enabled}

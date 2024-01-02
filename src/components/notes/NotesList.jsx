@@ -78,7 +78,7 @@ export const NotesList = ({ token, recipeId, userId, notes, fetchNotes }) => {
   };
 
   return (
-    <div className="notes--container flex flex-col rounded-b-md border-t-transparent px-8 py-2 bg-cyan-600 w-full h-full overflow-auto">
+    <div className="notes--container flex flex-col rounded-b-md border-t-transparent px-8 py-2 bg-green-800 w-full h-full overflow-auto">
       <div className="my-2">
         {showAddButton ? (
           <div className="text-center">
@@ -106,11 +106,11 @@ export const NotesList = ({ token, recipeId, userId, notes, fetchNotes }) => {
           </div>
         )}
       </div>
-      <div className="bg-cyan-100 rounded-lg border-double border-8 border-cyan-600 h-full mb-4">
+      <div className="bg-green-100 rounded-lg border-double border-8 border-beet-purple h-full mb-4">
         <div className="flex justify-around flex-wrap ">
           {notes.map((note) => (
             <div
-              className="note--container card basis-80 bg-white px-2 pt-2 rounded-md my-3 shadow-lg border-2 border-cyan-600"
+              className="note--container card basis-80 bg-white px-2 pt-2 rounded-md my-3 shadow-lg border-2 border-beet-purple"
               key={note.id}
             >
               <div className="card-body">

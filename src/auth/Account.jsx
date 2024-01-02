@@ -19,7 +19,7 @@ export const Account = ({ token, userId }) => {
     <section className="flex justify-center my-14">
       <div className="account--container w-1/3">
         <h1>Account Info</h1>
-        <div className="border-1 border-cyan-600 rounded-lg bg-cyan-600/90 shadow-lg p-3 mb-5">
+        <div className="border-1 border-beet-purple rounded-lg bg-green-800/90 shadow-lg p-3 mb-5">
           <div className="name--container flex">
             <div className="mr-4 w-full">
               <label className="mr-2 mb-2 text-white">First Name</label>
