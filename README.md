@@ -22,7 +22,8 @@ Tastevine's front-end is meticulously crafted for an intuitive and seamless user
 
 ## Installing
 
-- git clone `git@github.com:triciaswift/tastevine-client.git`
-- cd to `tastevine-client`
-- npm install
-- npm run dev
+1. git clone `git@github.com:triciaswift/tastevine-client.git`
+2. cd to `tastevine-client`
+3. npm install
+4. follow instructions for server: https://github.com/triciaswift/tastevine-server
+5. npm run dev
