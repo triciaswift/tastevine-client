@@ -57,7 +57,7 @@ export const NoteForm = ({
   };
 
   return (
-    <form>
+    <form onSubmit={handleSave}>
       <fieldset className="content--container mb-2">
         <div>
           <label className="form-label">Note Content</label>
@@ -71,12 +71,9 @@ export const NoteForm = ({
         />
       </fieldset>
       <div className="flex justify-end mt-2">
-        <div className="px-2">
-          <i
-            className="fa-solid fa-check fa-lg cursor-pointer"
-            onClick={handleSave}
-          ></i>
-        </div>
+        <button type="submit" className="px-2">
+          <i className="fa-solid fa-check fa-lg cursor-pointer"></i>
+        </button>
         <div>
           <i
             className="fa-solid fa-rotate-left fa-lg cursor-pointer"

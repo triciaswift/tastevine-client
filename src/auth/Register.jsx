@@ -48,27 +48,29 @@ export const Register = ({ setToken, setId }) => {
   };
 
   return (
-    <section className="flex flex-col items-center mt-20">
-      <h1 className="mb-16">Welcome to Tastevine</h1>
-      <div className="w-5/12 bg-cyan-600 p-4 rounded-lg">
-        <form className="" onSubmit={handleRegister}>
-          <p className="mb-4 text-2xl text-white">Create an Account</p>
+    <section className="flex flex-col items-center">
+      <h1 className="mb-10">Welcome to Tastevine</h1>
+      <div className="w-[40rem] p-4 rounded-lg">
+        <form onSubmit={handleRegister}>
+          <p className="mb-4 text-2xl">Create an Account</p>
           <div className="flex">
             <div className="mb-2 mr-2 basis-1/2">
-              <label className="form-label text-white">First Name</label>
+              <label className="form-label">First Name</label>
               <div>
-                <FormInput
+                <input
                   type="text"
                   value={firstName}
                   onChange={(e) => setFirstName(e.target.value)}
+                  className="form-control focus:ring-4 focus:ring-green-700/40 focus:border focus:border-green-700"
+                  autoFocus
+                  required
                 />
               </div>
             </div>
             <div className="mb-2 basis-1/2">
-              <label className="form-label text-white">Last Name</label>
+              <label className="form-label">Last Name</label>
               <div>
                 <FormInput
-                  type="text"
                   value={lastName}
                   onChange={(e) => setLastName(e.target.value)}
                 />
@@ -76,7 +78,7 @@ export const Register = ({ setToken, setId }) => {
             </div>
           </div>
           <div className="mb-2">
-            <label className="form-label text-white">Email</label>
+            <label className="form-label">Email</label>
             <div>
               <FormInput
                 type="email"
@@ -87,7 +89,7 @@ export const Register = ({ setToken, setId }) => {
           </div>
           <div className="flex">
             <div className="basis-1/2 mb-2 mr-2">
-              <label className="form-label text-white">Password</label>
+              <label className="form-label">Password</label>
               <div>
                 <FormInput
                   type="password"
@@ -97,7 +99,7 @@ export const Register = ({ setToken, setId }) => {
               </div>
             </div>
             <div className="basis-1/2 mb-8">
-              <label className="form-label text-white">Verify Password</label>
+              <label className="form-label">Verify Password</label>
               <div>
                 <FormInput
                   type="password"
@@ -113,7 +115,7 @@ export const Register = ({ setToken, setId }) => {
             </div>
           </div>
           <div className="d-grid gap-2 col-6 mx-auto">
-            <button className="btn btn-primary rounded-full">
+            <button className="btn btn-success rounded-full">
               Get Started
             </button>
           </div>
@@ -132,7 +134,7 @@ export const Register = ({ setToken, setId }) => {
             <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
               <div className="relative transform overflow-hidden rounded-lg bg-red-600 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
                 <div className="bg-white m-4 rounded-lg">
-                  <div className="flex justify-center px-4 pb-4 sm:p-6 sm:pb-4">
+                  <div className="flex justify-center px-4 pt-4 sm:p-6 sm:pb-4">
                     <div className="sm:flex sm:items-start">
                       <div className="text-center">
                         <div className="mb-3">
@@ -145,7 +147,7 @@ export const Register = ({ setToken, setId }) => {
                           Account exists
                         </h3>
                         <div className="mt-2">
-                          <p className="text-sm text-gray-500">
+                          <p className="text-md text-gray-500">
                             Please create a different account with a different
                             email.
                           </p>

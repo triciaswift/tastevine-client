@@ -19,11 +19,11 @@ export const TabContent = ({
       break;
     case 1:
       tabContent = (
-        <div className="flex items-center w-full h-full py-6 rounded-b-md bg-cyan-600 overflow-auto">
+        <div className="flex items-center w-full h-full py-6 rounded-b-md bg-green-800 overflow-auto">
           {recipe.image ? (
             <img
               src={recipe.image}
-              className="rounded-lg w-3/5 h-auto mx-auto border-8 border-double border-white shadow-xl"
+              className="rounded-lg w-[38rem] h-auto mx-auto border-8 border-double border-white shadow-xl"
               alt={recipe.title}
             />
           ) : (
@@ -48,7 +48,7 @@ export const TabContent = ({
   }
 
   return (
-    <div className="recipe--container w-[70rem] h-[35rem] mx-auto">
+    <div className="recipe--container w-[70rem] h-[28rem] mx-auto">
       <RecipeTabs activeTab={activeTab} handleTabClick={handleTabClick} />
       {tabContent}
     </div>

@@ -44,9 +44,10 @@ export const IngredientForm = ({
 
   const handleSave = (e) => {
     e.preventDefault();
+    console.log("handleSave function called");
     createIngredient(ingredientState, token)
       .then(() => {
-        setIngredient({ name: "", grocery_category: "" });
+        setIngredient({ name: "", grocery_category: 0 });
       })
       .then(() => {
         getIngredients();
@@ -57,7 +58,7 @@ export const IngredientForm = ({
     return (
       <>
         <button
-          className="text-white"
+          className="text-black"
           type="button"
           data-bs-toggle="modal"
           data-bs-target="#formModal"
@@ -78,12 +79,12 @@ export const IngredientForm = ({
                 ></button>
               </div>
               <div className="modal-body">
-                <form>
+                <form onSubmit={handleSave}>
                   <div className="mb-3">
                     <label className="col-form-label">Ingredient:</label>
                     <input
                       type="text"
-                      className="form-control"
+                      className="form-control focus:ring-4 focus:ring-green-700/40 focus:border focus:border-green-700"
                       name="name"
                       value={ingredientState.name}
                       onChange={handleInputChange}
@@ -97,9 +98,10 @@ export const IngredientForm = ({
                       className="form-select"
                       name="grocery_category"
                       onChange={handleInputChange}
+                      value={ingredientState.grocery_category}
                       required
                     >
-                      <option value={0}>- Select a grocery category -</option>
+                      <option value={""}>- Select a grocery category -</option>
                       {groceryCategories.map((c) => (
                         <option key={`category-${c.id}`} value={c.id}>
                           {c.category}
@@ -107,24 +109,22 @@ export const IngredientForm = ({
                       ))}
                     </select>
                   </div>
+                  <div className="modal-footer border-t-0">
+                    <button type="submit" className="btn btn-success">
+                      Save
+                    </button>
+                    <button
+                      type="button"
+                      className="btn btn-secondary"
+                      data-bs-dismiss="modal"
+                      onClick={() => {
+                        setIngredient({ name: "", grocery_category: 0 });
+                      }}
+                    >
+                      Close
+                    </button>
+                  </div>
                 </form>
-              </div>
-              <div className="modal-footer">
-                <button
-                  type="button"
-                  className="btn btn-secondary"
-                  data-bs-dismiss="modal"
-                >
-                  Close
-                </button>
-                <button
-                  type="button"
-                  className="btn btn-primary"
-                  data-bs-dismiss="modal"
-                  onClick={handleSave}
-                >
-                  Save
-                </button>
               </div>
             </div>
           </div>
@@ -134,10 +134,9 @@ export const IngredientForm = ({
   };
 
   return (
-    <div className="w-[40%] my-4 bg-cyan-600 rounded-lg p-4 flex">
-      <div className="flex flex-col justify-center bg-cyan-600">
-        <h3 className="mb-4 text-white">Ingredient Options</h3>
-        <div className="flex justify-between items-center mb-4">
+    <div className="w-[40%]">
+      <div className="flex flex-col justify-center bg-white w-full p-2 rounded-lg border-2 border-dashed border-green-800">
+        <div className="flex justify-between items-center mb-2 p-2">
           <div>
             <FormInput
               type="search"
@@ -149,6 +148,7 @@ export const IngredientForm = ({
           </div>
           <div>{displayIngredientForm()}</div>
         </div>
+        <h3 className="mb-4 text-black">Ingredient Options</h3>
         <IngredientsList
           chosenIngredients={chosenIngredients}
           updateIngredients={updateIngredients}

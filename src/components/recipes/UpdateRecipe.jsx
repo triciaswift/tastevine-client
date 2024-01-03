@@ -77,7 +77,7 @@ export const UpdateRecipe = ({
   };
 
   return (
-    <section className="my-14 mx-40">
+    <section className="mx-4">
       <h1>Update Recipe</h1>
       <RecipeForm
         categories={categories}
