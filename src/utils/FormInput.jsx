@@ -35,7 +35,7 @@ export const FormInput = ({
           type="search"
           onChange={onChange}
           placeholder={placeholder}
-          className="form-control"
+          className="form-control focus:ring-4 focus:ring-green-700/40 focus:border focus:border-green-700"
         />
       );
     case "file":
@@ -44,7 +44,7 @@ export const FormInput = ({
           type="file"
           name="image"
           onChange={onChange}
-          className="form-control focus:ring-4 focus:ring-green-700/40 focus:border focus:border-green-700"
+          className="form-control form-control-sm focus:ring-4 focus:ring-green-700/40 focus:border focus:border-green-700"
           required
         />
       );

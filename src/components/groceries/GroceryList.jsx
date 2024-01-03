@@ -94,21 +94,21 @@ export const GroceryList = ({ token }) => {
   const displayUncheckedItems = () => {
     if (groceries && groceries.groceries && groceries.groceries.length) {
       return (
-        <div className="uncheckedItems--container flex flex-wrap justify-center gap-4 bg-white border-8 border-double border-green-800 rounded-lg p-3">
+        <div className="uncheckedItems--container flex flex-wrap justify-center gap-4 bg-white/60 border-8 border-double border-green-800 rounded-lg p-3">
           {categorizedGroceries.map(
             (category, index) =>
               // Check if the category has any groceries before rendering
               category.groceries.length > 0 && (
                 <div
                   key={`category-${index}`}
-                  className="pb-4 basis-[25rem] bg-slate-400/20 rounded-lg"
+                  className="py-2.5 basis-[24rem] bg-lime-50 rounded-lg"
                 >
-                  <h3 className="bg-green-800 text-white rounded-full mb-3 mx-8 px-4 mt-3">
+                  <h3 className="bg-green-800/90 text-white rounded-full mb-1 mx-8 px-4">
                     {category.categoryTitle}
                   </h3>
                   <div className="px-4">
                     {category.groceries.map((groceryItem) => (
-                      <div key={groceryItem.id}>
+                      <div key={groceryItem.id} className="flex items-center">
                         <FormInput
                           type="checkbox"
                           checked={false}
@@ -139,7 +139,7 @@ export const GroceryList = ({ token }) => {
     if (groceries && groceries.groceries && groceries.groceries.length) {
       return (
         <div className="checkedItems--container bg-white/50 rounded-lg p-2">
-          <div className="flex items-center justify-center opacity-70">
+          <div className="flex items-center justify-center opacity-80 mb-2">
             <h4 className="mr-2">Completed Items</h4>
             <i
               className="icon fa-solid fa-trash fa-sm cursor-pointer"
@@ -151,7 +151,10 @@ export const GroceryList = ({ token }) => {
               {groceries.groceries
                 .filter((groceryItem) => groceryItem.checked)
                 .map((groceryItem) => (
-                  <div key={groceryItem.id} className="basis-1/5 px-2">
+                  <div
+                    key={groceryItem.id}
+                    className="basis-1/5 px-2 flex items-center"
+                  >
                     <FormInput
                       type="checkbox"
                       checked={true}
@@ -172,20 +175,18 @@ export const GroceryList = ({ token }) => {
   };
 
   return (
-    <section className="my-14 mx-[22rem]">
-      <h1>Grocery List</h1>
+    <section className="mx-[6rem]">
+      <h1 className="mb-3">Grocery List</h1>
       <div>
         {groceries ? (
           <div className="items--container">
-            <div className="p-2 rounded-lg mb-20">
-              {displayUncheckedItems()}
-            </div>
+            <div className="p-2 rounded-lg mb-4">{displayUncheckedItems()}</div>
             <div className="flex justify-center">
-              <div className="p-2 rounded-lg w-1/4 bg-slate-300">
+              <div className="p-2 rounded-lg w-1/3 bg-neutral-300">
                 {displayCheckedItems()}
               </div>
             </div>
-            <div className="text-center mt-8">
+            <div className="text-center mt-2.5 mb-2">
               <button className="btn btn-danger" onClick={handleDeleteList}>
                 Delete All
               </button>

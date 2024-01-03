@@ -16,7 +16,7 @@ export const FavoriteList = ({ token }) => {
         <>
           {favorites.map((favorite) => (
             <div
-              className="card basis-1/5 mx-4 cursor-pointer border-double border-8 border-beet-purple shadow-md"
+              className="card w-[18rem] mx-4 cursor-pointer border-double border-8 border-green-700 shadow-md"
               key={favorite.id}
               onClick={() => {
                 navigate(`/recipes/details/${favorite.recipe.id}`);
@@ -40,7 +40,7 @@ export const FavoriteList = ({ token }) => {
   };
 
   return (
-    <section className="my-14 mx-16">
+    <section className="mx-16">
       <h1 className="mb-10">Favorites</h1>
       <div className="cards--container flex flex-wrap justify-center gap-y-4">
         {displayFavorite()}

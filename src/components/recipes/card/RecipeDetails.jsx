@@ -188,8 +188,8 @@ export const RecipeDetails = ({ token, userId }) => {
   };
 
   return (
-    <section className="my-14">
-      <h1>{recipe.title}</h1>
+    <section>
+      <h1 className="mb-4">{recipe.title}</h1>
       {displayCategories()}
       <TabContent
         displayRecipe={displayRecipe}

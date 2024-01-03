@@ -15,7 +15,7 @@ export default {
     extend: {
       colors: {
         beige: "#f5ecca",
-        "avocado-green": "#748147",
+        "avocado-green": "#fbedb0",
         "beet-purple": "#844a4e",
         "tomato-red": "#ba0518",
         "lemon-yellow": "#f4ca64",

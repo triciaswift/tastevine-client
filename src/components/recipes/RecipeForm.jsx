@@ -88,11 +88,11 @@ export const RecipeForm = ({
   };
 
   return (
-    <div className="flex">
+    <div className="flex mb-1">
       <div className="flex flex-col w-[60%]">
         <form onSubmit={handleSave}>
           <div className="recipe-ingredient--container">
-            <div className="recipe--card rounded-lg mr-24 flex flex-col justify-between">
+            <div className="recipe--card rounded-lg mr-8 flex flex-col justify-between">
               <div className="bg-white rounded-lg px-4 py-8 border-2 border-dashed border-green-700">
                 <div className="mb-3">
                   <div>
@@ -156,7 +156,7 @@ export const RecipeForm = ({
                         placeholder={`1. First instruction\n2. Second instruction\netc.`}
                         value={recipe.instructions}
                         onChange={changeRecipeState}
-                        rows="20"
+                        rows="12"
                         required
                       ></textarea>
                     </div>

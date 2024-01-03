@@ -53,8 +53,8 @@ export const RecipesList = ({
   const displayRecipes = () => {
     // if (filteredRecipes && filteredRecipes.length) {
     return (
-      <section className="recipe--book--container flex flex-col my-3 items-center">
-        <div className="w-3/4">
+      <div className="recipe--book--container my-3">
+        <div className="w-[90%] mx-auto">
           {
             <CategoryTabs
               categories={categories}
@@ -62,11 +62,11 @@ export const RecipesList = ({
               handleTabClick={handleTabClick}
             />
           }
-          <div className="cards--containers flex flex-wrap gap-y-4 gap-x-20 justify-center bg-beige rounded-md max-h-[64rem] min-h-[20rem] overflow-y-auto py-4">
+          <div className="cards--containers flex flex-wrap justify-center gap-x-6 gap-y-4 bg-white/60 max-h-[30rem] min-h-[20rem] overflow-y-auto py-4">
             {filteredRecipes.map((recipe) => {
               return (
                 <div
-                  className="card basis-1/5 cursor-pointer border-2 border-beet-purple hover:shadow-xl"
+                  className="card w-[18rem] cursor-pointer border-2 border-green-800 hover:shadow-xl"
                   key={recipe.id}
                   onClick={() => {
                     navigate(`/recipes/details/${recipe.id}`);
@@ -77,7 +77,7 @@ export const RecipesList = ({
                     className="card-img-top img-fluid h-auto rounded-sm"
                     alt={recipe.title}
                   />
-                  <div className="card-body flex items-center justify-center">
+                  <div className="card-body flex items-center justify-center p-1">
                     <h3 className="card-title m-0">{recipe.title}</h3>
                   </div>
                 </div>
@@ -85,7 +85,7 @@ export const RecipesList = ({
             })}
           </div>
         </div>
-      </section>
+      </div>
     );
     // }
   };
@@ -93,18 +93,18 @@ export const RecipesList = ({
   return (
     <div>
       <div className="flex justify-end mr-6 mt-3">
-        <form className="d-flex" role="search">
+        <div className="d-flex" role="search">
           <input
-            className="form-control me-2 border-2 rounded-lg focus:border focus:border-beet-purple border-beet-purple"
+            className="form-control me-2 border-2 rounded-lg focus:ring-4 focus:ring-green-700/40 focus:border focus:border-green-700 border-green-800"
             type="search"
             placeholder={`Search ${findCategory(categoryId)}`}
             onChange={(event) => {
               setSearch(event.target.value);
             }}
           />
-        </form>
+        </div>
       </div>
-      <h2>Select a category</h2>
+      <h2 className="text-3xl">Select a category</h2>
       {displayRecipes()}
     </div>
   );

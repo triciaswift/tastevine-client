@@ -58,7 +58,7 @@ export const IngredientForm = ({
     return (
       <>
         <button
-          className="text-white"
+          className="text-black"
           type="button"
           data-bs-toggle="modal"
           data-bs-target="#formModal"
@@ -98,6 +98,7 @@ export const IngredientForm = ({
                       className="form-select"
                       name="grocery_category"
                       onChange={handleInputChange}
+                      value={ingredientState.grocery_category}
                       required
                     >
                       <option value={""}>- Select a grocery category -</option>
@@ -133,10 +134,9 @@ export const IngredientForm = ({
   };
 
   return (
-    <div className="w-[40%] bg-green-800 rounded-lg px-4 flex">
-      <div className="flex flex-col justify-center bg-green-800 w-full">
-        <h3 className="mb-4 text-white">Ingredient Options</h3>
-        <div className="flex justify-between items-center mb-4">
+    <div className="w-[40%]">
+      <div className="flex flex-col justify-center bg-white w-full p-2 rounded-lg border-2 border-dashed border-green-800">
+        <div className="flex justify-between items-center mb-2 p-2">
           <div>
             <FormInput
               type="search"
@@ -148,6 +148,7 @@ export const IngredientForm = ({
           </div>
           <div>{displayIngredientForm()}</div>
         </div>
+        <h3 className="mb-4 text-black">Ingredient Options</h3>
         <IngredientsList
           chosenIngredients={chosenIngredients}
           updateIngredients={updateIngredients}

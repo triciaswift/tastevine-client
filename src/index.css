@@ -47,7 +47,7 @@ dialog {
   }
 
   .category--tags {
-    @apply font-poppins border-double mx-2 mb-4 bg-yellow-400 rounded-full border-4 border-yellow-500 px-4;
+    @apply font-poppins border-double mx-2 bg-yellow-400 rounded-full border-4 border-yellow-500 px-4;
   }
 
   .overlay {
@@ -74,7 +74,7 @@ dialog {
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
-    opacity: 0.7;
+    opacity: 0.5;
     z-index: -1;
   }
 
@@ -95,10 +95,14 @@ dialog {
   }
 
   h3 {
-    @apply font-spoof text-center text-2xl;
+    @apply font-spoof text-center text-xl;
   }
 
   h4 {
     @apply font-poppins text-xl;
+  }
+
+  section {
+    @apply mt-8;
   }
 }

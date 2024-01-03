@@ -37,7 +37,7 @@ export const Home = ({ userId }) => {
       return (
         <div
           id="recipeCarousel"
-          className="carousel carousel-dark slide carousel-fade w-[60rem] h-auto"
+          className="carousel carousel-dark slide carousel-fade w-[50rem] h-auto"
           data-bs-ride="carousel"
           data-bs-interval="3000"
         >
@@ -47,14 +47,14 @@ export const Home = ({ userId }) => {
                 key={index}
                 className={`carousel-item ${
                   index === 0 ? "active" : ""
-                } py-8 rounded-lg`}
+                } pt-8 rounded-lg`}
               >
                 <img
                   src={recipe.image}
-                  className="d-block w-3/4 rounded-xl mx-auto border-8 border-white"
+                  className="d-block w-[75%] rounded-xl mx-auto border-2 border-green-800"
                   alt={recipe.title}
                 />
-                <div className="carousel-caption d-none d-md-block bg-white/70 rounded-xl mx-[3rem] mb-6 py-2">
+                <div className="carousel-caption d-none d-md-block bg-white/70 rounded-xl mx-[3rem] py-2">
                   <h3>{recipe.title}</h3>
                 </div>
               </div>
@@ -90,12 +90,17 @@ export const Home = ({ userId }) => {
   };
 
   return (
-    <section className="my-14">
-      <h1>Welcome to Tastevine {user.first_name}!</h1>
-      <div className="flex justify-center py-4">{displayCarousel()}</div>
-      <h4 className="text-center underline text-xl">
-        <Link to={`/recipes/all`}>Browse Recipes</Link>
+    <section>
+      <h1 className="mb-4">Welcome to Tastevine {user.first_name}!</h1>
+      <h4 className="text-center">
+        <Link
+          className="underline hover:text-blue-600 visited:text-black"
+          to={`/recipes/all`}
+        >
+          Browse Recipes
+        </Link>
       </h4>
+      <div className="flex justify-center">{displayCarousel()}</div>
     </section>
   );
 };

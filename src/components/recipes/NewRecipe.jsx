@@ -38,7 +38,7 @@ export const NewRecipe = ({
   };
 
   return (
-    <section className="my-14 mx-40">
+    <section className="mx-4">
       <h1>New Recipe</h1>
       <RecipeForm
         categories={categories}

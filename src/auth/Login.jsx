@@ -29,13 +29,13 @@ export const Login = ({ setToken, setId }) => {
 
   return (
     <main>
-      <section className="mt-20 flex flex-col justify-center items-center">
-        <h1 className="mb-16">Welcome to Tastevine</h1>
-        <div className="w-5/12 bg-green-800 px-8 py-4 rounded-lg mb-4">
+      <section className="flex flex-col justify-center items-center">
+        <h1 className="mb-10">Welcome to Tastevine</h1>
+        <div className="w-[35rem] px-8 py-4 rounded-lg mb-4">
           <form onSubmit={handleLogin}>
-            <p className="mb-4 text-2xl text-white">Login To Your Account</p>
+            <p className="mb-4 text-2xl">Login To Your Account</p>
             <div className="mb-2">
-              <label className="form-label text-white">Email</label>
+              <label className="form-label">Email</label>
               <div>
                 <input
                   className="form-control focus:ring-4 focus:ring-green-700/40 focus:border focus:border-green-700"
@@ -50,7 +50,7 @@ export const Login = ({ setToken, setId }) => {
             </div>
 
             <div className="basis-1/2 mb-2">
-              <label className="form-label text-white">Password</label>
+              <label className="form-label">Password</label>
               <div>
                 <input
                   className="form-control focus:ring-4 focus:ring-green-700/40 focus:border focus:border-green-700"
@@ -63,7 +63,7 @@ export const Login = ({ setToken, setId }) => {
               </div>
             </div>
             {isUnsuccessful ? (
-              <p className="text-white mx-auto bg-red-600 rounded-full w-max px-3 py-1">
+              <p className="text-red-500 mx-auto w-max">
                 Username or password not valid
               </p>
             ) : (
@@ -71,7 +71,7 @@ export const Login = ({ setToken, setId }) => {
             )}
 
             <div className="mt-6">
-              <button className="btn btn-primary rounded-full w-100">
+              <button className="btn btn-success rounded-full w-100">
                 Login
               </button>
             </div>
@@ -79,14 +79,14 @@ export const Login = ({ setToken, setId }) => {
         </div>
       </section>
       <div className="loginLinks mb-6">
-        <section className="link--register text-center">
+        <div className="link--register text-center">
           <Link
             className="underline text-blue-600 hover:text-blue-600 visited:text-black"
             to="/register"
           >
             Create Account
           </Link>
-        </section>
+        </div>
       </div>
     </main>
   );
