@@ -6,22 +6,28 @@ export const Home = ({ userId }) => {
   const [user, setUser] = useState({});
 
   const fetchRecipes = async () => {
-    const response = await fetch("http://localhost:8000/recipes", {
-      headers: {
-        Authorization: `Token ${localStorage.getItem("auth_token")}`,
-      },
-    });
+    const response = await fetch(
+      "https://starfish-app-x978m.ondigitalocean.app/recipes",
+      {
+        headers: {
+          Authorization: `Token ${localStorage.getItem("auth_token")}`,
+        },
+      }
+    );
 
     const recipes = await response.json();
     setRecipes(recipes);
   };
 
   const fetchCurrentUser = async () => {
-    const response = await fetch(`http://localhost:8000/users/${userId}`, {
-      headers: {
-        Authorization: `Token ${localStorage.getItem("auth_token")}`,
-      },
-    });
+    const response = await fetch(
+      `https://starfish-app-x978m.ondigitalocean.app/users/${userId}`,
+      {
+        headers: {
+          Authorization: `Token ${localStorage.getItem("auth_token")}`,
+        },
+      }
+    );
 
     const user = await response.json();
     setUser(user);

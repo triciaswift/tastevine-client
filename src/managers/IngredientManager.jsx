@@ -1,5 +1,5 @@
 export const getAllIngredients = (token) => {
-  return fetch(`http://localhost:8000/ingredients`, {
+  return fetch(`https://starfish-app-x978m.ondigitalocean.app/ingredients`, {
     headers: {
       Authorization: `Token ${token}`,
       "Content-Type": "application/json",
@@ -8,7 +8,7 @@ export const getAllIngredients = (token) => {
 };
 
 export const createIngredient = (ingredient, token) => {
-  return fetch(`http://localhost:8000/ingredients`, {
+  return fetch(`https://starfish-app-x978m.ondigitalocean.app/ingredients`, {
     method: "POST",
     headers: {
       Authorization: `Token ${token}`,

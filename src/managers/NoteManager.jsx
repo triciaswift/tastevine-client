@@ -1,34 +1,43 @@
 export const getNotesByRecipeId = (token, recipeId) => {
-  return fetch(`http://localhost:8000/notes?recipe=${recipeId}`, {
-    headers: {
-      Authorization: `Token ${token}`,
-      "Content-Type": "application/json",
-    },
-  }).then((response) => response.json());
+  return fetch(
+    `https://starfish-app-x978m.ondigitalocean.app/notes?recipe=${recipeId}`,
+    {
+      headers: {
+        Authorization: `Token ${token}`,
+        "Content-Type": "application/json",
+      },
+    }
+  ).then((response) => response.json());
 };
 
 export const updateNote = (note, noteId, token) => {
-  return fetch(`http://localhost:8000/notes/${noteId}`, {
-    method: "PUT",
-    headers: {
-      Authorization: `Token ${token}`,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(note),
-  });
+  return fetch(
+    `https://starfish-app-x978m.ondigitalocean.app/notes/${noteId}`,
+    {
+      method: "PUT",
+      headers: {
+        Authorization: `Token ${token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(note),
+    }
+  );
 };
 
 export const deleteNote = (token, noteId) => {
-  return fetch(`http://localhost:8000/notes/${noteId}`, {
-    method: "DELETE",
-    headers: {
-      Authorization: `Token ${token}`,
-    },
-  });
+  return fetch(
+    `https://starfish-app-x978m.ondigitalocean.app/notes/${noteId}`,
+    {
+      method: "DELETE",
+      headers: {
+        Authorization: `Token ${token}`,
+      },
+    }
+  );
 };
 
 export const createNote = (note, token) => {
-  return fetch(`http://localhost:8000/notes`, {
+  return fetch(`https://starfish-app-x978m.ondigitalocean.app/notes`, {
     method: "POST",
     headers: {
       Authorization: `Token ${token}`,
