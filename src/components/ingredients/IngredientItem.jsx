@@ -108,36 +108,36 @@ export const IngredientItem = ({
 
   return (
     <>
-      <td className="align-middle">
+      <td className="align-middle w-[2%]">
         <FormInput
           type="checkbox"
           checked={enabled}
           onChange={() => setEnabled(!enabled)}
         />
       </td>
-      <td className="align-middle">
+      <td className="align-middle w-[50%]">
         <label>{ingredient.name}</label>
       </td>
-      <td className="align-middle">
+      <td className="align-middle w-[24%]">
         <input
           className="form-control focus:ring-4 focus:ring-green-700/40 focus:border focus:border-green-700"
           type="text"
           name="quantity"
           disabled={!enabled}
-          placeholder="2, 1/4 etc."
+          placeholder="2, 1/4, 1 1/2"
           value={ingredientInfo.quantity}
           onChange={(e) =>
             setIngredientInfo({ ...ingredientInfo, quantity: e.target.value })
           }
         />
       </td>
-      <td className="align-middle">
+      <td className="align-middle w-[24%]">
         <input
           className="form-control focus:ring-4 focus:ring-green-700/40 focus:border focus:border-green-700"
           type="text"
           name="unit"
           disabled={!enabled}
-          placeholder="tsp, c, oz, etc."
+          placeholder="c, tsp, oz"
           value={ingredientInfo.unit}
           onChange={(e) =>
             setIngredientInfo({ ...ingredientInfo, unit: e.target.value })

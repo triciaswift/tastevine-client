@@ -53,8 +53,8 @@ export const RecipesList = ({
   const displayRecipes = () => {
     // if (filteredRecipes && filteredRecipes.length) {
     return (
-      <div className="recipe--book--container my-3">
-        <div className="w-[90%] mx-auto">
+      <div className="recipe--book--container flex justify-center mt-3">
+        <div className="mx-24">
           {
             <CategoryTabs
               categories={categories}
@@ -62,7 +62,7 @@ export const RecipesList = ({
               handleTabClick={handleTabClick}
             />
           }
-          <div className="cards--containers flex flex-wrap justify-center gap-x-6 gap-y-4 bg-white/60 max-h-[30rem] min-h-[20rem] overflow-y-auto py-4">
+          <div className="cards--containers flex flex-wrap justify-center gap-x-6 gap-y-4 bg-white/60 max-h-[33rem] min-h-[20rem] overflow-y-auto py-4 px-8">
             {filteredRecipes.map((recipe) => {
               return (
                 <div
@@ -92,8 +92,12 @@ export const RecipesList = ({
 
   return (
     <div>
-      <div className="flex justify-end mr-6 mt-3">
-        <div className="d-flex" role="search">
+      <div className="flex items-center justify-between mx-6 mt-3">
+        <div className="flex w-[253.6px]"></div>
+        <div className="flex items-center">
+          <h2 className="text-3xl">Select a category</h2>
+        </div>
+        <div className="flex items-center" role="search">
           <input
             className="form-control me-2 border-2 rounded-lg focus:ring-4 focus:ring-green-700/40 focus:border focus:border-green-700 border-green-800"
             type="search"
@@ -104,7 +108,6 @@ export const RecipesList = ({
           />
         </div>
       </div>
-      <h2 className="text-3xl">Select a category</h2>
       {displayRecipes()}
     </div>
   );

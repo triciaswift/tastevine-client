@@ -134,8 +134,8 @@ export const IngredientForm = ({
   };
 
   return (
-    <div className="w-[40%]">
-      <div className="flex flex-col justify-center bg-white w-full p-2 rounded-lg border-2 border-dashed border-green-800">
+    <div className="flex grow w-[40%]">
+      <div className="flex flex-col justify-start overflow-auto bg-white w-full p-2 rounded-lg border-2 border-dashed border-green-700 mb-[46px]">
         <div className="flex justify-between items-center mb-2 p-2">
           <div>
             <FormInput
