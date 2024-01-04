@@ -10,7 +10,6 @@ export const NoteForm = ({
   token,
   recipeId,
   fetchNotes,
-  setShowAddButton,
 }) => {
   const [currentNote, setCurrentNote] = useState({ content: "" });
 
@@ -41,9 +40,7 @@ export const NoteForm = ({
           setEditingNoteId(null);
         });
     } else {
-      createNote(newNote, token)
-        .then(() => fetchNotes())
-        .then(setShowAddButton(true));
+      createNote(newNote, token).then(() => fetchNotes());
     }
   };
 
@@ -51,8 +48,6 @@ export const NoteForm = ({
     if (isEditing) {
       setIsEditing(false);
       setEditingNoteId(null);
-    } else {
-      setShowAddButton(true);
     }
   };
 
@@ -71,13 +66,14 @@ export const NoteForm = ({
         />
       </fieldset>
       <div className="flex justify-end mt-2">
-        <button type="submit" className="px-2">
+        <button type="submit" className="px-2" data-bs-dismiss="modal">
           <i className="fa-solid fa-check fa-lg cursor-pointer"></i>
         </button>
         <div>
           <i
             className="fa-solid fa-rotate-left fa-lg cursor-pointer"
             onClick={handleCancel}
+            data-bs-dismiss="modal"
           ></i>
         </div>
       </div>

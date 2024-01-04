@@ -5,7 +5,6 @@ import { NoteForm } from "./NoteForm";
 export const NotesList = ({ token, recipeId, userId, notes, fetchNotes }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [editingNoteId, setEditingNoteId] = useState(null);
-  const [showAddButton, setShowAddButton] = useState(true);
   const newNote = { content: "" };
 
   const handleEdit = (noteId) => {
@@ -80,7 +79,61 @@ export const NotesList = ({ token, recipeId, userId, notes, fetchNotes }) => {
   return (
     <div className="notes--container flex flex-col rounded-b-md border-t-transparent px-8 pb-1 bg-green-800 w-full h-full overflow-auto">
       <div className="my-2">
-        {showAddButton ? (
+        <div className="text-center">
+          <button
+            type="button"
+            className="bg-white px-4 py-1 rounded-full"
+            data-bs-toggle="modal"
+            data-bs-target="#noteFormModal"
+          >
+            Add Note
+          </button>
+        </div>
+        <div
+          className="modal fade"
+          id="noteFormModal"
+          tabIndex="-1"
+          aria-labelledby="noteFormLabel"
+          aria-hidden="true"
+        >
+          <div className="modal-dialog">
+            <div className="modal-content">
+              <div className="modal-header border-b-0 pb-0">
+                {/* <div className="modal-title fs-5" id="noteFormLabel">
+                  Note Content
+                </div> */}
+                <button
+                  type="button"
+                  className="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <div className="modal-body pt-0">
+                <NoteForm
+                  note={newNote}
+                  isEditing={isEditing}
+                  token={token}
+                  recipeId={recipeId}
+                  fetchNotes={fetchNotes}
+                />
+              </div>
+              {/* <div className="modal-footer">
+                <button
+                  type="button"
+                  className="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                >
+                  Close
+                </button>
+                <button type="button" className="btn btn-primary">
+                  Save changes
+                </button>
+              </div> */}
+            </div>
+          </div>
+        </div>
+        {/* {showAddButton ? (
           <div className="text-center">
             <button
               className="bg-white px-4 py-1 rounded-full"
@@ -104,7 +157,7 @@ export const NotesList = ({ token, recipeId, userId, notes, fetchNotes }) => {
               </div>
             </div>
           </div>
-        )}
+        )} */}
       </div>
       <div className="bg-green-100 rounded-lg h-full mb-4 overflow-y-auto">
         <div className="flex justify-around flex-wrap">
