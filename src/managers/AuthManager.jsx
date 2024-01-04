@@ -1,5 +1,5 @@
 export const registerUser = (newUser) => {
-  return fetch("http://localhost:8000/register", {
+  return fetch("https://starfish-app-x978m.ondigitalocean.app/register", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -10,7 +10,7 @@ export const registerUser = (newUser) => {
 };
 
 export const loginUser = (user) => {
-  return fetch("http://localhost:8000/login", {
+  return fetch("https://starfish-app-x978m.ondigitalocean.app/login", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -21,10 +21,13 @@ export const loginUser = (user) => {
 };
 
 export const getUser = (userId, token) => {
-  return fetch(`http://localhost:8000/users/${userId}`, {
-    headers: {
-      Authorization: `Token ${token}`,
-      "Content-Type": "application/json",
-    },
-  }).then((response) => response.json());
+  return fetch(
+    `https://starfish-app-x978m.ondigitalocean.app/users/${userId}`,
+    {
+      headers: {
+        Authorization: `Token ${token}`,
+        "Content-Type": "application/json",
+      },
+    }
+  ).then((response) => response.json());
 };
