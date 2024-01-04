@@ -71,9 +71,14 @@ export const UpdateRecipe = ({
       ingredients: Array.from(chosenIngredients),
       categories: Array.from(chosenCategories),
     };
-    updateRecipe(updatedRecipe, token).then(() => {
+
+    try {
+      updateRecipe(updatedRecipe, token).then(() => {
+        navigate(`/recipes/details/${recipeId}`);
+      });
+    } catch (error) {
       navigate(`/recipes/details/${recipeId}`);
-    });
+    }
   };
 
   return (
