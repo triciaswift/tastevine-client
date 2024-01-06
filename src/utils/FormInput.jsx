@@ -45,7 +45,6 @@ export const FormInput = ({
           name="image"
           onChange={onChange}
           className="form-control form-control-sm focus:ring-4 focus:ring-green-700/40 focus:border focus:border-green-700"
-          required
         />
       );
     case "email":
