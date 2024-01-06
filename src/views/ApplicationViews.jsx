@@ -24,10 +24,11 @@ export const ApplicationViews = ({ token, setToken, userId, setId }) => {
   const [ingredientState, setIngredientState] = useState([]);
 
   const fetchRecipesFromAPI = (showAll) => {
-    let url = "http://localhost:8000/recipes";
+    let url = "https://starfish-app-x978m.ondigitalocean.app/recipes";
 
     if (showAll !== true) {
-      url = "http://localhost:8000/recipes?user=current";
+      url =
+        "https://starfish-app-x978m.ondigitalocean.app/recipes?user=current";
     }
 
     getAllRecipes(url, token).then((recipes) => {
