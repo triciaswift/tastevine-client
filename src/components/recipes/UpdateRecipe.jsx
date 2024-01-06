@@ -13,6 +13,7 @@ export const UpdateRecipe = ({
   const [recipe, setRecipe] = useState({});
   const [chosenCategories, updateCategories] = useState(new Set());
   const [chosenIngredients, updateIngredients] = useState(new Set());
+  const [isEditing, setEditingState] = useState("");
 
   const { recipeId } = useParams();
   const navigate = useNavigate();
@@ -23,6 +24,7 @@ export const UpdateRecipe = ({
     });
     fetchCategories();
     fetchIngredients();
+    setEditingState(true);
   }, [recipeId, token]);
 
   useEffect(() => {
@@ -96,6 +98,8 @@ export const UpdateRecipe = ({
         chosenIngredients={chosenIngredients}
         updateIngredients={updateIngredients}
         handleSave={handleSave}
+        isEditing={isEditing}
+        setEditingState={setEditingState}
       />
     </section>
   );

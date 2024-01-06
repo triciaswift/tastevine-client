@@ -14,6 +14,7 @@ export const RecipeForm = ({
   chosenIngredients,
   updateIngredients,
   handleSave,
+  isEditing,
 }) => {
   const navigate = useNavigate();
 
@@ -130,12 +131,24 @@ export const RecipeForm = ({
                       <label htmlFor="formFile" className="form-label">
                         Recipe Image
                       </label>
-                      <FormInput
-                        type="file"
-                        onChange={(e) => {
-                          createImageString(e);
-                        }}
-                      />
+                      {isEditing ? (
+                        <FormInput
+                          type="file"
+                          onChange={(e) => {
+                            createImageString(e);
+                          }}
+                        />
+                      ) : (
+                        <input
+                          type="file"
+                          name="image"
+                          onChange={(e) => {
+                            createImageString(e);
+                          }}
+                          className="form-control form-control-sm focus:ring-4 focus:ring-green-700/40 focus:border focus:border-green-700"
+                          required
+                        />
+                      )}
                     </div>
                   </fieldset>
                   <fieldset className="flex w-2/3">

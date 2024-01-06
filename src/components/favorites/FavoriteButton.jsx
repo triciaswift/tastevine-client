@@ -6,37 +6,21 @@ import {
 } from "../../managers/FavoriteManager";
 
 export const FavoriteButton = ({ recipeId, token }) => {
-  const [favorites, setFavorites] = useState([]);
   const [favorite, setFavorite] = useState(undefined);
   const [buttonState, setButtonState] = useState("fa-regular");
 
-  const getFavorites = async () => {
-    const fetchedFavorites = await getAllFavorites(token);
-    await setFavorites(fetchedFavorites);
-    const foundRecipe = fetchedFavorites.find(
-      (fav) => fav.recipe.id === parseInt(recipeId)
-    );
-    setFavorite(foundRecipe);
-  };
-
   useEffect(() => {
-    getFavorites();
+    getAllFavorites(token).then((favorites) => {
+      const foundRecipe = favorites.find(
+        (fav) => fav.recipe.id === parseInt(recipeId)
+      );
+      setFavorite(foundRecipe);
+    });
   }, [recipeId, token]);
 
   useEffect(() => {
     setButtonState(favorite ? "fa-solid" : "fa-regular");
   }, [favorite]);
-
-  const displayButton = () => {
-    if (favorites && favorites.length) {
-      return (
-        <i
-          className={`fa-heart ${buttonState} fa-xl cursor-pointer`}
-          onClick={handleFavorite}
-        ></i>
-      );
-    }
-  };
 
   const handleFavorite = () => {
     const newFavorite = { recipeId: recipeId };
@@ -52,5 +36,12 @@ export const FavoriteButton = ({ recipeId, token }) => {
     }
   };
 
-  return <div>{displayButton()}</div>;
+  return (
+    <div>
+      <i
+        className={`fa-heart ${buttonState} fa-xl cursor-pointer`}
+        onClick={handleFavorite}
+      ></i>
+    </div>
+  );
 };

@@ -3,31 +3,26 @@ import { Link } from "react-router-dom";
 
 export const Home = ({ userId }) => {
   const [recipes, setRecipes] = useState([]);
+  const [visibleRecipes, setVisibleRecipes] = useState([]);
   const [user, setUser] = useState({});
 
   const fetchRecipes = async () => {
-    const response = await fetch(
-      "https://starfish-app-x978m.ondigitalocean.app/recipes",
-      {
-        headers: {
-          Authorization: `Token ${localStorage.getItem("auth_token")}`,
-        },
-      }
-    );
+    const response = await fetch("http://localhost:8000/recipes", {
+      headers: {
+        Authorization: `Token ${localStorage.getItem("auth_token")}`,
+      },
+    });
 
     const recipes = await response.json();
     setRecipes(recipes);
   };
 
   const fetchCurrentUser = async () => {
-    const response = await fetch(
-      `https://starfish-app-x978m.ondigitalocean.app/users/${userId}`,
-      {
-        headers: {
-          Authorization: `Token ${localStorage.getItem("auth_token")}`,
-        },
-      }
-    );
+    const response = await fetch(`http://localhost:8000/users/${userId}`, {
+      headers: {
+        Authorization: `Token ${localStorage.getItem("auth_token")}`,
+      },
+    });
 
     const user = await response.json();
     setUser(user);
@@ -38,58 +33,43 @@ export const Home = ({ userId }) => {
     fetchCurrentUser();
   }, []);
 
+  useEffect(() => {
+    setVisibleRecipes(recipes.slice(0, 5));
+  }, [recipes]);
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setTimeout(() => {
+        setVisibleRecipes((prevRecipes) => [
+          ...prevRecipes.slice(1),
+          prevRecipes[0],
+        ]);
+      }, 500);
+    }, 2000);
+    return () => clearInterval(intervalId);
+  }, [visibleRecipes]);
+
   const displayCarousel = () => {
-    if (recipes && recipes.length) {
+    if (visibleRecipes && recipes.length) {
       return (
-        <div
-          id="recipeCarousel"
-          className="carousel carousel-dark slide carousel-fade w-[50rem] h-auto"
-          data-bs-ride="carousel"
-          data-bs-interval="3000"
-        >
-          <div className="carousel-inner">
-            {recipes.slice(0, 5).map((recipe, index) => (
-              <div
-                key={index}
-                className={`carousel-item ${
-                  index === 0 ? "active" : ""
-                } pt-8 rounded-lg`}
-              >
-                <img
-                  src={recipe.image}
-                  className="d-block w-[75%] rounded-xl mx-auto border-2 border-green-800"
-                  alt={recipe.title}
-                />
-                <div className="carousel-caption d-none d-md-block bg-white/70 rounded-xl mx-[3rem] py-2">
-                  <h3>{recipe.title}</h3>
-                </div>
+        <div className="carousel--container mx-auto">
+          {visibleRecipes.map((recipe, index) => (
+            <div
+              key={index}
+              className={`relative w-[38rem] ${
+                index === visibleRecipes.length - 1 ? "block" : "hidden"
+              } pt-8 rounded-lg`}
+            >
+              <img
+                src={recipe.image}
+                className="w-full rounded-xl mx-auto border-2 border-green-800"
+                alt={recipe.title}
+              />
+              <div className="w-2/3 absolute bottom-6 left-1/2 -translate-x-1/2 bg-white/70 py-2 px-4 rounded-lg">
+                <h3 className="text-center">{recipe.title}</h3>
               </div>
-            ))}
-          </div>
-          <button
-            className="carousel-control-prev"
-            type="button"
-            data-bs-target="#recipeCarousel"
-            data-bs-slide="prev"
-          >
-            <span
-              className="carousel-control-prev-icon"
-              aria-hidden="true"
-            ></span>
-            <span className="visually-hidden">Previous</span>
-          </button>
-          <button
-            className="carousel-control-next"
-            type="button"
-            data-bs-target="#recipeCarousel"
-            data-bs-slide="next"
-          >
-            <span
-              className="carousel-control-next-icon"
-              aria-hidden="true"
-            ></span>
-            <span className="visually-hidden">Next</span>
-          </button>
+            </div>
+          ))}
         </div>
       );
     }

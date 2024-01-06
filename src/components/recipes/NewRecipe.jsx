@@ -17,11 +17,13 @@ export const NewRecipe = ({
   });
   const [chosenCategories, updateCategories] = useState(new Set());
   const [chosenIngredients, updateIngredients] = useState(new Set());
+  const [isEditing, setEditingState] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
     fetchCategories();
     fetchIngredients();
+    setEditingState(false);
   }, []);
 
   const handleSave = (e) => {
@@ -52,6 +54,7 @@ export const NewRecipe = ({
         chosenIngredients={chosenIngredients}
         updateIngredients={updateIngredients}
         handleSave={handleSave}
+        isEditing={isEditing}
       />
     </section>
   );
