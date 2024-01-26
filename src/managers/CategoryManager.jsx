@@ -1,5 +1,5 @@
 export const getAllCategories = (token) => {
-  return fetch(`https://starfish-app-x978m.ondigitalocean.app/categories`, {
+  return fetch(`http://localhost:8000/categories`, {
     headers: {
       Authorization: `Token ${token}`,
       "Content-Type": "application/json",

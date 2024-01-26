@@ -9,12 +9,14 @@ export const RecipesList = ({
   fetchCategories,
   showAll,
 }) => {
+  // State variables
   const [categoryId, setCategoryId] = useState(0);
   const [filteredRecipes, setFilteredRecipes] = useState([]);
   const [searchRecipe, setSearch] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
+    // Fetch recipes and categories when 'showAll' changes
     fetchRecipes(showAll);
     setFilteredRecipes(recipes);
     fetchCategories();
@@ -22,6 +24,7 @@ export const RecipesList = ({
   }, [showAll]);
 
   useEffect(() => {
+    // Filter recipes based on search input, searches titles
     const foundRecipe = recipes.filter((recipe) =>
       recipe.title.toLowerCase().includes(searchRecipe.toLocaleLowerCase())
     );
@@ -29,6 +32,7 @@ export const RecipesList = ({
   }, [recipes, searchRecipe]);
 
   useEffect(() => {
+    // Filter recipes based on selected category
     if (searchRecipe === "" && categoryId) {
       const filteredRecipesById = recipes.filter((recipe) =>
         recipe.categories.some((catObj) => catObj.id === categoryId)
@@ -37,10 +41,12 @@ export const RecipesList = ({
     }
   }, [searchRecipe, categoryId]);
 
+  // Function handles category tab click
   const handleTabClick = (categoryId) => {
     setCategoryId(categoryId);
   };
 
+  // Based on selected category, function finds the category id from the categories array and returns the category label
   const findCategory = (catId) => {
     if (categoryId) {
       const category = categories.find((category) => category.id === catId);
@@ -50,8 +56,8 @@ export const RecipesList = ({
     }
   };
 
+  // JSX that displays the recipe cards & the category tabs
   const displayRecipes = () => {
-    // if (filteredRecipes && filteredRecipes.length) {
     return (
       <div className="recipe--book--container flex justify-center mt-3">
         <div className="mx-24">
@@ -87,9 +93,9 @@ export const RecipesList = ({
         </div>
       </div>
     );
-    // }
   };
 
+  // JSX displays the page title, search box & displayRecipes()
   return (
     <div>
       <div className="flex items-center justify-between mx-6 mt-3">

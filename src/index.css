@@ -8,6 +8,17 @@ dialog {
 }
 
 @layer components {
+  .nav-bar {
+    @apply px-4 py-3 sm:p-0;
+  }
+
+  .nav-links {
+    @apply px-3 pb-4 sm:p-0;
+  }
+  .nav-link {
+    @apply mt-1 block px-3 py-1 text-white hover:bg-green-700 rounded sm:mt-0 sm:ml-2;
+  }
+
   .btn-close {
     background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23000'%3e%3cpath d='M.293.293a1 1 0 0 1 1.414 0L8 6.586 14.293.293a1 1 0 1 1 1.414 1.414L9.414 8l6.293 6.293a1 1 0 0 1-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 0 1-1.414-1.414L6.586 8 .293 1.707a1 1 0 0 1 0-1.414z'/%3e%3c/svg%3e");
   }
@@ -92,7 +103,7 @@ dialog {
   }
 
   h1 {
-    @apply font-spoof font-light text-center text-5xl mb-8;
+    @apply font-spoof font-light text-center text-2xl sm:text-5xl mb-8;
   }
 
   h2 {
@@ -100,11 +111,11 @@ dialog {
   }
 
   h3 {
-    @apply font-spoof text-center text-xl;
+    @apply font-spoof text-center sm:text-xl;
   }
 
   h4 {
-    @apply font-poppins text-xl;
+    @apply font-poppins sm:text-xl;
   }
 
   section {

@@ -11,8 +11,10 @@ export const NoteForm = ({
   recipeId,
   fetchNotes,
 }) => {
+  // State variable to handle the current note content being edited or added
   const [currentNote, setCurrentNote] = useState({ content: "" });
 
+  // Update the current note state when the "note" prop changes
   useEffect(() => {
     setCurrentNote((prevNote) => ({
       ...prevNote,
@@ -20,10 +22,12 @@ export const NoteForm = ({
     }));
   }, [note]);
 
+  // Function handles the changes in the note content input
   const handleNoteState = (e) => {
     setCurrentNote({ ...currentNote, [e.target.name]: e.target.value });
   };
 
+  // Function handles saving the note
   const handleSave = (e) => {
     e.preventDefault();
 
@@ -32,7 +36,9 @@ export const NoteForm = ({
       content: currentNote.content,
     };
 
+    // Check if editing or creating a new note
     if (isEditing) {
+      // Update an existing note
       updateNote(newNote, note.id, token)
         .then(() => fetchNotes())
         .then(() => {
@@ -40,17 +46,18 @@ export const NoteForm = ({
           setEditingNoteId(null);
         });
     } else {
+      // Create a new note
       createNote(newNote, token).then(() => fetchNotes());
     }
   };
 
+  // Function handles canceling of note edit form
   const handleCancel = () => {
-    if (isEditing) {
-      setIsEditing(false);
-      setEditingNoteId(null);
-    }
+    setIsEditing(false);
+    setEditingNoteId(null);
   };
 
+  // JSX to display the note form
   return (
     <form onSubmit={handleSave}>
       <fieldset className="content--container mb-2">
@@ -65,6 +72,7 @@ export const NoteForm = ({
           rows="1"
         />
       </fieldset>
+      {/* Save/Cancel buttons */}
       <div className="flex justify-end mt-2">
         <button type="submit" className="px-2" data-bs-dismiss="modal">
           <i className="fa-solid fa-check fa-lg cursor-pointer"></i>

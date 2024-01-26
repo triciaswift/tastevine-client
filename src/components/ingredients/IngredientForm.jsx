@@ -11,6 +11,7 @@ export const IngredientForm = ({
   token,
   fetchIngredients,
 }) => {
+  // State variables
   const [filteredIngredients, setFiltered] = useState([]);
   const [searchIngredient, setSearch] = useState("");
   const [ingredientState, setIngredient] = useState({
@@ -19,18 +20,22 @@ export const IngredientForm = ({
   });
   const [groceryCategories, setCategories] = useState([]);
 
+  // Function to fetch ingredients
   const getIngredients = () => {
     fetchIngredients();
   };
 
+  // Fetch ingredients on initial rendering of the page
   useEffect(() => {
     getIngredients();
   }, []);
 
+  // Fetch grocery categories on initial rendering of the page
   useEffect(() => {
     getGroceryCategories(token).then(setCategories);
   }, []);
 
+  // Update filtered ingredients based on search input
   useEffect(() => {
     const foundIngredients = ingredients.filter((ingredient) =>
       ingredient.name.toLowerCase().includes(searchIngredient.toLowerCase())
@@ -38,10 +43,12 @@ export const IngredientForm = ({
     setFiltered(foundIngredients);
   }, [ingredients, searchIngredient]);
 
+  // Function handles input change for ingredient form
   const handleInputChange = (e) => {
     setIngredient({ ...ingredientState, [e.target.name]: e.target.value });
   };
 
+  // Function handles saving a new ingredient
   const handleSave = (e) => {
     e.preventDefault();
     console.log("handleSave function called");
@@ -54,6 +61,7 @@ export const IngredientForm = ({
       });
   };
 
+  // JSX to display the ingredient form modal
   const displayIngredientForm = () => {
     return (
       <>
@@ -66,6 +74,7 @@ export const IngredientForm = ({
           <i className="fa-solid fa-plus fa-lg mr-2"></i>
           Ingredient
         </button>
+        {/* Ingredient form modal */}
         <div className="modal fade" id="formModal" tabIndex="-1">
           <div className="modal-dialog modal-dialog-centered">
             <div className="modal-content">
@@ -82,6 +91,7 @@ export const IngredientForm = ({
                 <form onSubmit={handleSave}>
                   <div className="mb-3">
                     <label className="col-form-label">Ingredient:</label>
+                    {/* Input for the ingredient name */}
                     <input
                       type="text"
                       className="form-control focus:ring-4 focus:ring-green-700/40 focus:border focus:border-green-700"
@@ -94,6 +104,7 @@ export const IngredientForm = ({
                     />
                   </div>
                   <div className="mb-3">
+                    {/* Dropdown for selecting grocery category */}
                     <select
                       className="form-select"
                       name="grocery_category"
@@ -109,6 +120,7 @@ export const IngredientForm = ({
                       ))}
                     </select>
                   </div>
+                  {/* Save/Close buttons */}
                   <div className="modal-footer border-t-0">
                     <button type="submit" className="btn btn-success">
                       Save
@@ -133,6 +145,7 @@ export const IngredientForm = ({
     );
   };
 
+  // JSX to display the ingredient form container
   return (
     <div className="flex grow w-[40%]">
       <div className="flex flex-col justify-start overflow-auto bg-white w-full p-2 rounded-lg border-2 border-dashed border-green-700 mb-[46px]">

@@ -9,32 +9,39 @@ import { getNotesByRecipeId } from "../../../managers/NoteManager";
 import { createGroceryList } from "../../../managers/GroceryListManager";
 
 export const RecipeDetails = ({ token, userId }) => {
+  // State variables
   const [recipe, setRecipe] = useState({});
   const [activeTab, setActiveTab] = useState(0);
   const [notes, setNotes] = useState([]);
   const [chosenIngredients, updateIngredients] = useState(new Set());
 
+  // Get the recipeId from the route parameters
   const { recipeId } = useParams();
   const navigate = useNavigate();
 
+  // Function handles tab click to switch between recipe details, image and notes
   const handleTabClick = (index) => {
     setActiveTab(index);
   };
 
+  // Function to fetch notes related to the recipe
   const fetchNotes = () => {
     getNotesByRecipeId(token, recipeId).then(setNotes);
   };
 
+  // Fetch notes only on initial render of page
   useEffect(() => {
     fetchNotes();
   }, []);
 
+  // Fetch the recipe using the route parameter
   useEffect(() => {
     getRecipeById(recipeId, token).then((recipeObj) => {
       setRecipe(recipeObj);
     });
   }, [recipeId, token]);
 
+  // JSX to display the recipe content
   const displayRecipe = () => {
     if (recipe && recipe.author) {
       return (
@@ -71,6 +78,7 @@ export const RecipeDetails = ({ token, userId }) => {
                 onClick={handleAddToGroceryList}
               ></i>
               <div>By: {recipe.author.full_name}</div>
+              {/* Id current user's recipe display edit/delete otherwise display favorite button */}
               {userId === recipe.author.id ? (
                 displayButtons()
               ) : (
@@ -83,6 +91,7 @@ export const RecipeDetails = ({ token, userId }) => {
     }
   };
 
+  // JSX displays edit and delete buttons as well as the modal upon deletion
   const displayButtons = () => {
     if (recipe && recipe.author)
       return (
@@ -145,6 +154,7 @@ export const RecipeDetails = ({ token, userId }) => {
       );
   };
 
+  // JSX to display the category tags
   const displayCategories = () => {
     if (recipe.categories && recipe.categories.length) {
       return (
@@ -163,6 +173,7 @@ export const RecipeDetails = ({ token, userId }) => {
     }
   };
 
+  // Function handles the addition of the recipe's ingredients to the grocery list
   const handleAddToGroceryList = () => {
     const groceryList = {
       ingredients: Array.from(chosenIngredients),
@@ -170,6 +181,7 @@ export const RecipeDetails = ({ token, userId }) => {
     createGroceryList(groceryList, token).then(() => navigate(`/groceries`));
   };
 
+  // Function handles checking/unchecking all ingredients
   const handleCheckAllIngredients = () => {
     if (recipe && recipe.ingredient_measurements) {
       const allIngredientIds = recipe.ingredient_measurements.map(
@@ -187,6 +199,7 @@ export const RecipeDetails = ({ token, userId }) => {
     }
   };
 
+  // JSX containing recipe title, categories, and tab content
   return (
     <section>
       <h1 className="mb-4">{recipe.title}</h1>
