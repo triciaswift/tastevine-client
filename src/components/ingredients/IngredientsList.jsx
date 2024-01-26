@@ -5,6 +5,7 @@ export const IngredientsList = ({
   updateIngredients,
   filteredIngredients,
 }) => {
+  // JSX to display the ingredient list table
   return (
     <div className="table--container flex flex-row justify-start grow overflow-auto border-1 px-4 py-1 rounded-md bg-white">
       <div className="flex grow max-h-[5rem]">

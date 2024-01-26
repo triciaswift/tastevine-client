@@ -1,4 +1,5 @@
 export const CategoryTabs = ({ categories, activeTab, handleTabClick }) => {
+  // JSX for navigation bar with category tabs
   return (
     <ul className="nav justify-center border-b-green-800 border-b-2">
       {categories.map((category) => {

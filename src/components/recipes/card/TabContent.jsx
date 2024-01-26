@@ -11,13 +11,17 @@ export const TabContent = ({
   notes,
   fetchNotes,
 }) => {
+  // Variable to hold the content based on the active tab
   let tabContent;
 
+  // Switch statement to determine the content based on the active tab
   switch (activeTab) {
     case 0:
+      // Display the recipe details
       tabContent = displayRecipe();
       break;
     case 1:
+      // Display the recipe image
       tabContent = (
         <div className="flex items-center w-full h-full py-6 rounded-b-md bg-green-800 overflow-auto">
           {recipe.image ? (
@@ -33,6 +37,7 @@ export const TabContent = ({
       );
       break;
     case 2:
+      // Display the list of notes related to the recipe
       tabContent = (
         <NotesList
           token={token}
@@ -44,9 +49,11 @@ export const TabContent = ({
       );
       break;
     default:
+      // No content for unknown tab
       tabContent = null;
   }
 
+  // JSX to display the tab container with tabs and determined content
   return (
     <div className="recipe--container w-[70rem] h-[28rem] mx-auto">
       <RecipeTabs activeTab={activeTab} handleTabClick={handleTabClick} />

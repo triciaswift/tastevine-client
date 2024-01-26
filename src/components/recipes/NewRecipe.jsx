@@ -10,6 +10,7 @@ export const NewRecipe = ({
   ingredients,
   fetchIngredients,
 }) => {
+  // State variables
   const [recipe, setRecipe] = useState({
     title: "",
     instructions: "",
@@ -20,15 +21,18 @@ export const NewRecipe = ({
   const [isEditing, setEditingState] = useState("");
   const navigate = useNavigate();
 
+  // Fetch categories and ingredients on initial rendering of page
   useEffect(() => {
     fetchCategories();
     fetchIngredients();
     setEditingState(false);
   }, []);
 
+  // Function handles the save action when form is submitted
   const handleSave = (e) => {
     e.preventDefault();
 
+    // Create a new recipe object with chosen categories and ingredients
     const newRecipe = {
       ...recipe,
       ingredients: Array.from(chosenIngredients),
@@ -39,6 +43,7 @@ export const NewRecipe = ({
     });
   };
 
+  // JSX to display the page title and recipe form
   return (
     <section className="mx-4">
       <h1>New Recipe</h1>

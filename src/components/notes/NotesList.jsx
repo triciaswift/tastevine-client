@@ -3,15 +3,19 @@ import { deleteNote } from "../../managers/NoteManager";
 import { NoteForm } from "./NoteForm";
 
 export const NotesList = ({ token, recipeId, userId, notes, fetchNotes }) => {
+  // State variables
   const [isEditing, setIsEditing] = useState(false);
   const [editingNoteId, setEditingNoteId] = useState(null);
+  // New note object for creating a new note
   const newNote = { content: "" };
 
+  // Function handles the edit button click for a specific note
   const handleEdit = (noteId) => {
     setIsEditing(true);
     setEditingNoteId(noteId);
   };
 
+  // JSX to display the edit/delete buttons for a note (if user is the author of the note)
   const displayButtons = (note) => {
     if (notes && notes.length)
       return (
@@ -32,6 +36,7 @@ export const NotesList = ({ token, recipeId, userId, notes, fetchNotes }) => {
               ></i>
             </div>
           </div>
+          {/* Delete modal content */}
           <div className="modal fade" id="deleteModal" tabIndex="-1">
             <div className="modal-dialog">
               <div className="modal-content">
@@ -76,6 +81,7 @@ export const NotesList = ({ token, recipeId, userId, notes, fetchNotes }) => {
       );
   };
 
+  // JSX to display the notes container
   return (
     <div className="notes--container flex flex-col rounded-b-md border-t-transparent px-8 pb-1 bg-green-800 w-full h-full overflow-auto">
       <div className="my-2">
@@ -89,6 +95,7 @@ export const NotesList = ({ token, recipeId, userId, notes, fetchNotes }) => {
             Add Note
           </button>
         </div>
+        {/* Note form modal content */}
         <div
           className="modal fade"
           id="noteFormModal"
@@ -99,9 +106,6 @@ export const NotesList = ({ token, recipeId, userId, notes, fetchNotes }) => {
           <div className="modal-dialog">
             <div className="modal-content">
               <div className="modal-header border-b-0 pb-0">
-                {/* <div className="modal-title fs-5" id="noteFormLabel">
-                  Note Content
-                </div> */}
                 <button
                   type="button"
                   className="btn-close"
@@ -118,47 +122,11 @@ export const NotesList = ({ token, recipeId, userId, notes, fetchNotes }) => {
                   fetchNotes={fetchNotes}
                 />
               </div>
-              {/* <div className="modal-footer">
-                <button
-                  type="button"
-                  className="btn btn-secondary"
-                  data-bs-dismiss="modal"
-                >
-                  Close
-                </button>
-                <button type="button" className="btn btn-primary">
-                  Save changes
-                </button>
-              </div> */}
             </div>
           </div>
         </div>
-        {/* {showAddButton ? (
-          <div className="text-center">
-            <button
-              className="bg-white px-4 py-1 rounded-full"
-              onClick={() => setShowAddButton(false)}
-            >
-              Add Note
-            </button>
-          </div>
-        ) : (
-          <div className="flex justify-center">
-            <div className="card basis-80">
-              <div className="card-body">
-                <NoteForm
-                  note={newNote}
-                  isEditing={isEditing}
-                  token={token}
-                  recipeId={recipeId}
-                  fetchNotes={fetchNotes}
-                  setShowAddButton={setShowAddButton}
-                />
-              </div>
-            </div>
-          </div>
-        )} */}
       </div>
+      {/* Container for list of notes */}
       <div className="bg-green-100 rounded-lg h-full mb-4 overflow-y-auto">
         <div className="flex justify-around flex-wrap">
           {notes.map((note) => (
@@ -167,6 +135,7 @@ export const NotesList = ({ token, recipeId, userId, notes, fetchNotes }) => {
               key={note.id}
             >
               <div className="card-body">
+                {/* If the edit button has been clicked, show edit note form else show note content */}
                 {editingNoteId === note.id ? (
                   <NoteForm
                     note={note}

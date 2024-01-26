@@ -3,11 +3,16 @@ import { FormInput } from "../../utils/FormInput";
 
 // found this code by  searching, "how to prevent a useEffect from running on initial render?"
 const useDidMountEffect = (func, deps) => {
+  // Create a ref to track whether the component has mounted
   const didMount = useRef(false);
+  // useEffect runs after each render
   useEffect(() => {
+    // Check if the component has already mounted
     if (didMount.current) {
+      // If it has mounted, call the provided function
       func();
     } else {
+      // If it hasn't mounted yet, set didMount to true
       didMount.current = true;
     }
   }, deps);
@@ -18,23 +23,22 @@ export const IngredientItem = ({
   chosenIngredients,
   updateIngredients,
 }) => {
+  // default state for ingredient information
   const defaultState = {
     id: ingredient.id,
     quantity: "",
     unit: "",
   };
+  // State to track ingredient information and enabled state
   const [ingredientInfo, setIngredientInfo] = useState(defaultState);
   const [enabled, setEnabled] = useState(false);
 
   // initial render only useEffect
   useEffect(() => {
+    // Check if the ingredient is in chosenIngredients
     const copy = new Set(chosenIngredients);
     for (const ingredientObj of copy) {
       if (ingredient.id === ingredientObj.id) {
-        // debugger;
-        // console.log(
-        //   `${ingredient.name} ingredient is in the original chosenIngredients array, set enabled to true`
-        // );
         setEnabled(true);
       }
     }
@@ -44,24 +48,18 @@ export const IngredientItem = ({
   useDidMountEffect(() => {
     // copy chosen set
     const copy = new Set(chosenIngredients);
-    // console.log(
-    //   `ingredientInfo useEffect triggered. changed to ${JSON.stringify(
-    //     ingredientInfo
-    //   )}.`
-    // );
-    // iterate copy
+    // Iterate over the copied set to remove any existing ingredient with the same id
     for (const ingredientObject of copy) {
-      // if object exists in set, nuke it
+      // if object exists in set, delete it
       if (ingredient.id === ingredientObject.id) {
-        // console.log(`Remove the matching object from chosenIngredients`);
         copy.delete(ingredientObject);
       }
     }
+    // If the 'enabled' state is true, add the current 'ingredientInfo' to the set
     if (enabled) {
-      // console.log(`Add the ingredientInfo object to chosenIngredients`);
       copy.add(ingredientInfo);
     }
-    // update state set
+    // update state set with modified set
     updateIngredients(copy);
   }, [ingredientInfo]);
 
@@ -72,29 +70,11 @@ export const IngredientItem = ({
       (obj) => obj.id === ingredient.id
     );
 
-    // console.log(`enabled useEffect triggered. changed to ${enabled}`);
     if (enabled && !foundIngredient) {
-      // console.log(
-      //   `enabled is true, and the ${
-      //     ingredient.name
-      //   } ingredient is not in the chosenIngredients array. Add the ingredientInfo ${JSON.stringify(
-      //     ingredientInfo
-      //   )} to the chosenIngredientsArray`
-      // );
       copy.add(ingredientInfo);
     } else if (enabled && foundIngredient) {
-      // console.log(
-      //   `enabled is true and ${
-      //     ingredient.name
-      //   } is in the chosenIngredients array. Set ingredientInfo to ${JSON.stringify(
-      //     foundIngredient
-      //   )}`
-      // );
       setIngredientInfo(foundIngredient);
     } else {
-      // console.log(
-      //   `enabled is false, remove the ${ingredient.name} ingredient from chosenIngredients and set the ingredientInfo to blank obj (with ingredient.id blank quantity/unit)`
-      // );
       for (const ingredientObject of copy) {
         if (ingredient.id === ingredientObject.id) {
           copy.delete(ingredientObject);
@@ -102,10 +82,10 @@ export const IngredientItem = ({
       }
       setIngredientInfo(defaultState);
     }
-    // update state set
     updateIngredients(copy);
   }, [enabled]);
 
+  // JSX to display each row of the ingredient table
   return (
     <>
       <td className="align-middle w-[2%]">

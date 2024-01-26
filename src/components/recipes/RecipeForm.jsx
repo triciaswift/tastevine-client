@@ -18,16 +18,19 @@ export const RecipeForm = ({
 }) => {
   const navigate = useNavigate();
 
+  // Function handles the change of the recipe state
   const changeRecipeState = (e) => {
     setRecipe({ ...recipe, [e.target.name]: e.target.value });
   };
 
+  // Function handles choosing/unchoosing of a category
   const handleChosenCategory = (category) => {
     const copy = new Set(chosenCategories);
     copy.has(category.id) ? copy.delete(category.id) : copy.add(category.id);
     updateCategories(copy);
   };
 
+  // JSX to display categories list as checkboxes
   const displayCategories = () => {
     if (categories && categories.length) {
       return categories.map((category) => (
@@ -45,7 +48,9 @@ export const RecipeForm = ({
     }
   };
 
+  // JSX to display the chosen ingredients
   const displayIngredients = () => {
+    // Checks if any ingredients have been chosen
     if (chosenIngredients.size !== 0) {
       return (
         <div>
@@ -62,6 +67,7 @@ export const RecipeForm = ({
         </div>
       );
     }
+    // Display only if ingredients have not been selected
     return (
       // eslint-disable-next-line react/no-unescaped-entities
       <div>
@@ -76,24 +82,29 @@ export const RecipeForm = ({
     );
   };
 
+  // Convert image file to base64 string
   const getBase64 = (file, callback) => {
     const reader = new FileReader();
     reader.addEventListener("load", () => callback(reader.result));
     reader.readAsDataURL(file);
   };
 
+  // Handle creating an image string from the selected file
   const createImageString = (e) => {
     getBase64(e.target.files[0], (base64ImageString) => {
       setRecipe({ ...recipe, [e.target.name]: base64ImageString });
     });
   };
 
+  // JSX to display the recipe form
   return (
     <div className="flex mb-1">
       <div className="flex flex-col w-[60%]">
+        {/* Recipe Form */}
         <form onSubmit={handleSave}>
           <div className="recipe-ingredient--container">
             <div className="recipe--card rounded-lg mr-8 flex flex-col justify-between">
+              {/* Recipe card with form inputs */}
               <div className="bg-white rounded-lg px-4 py-8 border-2 border-dashed border-green-700">
                 <div className="mb-3">
                   <div>
@@ -101,6 +112,7 @@ export const RecipeForm = ({
                       Title
                     </label>
                   </div>
+                  {/* Title Input */}
                   <input
                     type="text"
                     className="form-control focus:ring-4 focus:ring-green-700/40 focus:border focus:border-green-700"
@@ -116,9 +128,11 @@ export const RecipeForm = ({
                   <fieldset className="w-1/3 pr-3">
                     <div className="mb-3">
                       <label className="form-label">Categories</label>
+                      {/* Category checkboxes */}
                       {displayCategories()}
                     </div>
                     <div>
+                      {/* Recipe image if exists otherwise "" */}
                       {recipe.image ? (
                         <figure className="mb-3">
                           <img src={recipe.image} alt="recipe-pic" />
@@ -132,6 +146,7 @@ export const RecipeForm = ({
                         Recipe Image
                       </label>
                       {isEditing ? (
+                        // Display file input for editing
                         <FormInput
                           type="file"
                           onChange={(e) => {
@@ -139,6 +154,7 @@ export const RecipeForm = ({
                           }}
                         />
                       ) : (
+                        // Display file input for creation
                         <input
                           type="file"
                           name="image"
@@ -152,6 +168,7 @@ export const RecipeForm = ({
                     </div>
                   </fieldset>
                   <fieldset className="flex w-2/3">
+                    {/* Ingredients and Directions inputs */}
                     <div className="ingredients--container w-1/3 border-l-2 pl-2">
                       <label className="mb-2">Ingredients</label>
                       {displayIngredients()}
@@ -163,6 +180,7 @@ export const RecipeForm = ({
                       >
                         Directions
                       </label>
+                      {/* Direction Input */}
                       <textarea
                         className="form-control focus:ring-4 focus:ring-green-700/40 focus:border focus:border-green-700"
                         name="instructions"
@@ -178,6 +196,7 @@ export const RecipeForm = ({
               </div>
             </div>
           </div>
+          {/* Save/Cancel Buttons */}
           <div className="mt-2">
             <button type="submit" className="btn btn-success mr-4">
               Save

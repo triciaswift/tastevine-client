@@ -1,10 +1,12 @@
 export const RecipeTabs = ({ activeTab, handleTabClick }) => {
+  // Array of tabs with their respective ids and labels
   const tabs = [
     { id: 0, label: "Recipe" },
     { id: 1, label: "Image" },
     { id: 2, label: "Notes" },
   ];
 
+  // JSX to display the tabs for the recipe details page
   return (
     <ul className="nav">
       {tabs.map((tab) => (
